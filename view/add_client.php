@@ -1,9 +1,13 @@
 <?php
-include_once 'C:\xampp\htdocs\projet\model\client.php';
-include_once 'C:\xampp\htdocs\projet\model\config.php';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once '../controller/clientc.php';
 
+session_start();
+
+
+require_once '../controller/clientc.php';
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+   
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $nom_utilisateur = $_POST['nom_utilisateur'];
@@ -12,15 +16,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telephone = $_POST['telephone'];
     $choix = $_POST['choix'];
 
-    // Création du client
+
     $client = new Client($nom, $prenom, $nom_utilisateur, $email, $password, $telephone, $choix);
     $clientC = new ClientC();
-    // Ajouter client à la base
+
+  
     $clientC->addClient($client);
 
-    // Redirection vers la liste des clients après l'ajout
-    header("Location: client_liste.php");
-    header("Location: http://localhost/projet/view/farmfresh-1.0.0/index1.html");
-    exit();
+ 
+    $_SESSION['user_id'] = $clientC->getLastInsertedClientId(); 
+
+  
+    echo "Compte créé avec succès! Vous êtes maintenant connecté.";
+
+   
+    switch ($choix) {
+        case 'Vétérinaire':
+            header("Location: http://localhost/projet/view/farmfresh-1.0.0/vet.html");
+            break;
+        case 'Mécanicien':
+            header("Location: http://localhost/projet/view/farmfresh-1.0.0/mecanicien.html");
+            break;
+        case 'Saisonnier':
+            header("Location: http://localhost/projet/view/farmfresh-1.0.0/saisonnier.html");
+            break;
+        case 'Agriculteur':
+            header("Location: http://localhost/projet/view/farmfresh-1.0.0/agriculteure.html");
+            break;
+        default:
+            header("Location: http://localhost/projet/view/farmfresh-1.0.0/index1.html");
+            break;
+    }
+
+    exit(); 
 }
 ?>

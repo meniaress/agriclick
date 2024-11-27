@@ -1,6 +1,6 @@
 <?php
 include_once 'C:\xampp\htdocs\projet\model\client.php';
-include_once 'C:\xampp\htdocs\projet\config.php';
+include_once 'C:\xampp\htdocs\projet\model\config.php';
 require_once '../controller/clientc.php';
 
 if (isset($_POST['id'])) {

@@ -1,17 +1,17 @@
 <?php
-// Inclure les fichiers nécessaires
+
 include_once 'C:\xampp\htdocs\projet\model\client.php';
-include_once 'C:\xampp\htdocs\projet\model\config.php';
+include_once 'C:\xampp\htdocs\projet\config.php';
 require_once '../controller/clientc.php';
 
-// Créer une instance du contrôleur ClientC
+
 $clientC = new ClientC();
 
-// Vérifier si l'ID du client est passé en paramètre
-if (isset($_GET['id'])) {
-    $id = $_GET['id']; // Récupérer l'ID du client à modifier
 
-    // Récupérer les données du client
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+   
     $client = $clientC->getClientById($id);
 } else {
     // Rediriger si l'ID n'est pas trouvé
@@ -140,48 +140,52 @@ if (isset($_GET['id'])) {
 <body>
     
 
-    <div class="admin-container">
+   <div class="admin-container">
       
         <div class="content">
             <div class="form-container">
                 <h2>Mettre à jour le profil du client</h2>
 
                 <!-- Formulaire de mise à jour -->
-                <form action="update_client.php" method="POST" enctype="multipart/form-data">
+                <form action="update_client.php" method="POST" enctype="multipart/form-data" id="client-form">
+   <!---                 
     <div class="profile-pic-container" onclick="document.getElementById('file-input').click();">
         <img src="https://via.placeholder.com/120" id="profile-pic" alt="Profile Picture">
         <div class="upload-icon">&#128247;</div>
     </div>
+    -->
     <input type="hidden" name="id" value="<?php echo htmlspecialchars($client['id']); ?>">
     
     <input type="file" id="file-input" name="photo" class="file-input" accept="image/*" onchange="previewImage(event)" style="display: none;">
+    <input type="hidden" name="id" value="<?php echo htmlspecialchars($client['id']); ?>">
     
-    <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($client['nom']); ?>" >
+ <!----   <input type="file" id="file-input" name="photo" class="file-input" accept="image/*" onchange="previewImage(event)" style="display: none;">   -->
+    
+    
 
-    <label for="prenom">Prénom :</label>
-    <input type="text" id="prenom" name="prenom" value="<?php echo htmlspecialchars($client['prenom']); ?>" >
 
     <label for="nom_utilisateur">Nom d'utilisateur :</label>
-    <input type="text" id="nom_utilisateur" name="nom_utilisateur" value="<?php echo htmlspecialchars($client['nom_utilisateur']); ?>" >
+    <input id="nom_utilisateur" name ="nom_utilisateur"type="text" value="<?php echo htmlspecialchars($client['nom_utilisateur']); ?>" ><span id="usernameMessage"></span>
 
     <label for="email">Email :</label>
-    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($client['email']); ?>" >
+    <input id="email" type="text" name ="email" value="<?php echo htmlspecialchars($client['email']); ?>" ><span id="emailMessage"></span>
 
     <label for="telephone">Téléphone :</label>
-    <input type="text" id="telephone" name="telephone" value="<?php echo htmlspecialchars($client['telephone']); ?>" >
+    <input id="telephone" name ="telephone" type="text" value="<?php echo htmlspecialchars($client['telephone']); ?>" ><span id="telephoneMessage"></span>
 
-    <!-- Champ "Choix" avec Select, stylisé comme les autres champs -->
-    <label for="choix">Choisissez votre profession :</label>
+    
+  
+    <label for="choix">Choisissez la profession :</label>
 <select id="choix" name="choix" style="width: 100%; padding: 12px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; background-color: #fff; font-size: 16px;">
     <option value="" disabled>Choisissez votre profession</option>
-    <option value="Vétérinaire" <?php echo ($client['choix'] == "Vétérinaire") ? 'selected' : ''; ?>>Vétérinaire</option>
+    <option value="Vétérinaire"  <?php echo ($client['choix'] == "Vétérinaire") ? 'selected' : ''; ?>>Vétérinaire</option>
     <option value="Mécanicien" <?php echo ($client['choix'] == "Mécanicien") ? 'selected' : ''; ?>>Mécanicien</option>
     <option value="Saisonnier" <?php echo ($client['choix'] == "Saisonnier") ? 'selected' : ''; ?>>Saisonnier</option>
     <option value="Agriculteur" <?php echo ($client['choix'] == "Agriculteur") ? 'selected' : ''; ?>>Agriculteur</option>
 </select>
 
     <input type="submit" value="Mettre à jour">
+   
 </form>
 
             </div>
@@ -189,14 +193,61 @@ if (isset($_GET['id'])) {
     </div>
 
     <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('profile-pic').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+    function validateForm(event) {
+        let isFormValid = true;
+
+       
+        const username = document.getElementById("nom_utilisateur").value;
+const usernamePattern = /^[a-zA-Z0-9]{8,16}$/; 
+const digitCount = (username.match(/\d/g) || []).length;  
+
+// Vérifie si le nom d'utilisateur respecte les critères
+if (usernamePattern.test(username) && digitCount <= 3) {
+    document.getElementById("usernameMessage").innerHTML = "Nom d'utilisateur correct";
+    document.getElementById("usernameMessage").className = "valid";
+} else {
+    document.getElementById("usernameMessage").innerHTML = "Le nom d'utilisateur doit contenir entre 8 et 16 caractères,inclure des chiffres et des lettres,ne pas avoir plus de 3 chiffres,et ne pas contenir de caractères spéciaux.";
+    document.getElementById("usernameMessage").className = "invalid";
+}
+
+        
+        const email = document.getElementById("email").value;
+        const emailMessage = document.getElementById("emailMessage");
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+            emailMessage.innerHTML = "Veuillez entrer un email valide !";
+            emailMessage.className = "invalid";
+            isFormValid = false;
+        } else {
+            emailMessage.innerHTML = "Email correct";
+            emailMessage.className = "valid";
         }
-    </script>
+
+        
+        const phoneNumber = document.getElementById("telephone").value;
+        const phoneMessage = document.getElementById("telephoneMessage");
+        const phonePattern = /^[\d+\s]+$/;
+        if (!phonePattern.test(phoneNumber) || phoneNumber.length < 8 || phoneNumber.length > 15) {
+            phoneMessage.innerHTML = "Le numéro de téléphone doit contenir uniquement des chiffres et le caractère '+', avec une longueur entre 8 et 15 caractères.";
+            phoneMessage.className = "invalid";
+            isFormValid = false;
+        } else {
+            phoneMessage.innerHTML = "Numéro de téléphone correct";
+            phoneMessage.className = "valid";
+        }
+
+     
+        if (!isFormValid) {
+            event.preventDefault();
+        }
+    }
+
+  
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("client-form").addEventListener('submit', validateForm);
+    });
+</script>
+
+    
 </body>
 </html>

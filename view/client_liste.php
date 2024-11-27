@@ -82,7 +82,7 @@ $clients = $clientC->getClients();
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+            <!-- <th>ID</th>  -->
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Nom d'utilisateur</th>
@@ -94,10 +94,10 @@ $clients = $clientC->getClients();
         </thead>
         <tbody>
             <?php
-            // Parcourir et afficher les clients
+            
             foreach ($clients as $client) {
                 echo '<tr>';
-                echo '<td>' . htmlspecialchars($client['id']) . '</td>';
+            //    echo '<td>' . htmlspecialchars($client['id']) . '</td>';
                 echo '<td>' . htmlspecialchars($client['nom']) . '</td>';
                 echo '<td>' . htmlspecialchars($client['prenom']) . '</td>';
                 echo '<td>' . htmlspecialchars($client['nom_utilisateur']) . '</td>';
