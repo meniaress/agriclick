@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reclamation Form</title>
+  <link rel="stylesheet" href="css/style.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+
+<h1>Reclamation Form</h1>
+
+<?php if (isset($_GET['success'])): ?>
+  <p style="color: green;">Your reclamation has been submitted successfully!</p>
+<?php endif; ?>
+
+<form action="form.php" method="POST">
+  <div>
+      <label for="name">Your Name:</label>
+      <input type="text" name="name" id="name" ><span id="msgnom">
+  
+      </span>
+  </div>
+  <div>
+      <label for="email">Your Email:</label>
+      <input type="email" name="email" id="email" required>
+  </div>
+  <div>
+      <label for="subject">Subject:</label>
+      <input type="text" name="subject" id="subject" required>
+  </div>
+  <div>
+      <label for="message">Message:</label>
+      <textarea name="message" id="message" rows="4" required></textarea>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<script>
+  function validateNomPrenom() {
+        const nom = document.getElementById("nom").value;
+        
+        const verif = /^[a-zA-Z\s]*$/;  // Vérifie que le texte contient uniquement des lettres et des espaces
+
+        const isNomValid = verif.test(nom) && nom.length >= 3;
+        
+
+        // Vérification si les deux champs sont valides
+        if (isNomValid ) {
+            document.getElementById("msgnom").innerHTML = "Correct";
+            document.getElementById("msgnom").className = "valid";
+        } else {
+            document.getElementById("msgnom").innerHTML = "Le nom et le prénom doivent contenir au moins 3 caractères et uniquement des lettres !";
+            document.getElementById("msgnom").className = "invalid";
+        }
+    }
+</script>
+
+</body>
+</html>
