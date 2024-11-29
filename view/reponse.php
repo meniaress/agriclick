@@ -12,9 +12,8 @@ $notification = null; // Variable for notifications
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contenu_reponse = trim($_POST["reponse"]);
-  
 
-    if (!empty($contenu_reponse) ) {
+    if (!empty($contenu_reponse)) {
         $reponse = new Reponse($contenu_reponse);
         if ($reponseController->addReponse($reponse)) {
             // Redirect to the same page with a success parameter
@@ -40,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #dc3545;
             font-size: 0.9em;
             margin-top: 5px;
+            display: none; /* Hide error message by default */
         }
     </style>
 </head>
@@ -54,16 +54,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php if (isset($_GET['success'])): ?>
             <p class="alert alert-success">Votre réponse a été soumise avec succès!</p>
         <?php endif; ?>
-        <form method="POST" action="">
-            
+        <form id="responseForm" method="POST" action="">
             <div class="mb-3">
-                <label for="reponse" class="form-label">Votre Réponse</label>
-                <textarea id="reponse" name="reponse" class="form-control" rows="4" required></textarea>
+                <div class="mb-3 input-container">
+                    <label for="reponse" class="form-label">Votre Réponse</label>
+                    <textarea id="reponse" name="reponse" class="form-control" rows="4" required></textarea>
+                    <span class="error-message" id="nameError">La réponse doit contenir au moins 5 caractères.</span>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Soumettre la Réponse</button>
+            <div class="mb-3">
+                <button id="submitButton" class="btn btn-secondary w-100 py-3" type="submit" disabled>Soumettre la réponse</button>
+            </div>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#reponse').on('input', function() {
+                const responseText = $(this).val();
+                const errorMessage = $('#nameError');
+                const submitButton = $('#submitButton');
+
+                if (responseText.length < 5) {
+                    errorMessage.show(); // Show error message
+                    submitButton.prop('disabled', true); // Disable submit button
+                } else {
+                    errorMessage.hide(); // Hide error message
+                    submitButton.prop('disabled', false); // Enable submit button
+                }
+            });
+        });
+    </script>
 </body>
 </html>
