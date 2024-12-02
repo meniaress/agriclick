@@ -96,7 +96,7 @@
                     <div class="bg-secondary bg-fruit d-flex flex-column justify-content-center p-5" style="height: 300px;">
                         <h3 class="text-white mb-3">Événements:</h3>
                         <p class="text-white">Découvrez notre séléction de workshops, ateliers et formations en collaboration avec nos partenaires.</p>
-                        <a class="text-white fw-bold" href="">Lire plus<i class="bi bi-arrow-right ms-2"></i></a>
+                        <a class="text-white fw-bold" href="formations.html">Lire plus<i class="bi bi-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
