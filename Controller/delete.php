@@ -15,7 +15,7 @@ try {
 
         if ($stmt->execute()) {
             // Redirect to the main page or a success page after deletion
-            header("Location: ../Views/table.php?success=1");
+            header("Location: ../Views/dash.php?success=1");
             exit();
         } else {
             echo "Erreur : La suppression a échoué.";
