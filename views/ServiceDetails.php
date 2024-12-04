@@ -108,7 +108,7 @@ if (isset($_GET['id'])) {
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <h4 class="card-title">Price: $<?php echo number_format($service['tarif'], 2); ?></h4>
-                        <button class="btn btn-primary mt-3">book service</button>
+                        <a href="CommandeCreation.php?id=<?= htmlspecialchars($service['id']) ?>" class="btn btn-success">Book service</a>
                     </div>
                 </div>
 

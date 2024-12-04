@@ -6,15 +6,16 @@ class CommandeController
 {
     function addCommande($commande)
     {
-        $sql = "INSERT INTO commandes (id, date, paiement, idService)
-                VALUES (NULL, NOW(), :paiement, :idService)";
+        $sql = "INSERT INTO commandes (id, date,paiement,message,idService)
+                VALUES (NULL, NOW(), :paiement, :message, :idService)";
         $db = (new config)->getConnection();
 
         try {
             $query = $db->prepare($sql);
             $query->execute([
                 'paiement' => $commande->getPaiement(),
-                'idService' => $commande->getIdService()
+                'message' => $commande->getMessage(),
+                'idService' => $commande->getIdService(),
             ]);
 
             echo "Commande added successfully!";
@@ -27,7 +28,7 @@ class CommandeController
 
     public function listCommandes()
     {
-        $sql = "SELECT c.id, c.date, c.paiement, c.idService, s.title AS serviceTitle
+        $sql = "SELECT c.id, c.date, c.paiement,c.message, c.idService, s.title AS serviceTitle
                 FROM commandes c
                 JOIN services s ON c.idService = s.id";
         $db = (new config)->getConnection();
@@ -41,23 +42,7 @@ class CommandeController
         }
     }
 
-    public function updateCommandePayment($id, $newPaiement)
-    {
-        $sql = "UPDATE commandes SET paiement = :paiement WHERE id = :id";
-        $db = (new config)->getConnection();
-
-        try {
-            $query = $db->prepare($sql);
-            $query->execute([
-                'paiement' => $newPaiement,
-                'id' => $id,
-            ]);
-
-            echo "Payment method updated successfully!";
-        } catch (Exception $e) {
-            echo 'Error: ' . $e->getMessage();
-        }
-    }
+    
 
     public function deleteCommande($id)
     {
@@ -69,6 +54,28 @@ class CommandeController
             $query->execute(['id' => $id]);
 
             echo "Commande deleted successfully!";
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+    public function updateCommande($id, $paiement, $message)
+    {
+        $sql = "UPDATE commandes 
+                SET paiement = :paiement, 
+                    message = :message, 
+                    date = NOW() 
+                WHERE id = :id";
+        $db = (new config)->getConnection();
+    
+        try {
+            $query = $db->prepare($sql);
+            $query->execute([
+                'paiement' => $paiement,
+                'message' => $message,
+                'id' => $id,
+            ]);
+    
+            echo "Command updated successfully!";
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }

@@ -120,6 +120,7 @@ $commandes = $commandeController->listCommandes();
                         <th>ID</th>
                         <th>Date</th>
                         <th>Payment</th>
+                        <th>message</th>
                         <th>Service Title</th>
                     </tr>
                 </thead>
@@ -129,6 +130,7 @@ $commandes = $commandeController->listCommandes();
                         <td><?= htmlspecialchars($commande['id']) ?></td>
                         <td><?= htmlspecialchars($commande['date']) ?></td>
                         <td><?= htmlspecialchars($commande['paiement']) ?></td>
+                        <td><?= htmlspecialchars($commande['message'] ?? '') ?></td>
                         <td><?= htmlspecialchars($commande['serviceTitle']) ?></td>
                         <td>
                             <!-- Update Button -->
@@ -145,11 +147,11 @@ $commandes = $commandeController->listCommandes();
 
                             <!-- Success Message -->
                             <?php if (isset($_GET['updated']) && isset($_GET['id']) && $_GET['id'] == $commande['id']) : ?>
-                                <div class="alert alert-success mt-2">Payment method updated successfully!</div>
+                                <div class="alert alert-success mt-2">commande  updated successfully!</div>
                             <?php endif; ?>
 
                             <?php if (isset($_GET['deleted']) && isset($_GET['id']) && $_GET['id'] == $commande['id']) : ?>
-                                <div class="alert alert-success mt-2">Command deleted successfully!</div>
+                                <div class="alert alert-success mt-2">Commande deleted successfully!</div>
                             <?php endif; ?>
                         </td>
                     </tr>

@@ -66,6 +66,11 @@ if (
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <!-- JavaScript Files -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/addService.js"></script>
+
+    <script src="js/main.js"></script>
 
     <!-- Custom JavaScript for Validation -->
     <script>

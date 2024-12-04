@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             null,               // ID (auto-incremented)
             new DateTime(),     // Current date
             $_POST['paiement'], // Payment method
+            isset($_POST['message']) ? $_POST['message'] : null, // Message (optional)
             $idService          // Service ID passed in the URL
         );
 
@@ -82,7 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <option value="Bank Transfer">Bank Transfer</option>
                             </select>
                         </div>
-
+                        <!-- Message Input -->
+                        <div class="mb-3">
+                          <label for="message" class="form-label">Message (optional)</label>
+                          <textarea id="message" name="message" class="form-control" rows="3" placeholder="Enter any additional information here..."></textarea>
+                        </div>
                         <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary w-100">Confirm Command</button>
                     </form>
