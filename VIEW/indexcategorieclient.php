@@ -110,7 +110,7 @@ $list=$CatC->afficherCategorie();
     <table class ="table table-hover table-bordered table-striped">
         <thead>
             <tr>
-                <th>ID</th>
+                
                 <th>nom categorie</th>
             </tr>
         </thead>
@@ -118,7 +118,7 @@ $list=$CatC->afficherCategorie();
             if($list){
                 foreach($list as $Cat){
                 echo "<tr>";
-                echo "<td>" . $Cat['idCategorie'] . "</td>";
+               
                 echo "<td>" . $Cat['nomCategorie'] . "</td>";
                 
                 echo '<td><a class="btn btn-secondary" href="listeoffres.php" role="button">voir les offres</a>

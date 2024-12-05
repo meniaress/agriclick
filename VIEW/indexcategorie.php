@@ -106,34 +106,29 @@ $list=$CatC->afficherCategorie();
 
 
     <h1 id="root">CATEGORIE DE TRAVAIL</h1>
-    <div class ="container">
-    <table class ="table table-hover table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>nom categorie</th>
-            </tr>
-        </thead>
-        <?php 
-            if($list){
-                foreach($list as $Cat){
-                echo "<tr>";
-                echo "<td>" . $Cat['idCategorie'] . "</td>";
-                echo "<td>" . $Cat['nomCategorie'] . "</td>";
-                
-                echo '<td><a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] .'"role="button">modifier</a>
-                      <td><a class="btn btn-primary" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] .'" role="button">supprimer</a>
-                      <td><a class="btn btn-secondary" href="listeoffres.php" role="button">voir les offres</a>
-                      </td>';
-                echo "</tr>";
-
+    <div class="container">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nom Categorie</th>
+                </tr>
+            </thead>
+            <?php 
+                if ($list) {
+                    foreach ($list as $Cat) {
+                        echo "<tr>";
+                        echo "<td>" . $Cat['nomCategorie'] . "</td>";
+                        echo '<td><a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] .'" role="button">modifier</a></td>';
+                        echo '<td><a class="btn btn-primary" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] .'" role="button">supprimer</a></td>';
+                        echo '<td><a class="btn btn-secondary" href="indexoffre.php?idCategorie=' . $Cat['idCategorie'] .'" role="button">voir les offres</a></td>';
+                        echo '<td><a class="btn btn-secondary" href="addoffre.php?idCategorie=' . $Cat['idCategorie'] .'" role="button">ajouter offre</a></td>';
+                        echo "</tr>";
+                    }
                 }
-
-            }
-        ?>
-    </table> 
-    <a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">ajouter categorie</a>
-</div>
+            ?>
+        </table>
+        <a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">ajouter categorie</a>
+    </div>
 <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

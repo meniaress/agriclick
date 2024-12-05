@@ -1,24 +1,29 @@
 <?php
-include '../CONTROLLER/CategorieC.php';
+include '../CONTROLLER/OffreC.php';
 
 $error = "";
-$categorieC = new CategorieC();
-$categorie = null;
+$offreC = new OffreC();
+$offre = null;
+$idCategorie = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET["idCategorie"]) && !empty($_GET["idCategorie"])) {
-        $cateID = $_GET["idCategorie"];
-        $categorie = $categorieC->getCategById($cateID);
+    if (isset($_GET["idOffre"]) && !empty($_GET["idOffre"])) {
+        $offreID = $_GET["idOffre"];
+        $offre = $offreC->getOffreById($offreID);
+        $idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : $offre['idCategorie'];
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST["idCategorie"]) && isset($_POST["nomCategorie"])) {
-        if (!empty($_POST["idCategorie"]) && !empty($_POST['nomCategorie'])) {
-            $idCategorie = $_POST["idCategorie"];
-            $nomCategorie = $_POST['nomCategorie'];
-            $categorieC->modifierNomCategorie($idCategorie, $nomCategorie);
-            header('Location: indexcategorie.php');
+    if (isset($_POST["idOffre"]) && isset($_POST["localisation"]) && isset($_POST["travailOffre"]) && isset($_POST["salaire"]) && isset($_POST["idCategorie"])) {
+        if (!empty($_POST["idOffre"]) && !empty($_POST['localisation']) && !empty($_POST['travailOffre']) && !empty($_POST['salaire']) && !empty($_POST['idCategorie'])) {
+            $idOffre = $_POST["idOffre"];
+            $localisation = $_POST['localisation'];
+            $travailOffre = $_POST['travailOffre'];
+            $salaire = $_POST['salaire'];
+            $idCategorie = $_POST['idCategorie'];
+            $offreC->modifierOffre($idOffre, $localisation, $travailOffre, $salaire, $idCategorie);
+            header('Location: indexoffre.php?idCategorie=' . $idCategorie);
             exit;
         }
     }
@@ -28,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AGRICLICK - Organic Farm Website </title>
+    <title>AGRICLICK - Organic Farm Website</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet"href="style.css">
+    <link rel="stylesheet" href="style.css">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -52,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-     <!-- Topbar Start -->
-     <div class="container-fluid px-5 d-none d-lg-block">
+    <!-- Topbar Start -->
+    <div class="container-fluid px-5 d-none d-lg-block">
         <div class="row gx-5 py-3 align-items-center">
             <div class="col-lg-3">
                 <div class="d-flex align-items-center justify-content-start">
@@ -78,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <!-- Topbar End -->
-      <!-- Navbar Start -->
+    <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
         <a href="index.html" class="navbar-brand d-flex d-lg-none">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
@@ -106,7 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a href="contact.html" class="nav-item nav-link">reclamation</a>
             </div>
         </div>
-        
     </nav>
     <!-- Navbar End -->
     <!-- Hero Start -->
@@ -114,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container py-5">
             <div class="row justify-content-start">
                 <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 text-white mb-md-4">categorie travail</h1>
+                    <h1 class="display-1 text-white mb-md-4">Offres de travail</h1>
                     <a href="index.html" class="btn btn-primary py-md-3 px-md-5 me-3">Home</a>
                     <a href="about.html" class="btn btn-secondary py-md-3 px-md-5">About</a>
                 </div>
@@ -122,55 +126,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <!-- Hero End -->
-
-    <title>Modifier Categorie</title>
+    <title>Modifier Offre</title>
     <script>
         function validateForm() {
-    var NomCategorie = document.getElementById("NomCategorie").value;
-    
-    if (NomCategorie.trim() === "") {
-        alert("Tous les champs sont obligatoires.");
-        return false;
-    }
-    
-    if (NomCategorie.length <= 5) {
-        alert("Le nom du Categorie doit contenir plus de 5 caractères.");
-        return false;
-    }
-    
-    var firstChar = NomCategorie.charAt(0);
-    if (firstChar !== firstChar.toUpperCase()) {
-        alert("Le nom du Categorie doit commencer par une lettre majuscule.");
-        return false;
-    }
-    
+            var localisation = document.getElementById("localisation").value;
+            var travailOffre = document.getElementById("travailOffre").value;
+            var salaire = document.getElementById("salaire").value;
 
-    if (/\d/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de chiffres.");
-        return false;
-    }
-    
-    
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de signes spéciaux.");
-        return false;
-    }
-    
-    return true;
-}
+            if (localisation.trim() === "" || travailOffre.trim() === "" || salaire.trim() === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+
+            if (localisation.length <= 5) {
+                alert("La localisation doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            if (travailOffre.length <= 5) {
+                alert("Le travail doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            var specialChars = /[!@#$%^&*(),.?":{}|<>0-9]/;
+            if (specialChars.test(localisation)) {
+                alert("La localisation ne doit pas contenir de chiffres ou de signes spéciaux.");
+                return false;
+            }
+
+            if (specialChars.test(travailOffre)) {
+                alert("Le travail ne doit pas contenir de chiffres ou de signes spéciaux.");
+                return false;
+            }
+
+            if (isNaN(salaire) || salaire <= 0) {
+                alert("Le salaire doit être un nombre positif.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
 </head>
 <body>
-    <div class="container my-5">
-        <center><h1>Modifier Categorie</h1></center>
+<div class="container my-5">
+        <center><h1>Modifier Offre</h1></center>
         <hr>
         <br>
         <form method="POST" class="form" onsubmit="return validateForm()">
-            <input type="hidden" name="idCategorie" value="<?php echo $categorie['idCategorie']; ?>">
+            <input type="hidden" name="idOffre" value="<?php echo $offre['idOffre']; ?>">
+            <input type="hidden" name="idCategorie" value="<?php echo $idCategorie; ?>">
             <div class="input-group mb-3">
-                <label class="col-sm-3 col-form-label">Nom Categorie</label>
+                <label class="col-sm-3 col-form-label">Localisation</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="nomCategorie" id="nomCategorie" value="<?php echo $categorie['nomCategorie']; ?>" placeholder="nomCategorie">
+                    <input type="text" class="form-control" name="localisation" id="localisation" value="<?php echo $offre['localisation']; ?>" placeholder="Localisation">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Travail</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="travailOffre" id="travailOffre" value="<?php echo $offre['travailOffre']; ?>" placeholder="Travail">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Salaire</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="salaire" id="salaire" value="<?php echo $offre['salaire']; ?>" placeholder="Salaire">
                 </div>
             </div>
             <div class="row mb-5">
@@ -178,12 +199,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="btn btn-primary">Modifier</button>
                 </div>
                 <div class="col-sm-3 d-grid">
-                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorie.php" role="button">Quitter</a>
+                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexoffre.php?idCategorie=<?php echo $idCategorie; ?>" role="button">Quitter</a>
                 </div>
             </div>
         </form>
     </div>
-      <!-- Footer Start -->
+    <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">

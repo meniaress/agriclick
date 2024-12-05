@@ -1,103 +1,111 @@
-<?php
-    include_once '../config.php';
-    include '../model/offre.php';
-    class offreC{
-        function afficheroffre(){
-            $sql="SELECT * FROM offre ";
-            $db = config::getConnexion();
-            try{
-                $liste = $db->query($sql);
-                return $liste;
-            }
-            catch(Exception $e){
-                die('Erreur:' . $e->getMessage());
-            }
-        }
-        function supprimeroffre($id_offre){
-            $sql=" DELETE FROM offre WHERE id_offre=:id_offre";
-            $db = config::getConnexion();
-            $req = $db->prepare($sql);
-            $req->bindValue(':id_offre' , $id_offre);
-            try{
-                $req->execute();
-            }
-            catch(Exception $e){
-                die('Erreur:' . $e->getMessage());
-            }
-        }
-        function ajouteroffre($offre){
-    
-        $sql = "INSERT INTO offre ($id_offre, $travail_offre, $salaire, $localisation, $id_categorie)
-                    VALUES (:id_offre, :travail_offre, :salaire, :localisation, :id_categorie);
+
+<?php 
+include '../MODEL/offre.php';
+include '../Config.php';
+
+class OffreC
+{
+    function getOffreById($idOffre){
+        $sql = "SELECT * FROM offre WHERE idOffre = :idOffre";
         $db = config::getConnexion();
-        try{
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+            $query->execute();
+
+            $offre = $query->fetch();
+            return $offre;
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
+    }
+
+    function getOffreByLocalisation($localisation){
+        $sql = "SELECT * FROM offre WHERE localisation = :localisation";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':localisation', $localisation, PDO::PARAM_STR);
+            $query->execute();
+
+            $offre = $query->fetch();
+            return $offre;
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
+    }
+
+    function ajouterOffre($offre)
+    {
+        $sql = "INSERT INTO offre (localisation, travailOffre, salaire, idCategorie) VALUES (:localisation, :travailOffre, :salaire, :idCategorie)";
+        $db = config::getConnexion();
+        try {
             $query = $db->prepare($sql);
             $query->execute([
-                    'id_offre' => $offre->getIdOffre(),
-                    'travail_offre' => $offre->getTravailOffre(),
-                    'salaire' => $offre->getSalaire(),
-                    'localisation' => $offre->getLocalisation(),
-                    'id_categorie' => $offre->getIdCategorie()
-    
+                'localisation' => $offre->getLocalisation(),
+                'travailOffre' => $offre->getTravailOffre(),
+                'salaire' => $offre->getSalaire(),
+                'idCategorie' => $offre->getIdCategorie() 
             ]);
-            $_SESSION['error']="data add seccsesfuly";
-    } catch (Exception $e){
-        $e->getMessage();
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
     }
-
-        }
-
-
-        function modifieroffre($id_offre,$offre)
-        {
-            try {
-                $db = config::getConnexion();
-                $query = $db->prepare(
-                    'UPDATE offre SET 
-                        salaire = :salaire,
-                        localisation = :localisation
-                    WHERE id_offre = :id_offre'
-                );
-        
-                $query->execute([
-                    'id_offre' => $id_offre,
-                    'salaire' => $offre->getSalaire(),
-                    'localisation' => $offre->getLocalisation()
-                ]);
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
-        }
-        
-        function recupereroffre($id_offre, $id_categorie)
-        {
-            try {
-                $sql = "SELECT * FROM commandes INNER JOIN panier ON commandes.panier_id = panier.panier_id WHERE panier.panier_id = :panier_id AND id_commande = :id_commande";
-                $db = config::getConnexion();
-                $query = $db->prepare($sql);
-                $query->bindParam(':panier_id', $panier_id, PDO::PARAM_INT);
-                $query->bindParam(':id_commande', $id_commande, PDO::PARAM_INT);
-                $query->execute();
-                $commande = $query->fetch(PDO::FETCH_ASSOC);
-                return $commande;
-            } catch (Exception $e) {
-                echo $e->getMessage();
-            }
-        }
-        
-    function joinpanier($panier_id){
-        $sql=("SELECT * FROM commandes INNER JOIN panier on commandes.panier_id = panier.panier_id WHERE panier.panier_id = $panier_id");
+    
+    public function afficherOffre()
+    {
+        $sql = "SELECT * FROM offre";
         $db = config::getConnexion();
-        try{
+        try {
             $liste = $db->query($sql);
             return $liste;
-        }
-        catch(Exception $e){
-            die('Erreur:' . $e->getMessage());
+        } catch (Exception $e) {
+            die('Error:' . $e->getMessage());
         }
     }
 
+    function supprimerOffre($idOffre)
+    {
+        $sql = "DELETE FROM offre WHERE idOffre = :idOffre";
+        $db = config::getConnexion();
+        $req = $db->prepare($sql);
+        $req->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
 
-
+        try {
+            $req->execute();
+        } catch (Exception $e) {
+            die('Error:' . $e->getMessage());
+        }
     }
-    ?>
+
+    function modifierOffre($idOffre, $localisation, $travailOffre, $salaire, $idCategorie)
+    {
+        try {
+            $db = config::getConnexion();
+            $query = $db->prepare('UPDATE offre SET localisation = :localisation, travailOffre = :travailOffre, salaire = :salaire, idCategorie = :idCategorie WHERE idOffre = :idOffre');
+            $query->bindValue(':localisation', $localisation, PDO::PARAM_STR);
+            $query->bindValue(':travailOffre', $travailOffre, PDO::PARAM_STR);
+            $query->bindValue(':salaire', $salaire, PDO::PARAM_STR);
+            $query->bindValue(':idCategorie', $idCategorie, PDO::PARAM_INT); 
+            $query->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+            $query->execute();
+        } catch (PDOException $e) {
+            echo 'Erreur: ' . $e->getMessage();
+        }
+    }
+    function getOffresByCategorie($idCategorie){
+        $sql = "SELECT * FROM offre WHERE idCategorie = :idCategorie";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':idCategorie', $idCategorie, PDO::PARAM_INT);
+            $query->execute();
+
+            $offres = $query->fetchAll();
+            return $offres;
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
+    }
+}
+?>

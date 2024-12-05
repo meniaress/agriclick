@@ -1,26 +1,39 @@
 <?php
-include '../CONTROLLER/CategorieC.php';
+include_once '../CONTROLLER/OffreC.php';
 
-$error = "";
-$categorieC = new CategorieC();
-$categorie = null;
+$errorMessage = "";
+$successMessage = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (isset($_GET["idCategorie"]) && !empty($_GET["idCategorie"])) {
-        $cateID = $_GET["idCategorie"];
-        $categorie = $categorieC->getCategById($cateID);
-    }
-}
+// create offer
+$Offre = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST["idCategorie"]) && isset($_POST["nomCategorie"])) {
-        if (!empty($_POST["idCategorie"]) && !empty($_POST['nomCategorie'])) {
-            $idCategorie = $_POST["idCategorie"];
-            $nomCategorie = $_POST['nomCategorie'];
-            $categorieC->modifierNomCategorie($idCategorie, $nomCategorie);
-            header('Location: indexcategorie.php');
-            exit;
-        }
+// create an instance of the controller
+$OffreC = new OffreC();
+$idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : null;
+
+if (
+    isset($_POST["localisation"]) &&
+    isset($_POST["travailOffre"]) &&
+    isset($_POST["salaire"]) &&
+    isset($_POST["idCategorie"])
+) {
+    if (
+        !empty($_POST["localisation"]) &&
+        !empty($_POST["travailOffre"]) &&
+        !empty($_POST["salaire"]) &&
+        !empty($_POST["idCategorie"])
+    ) {
+        $Offre = new Offre(
+            null,
+            $_POST['localisation'],
+            $_POST['travailOffre'],
+            $_POST['salaire'],
+            $_POST['idCategorie']
+        );
+        $OffreC->ajouterOffre($Offre);
+        header("Location:indexCategorie.php?successMessage=Offre ajoutée avec succès");
+    } else {
+        $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Une Information manquante !</label>";
     }
 }
 ?>
@@ -121,69 +134,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-    <!-- Hero End -->
-
-    <title>Modifier Categorie</title>
+    <title>Offres</title>
     <script>
         function validateForm() {
-    var NomCategorie = document.getElementById("NomCategorie").value;
-    
-    if (NomCategorie.trim() === "") {
-        alert("Tous les champs sont obligatoires.");
-        return false;
-    }
-    
-    if (NomCategorie.length <= 5) {
-        alert("Le nom du Categorie doit contenir plus de 5 caractères.");
-        return false;
-    }
-    
-    var firstChar = NomCategorie.charAt(0);
-    if (firstChar !== firstChar.toUpperCase()) {
-        alert("Le nom du Categorie doit commencer par une lettre majuscule.");
-        return false;
-    }
-    
+            var localisation = document.getElementById("localisation").value;
+            var travailOffre = document.getElementById("travailOffre").value;
+            var salaire = document.getElementById("salaire").value;
 
-    if (/\d/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de chiffres.");
-        return false;
-    }
-    
-    
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de signes spéciaux.");
-        return false;
-    }
-    
-    return true;
-}
+            if (localisation.trim() === "" || travailOffre.trim() === "" || salaire.trim() === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+
+            if (localisation.length <= 5) {
+                alert("La localisation doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            if (travailOffre.length <= 5) {
+                alert("Le travail doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            if (isNaN(salaire) || salaire <= 0) {
+                alert("Le salaire doit être un nombre positif.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
-</head>
-<body>
-    <div class="container my-5">
-        <center><h1>Modifier Categorie</h1></center>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 0.2em;
+        }
+    </style>
+   <div class="container my-5">
+        <center><h1>Nouvelle offre</h1></center>
         <hr>
         <br>
-        <form method="POST" class="form" onsubmit="return validateForm()">
-            <input type="hidden" name="idCategorie" value="<?php echo $categorie['idCategorie']; ?>">
+        <form method="post" class="form" name="form" id="form" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <input type="hidden" name="idCategorie" value="<?php echo $idCategorie; ?>">
             <div class="input-group mb-3">
-                <label class="col-sm-3 col-form-label">Nom Categorie</label>
+                <label class="col-sm-3 col-form-label">Localisation</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="nomCategorie" id="nomCategorie" value="<?php echo $categorie['nomCategorie']; ?>" placeholder="nomCategorie">
+                    <input type="text" class="form-control" name="localisation" id="localisation" placeholder="Localisation">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Travail</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="travailOffre" id="travailOffre" placeholder="Travail">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Salaire</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="salaire" id="salaire" placeholder="Salaire">
                 </div>
             </div>
             <div class="row mb-5">
                 <div class="offset-sm-3 col-sm-3 d-grid">
-                    <button type="submit" class="btn btn-primary">Modifier</button>
+                    <button type="submit" class="btn btn-primary" name="Ajouter" id="Ajouter">Ajouter</button>
                 </div>
                 <div class="col-sm-3 d-grid">
-                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorie.php" role="button">Quitter</a>
+                <a class="btn btn-secondary py-md-3 px-md-5" href="indexoffre.php?idCategorie=<?php echo $idCategorie; ?>" role="button">Quitter</a>
                 </div>
             </div>
         </form>
-    </div>
-      <!-- Footer Start -->
+        </div>
+     <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
