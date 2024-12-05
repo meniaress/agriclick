@@ -109,7 +109,9 @@ $services = $serviceController->listServices();
                     <h1 class="display-1 text-white mb-md-4">Service List</h1>
                     <a href="ServiceCreation.php" class="btn btn-secondary py-md-3 px-md-5">Create Service</a>
                     <a href="CommandeList.php" class="btn btn-secondary py-md-3 px-md-5">see command</a>
+                    <a href="dash.php" class="btn btn-secondary py-md-3 px-md-5">dashboard</a>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -133,6 +135,8 @@ $services = $serviceController->listServices();
                             
                                 <h4 class="fw-bold"><?= htmlspecialchars($service['title']) ?></h4>
                                 <p class="text-muted mb-3"><?= htmlspecialchars($service['description']) ?></p>
+                                <p class="text-muted mb-3"><?= htmlspecialchars($service['tarif']) ?></p>
+                                <p class="text-muted mb-3"><?= htmlspecialchars($service['type']) ?></p>
                                 <a href="serviceDetails.php?id=<?= $service['id'] ?>" class="btn btn-outline-primary mt-3">View Details</a>
                                 <a href="ServiceUpdate.php?id=<?= $service['id'] ?>" class="btn btn-secondary mt-3">Update</a> |
                                 <td>

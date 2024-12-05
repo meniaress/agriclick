@@ -86,6 +86,7 @@ if (isset($_GET['id'])) {
         <div class="container py-5">
             <h1 class="display-1 text-white">Service Details</h1>
             <a href="Servicelist.php" class="btn btn-secondary"> All Services</a>
+            <a href="dash.php" class="btn btn-secondary py-md-3 px-md-5">dashboard</a>
         </div>
     </div>
 

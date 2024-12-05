@@ -33,5 +33,31 @@ document.addEventListener("DOMContentLoaded", function(){
             descriptionerrorElement.style.color = "green";
         }
     });
+    localisationelement.addEventListener("keyup", function(){
+        var localisationerrorElement = document.getElementById("localisationError");
+        var localisationerrorValue = localisationelement.value;
+        // Updated pattern to accept letters and numbers but not only numbers
+        var pattern = /^(?=.*[A-Za-z])[A-Za-z0-9 ]{3,}$/;
+        if(!pattern.test(localisationerrorValue)){
+            localisationerrorElement.innerHTML = "La destination doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
+            localisationerrorElement.style.color = "red";
+        } else {
+            localisationerrorElement.innerHTML = "Correct";
+            localisationerrorElement.style.color = "green";
+        }
+    });
+    categoryelement.addEventListener("keyup", function(){
+        var categoryerrorElement = document.getElementById("categoryError");
+        var categoryerrorValue = categoryelement.value;
+        // Updated pattern to accept letters and numbers but not only numbers
+        var pattern = /^(?=.*[A-Za-z])[A-Za-z0-9 ]{3,}$/;
+        if(!pattern.test(categoryerrorValue)){
+            categoryerrorElement.innerHTML = "La destination doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
+            categoryerrorElement.style.color = "red";
+        } else {
+            categoryerrorElement.innerHTML = "Correct";
+            categoryerrorElement.style.color = "green";
+        }
+    });
 
 });

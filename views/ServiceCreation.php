@@ -114,8 +114,8 @@ if (
 
              // Validate Localisation
              const localisation = document.getElementById("localisation");
-            if (category.value === "") {
-                document.getElementById("localisationError").textContent = "Please select a localisation.";
+            if (localisation.value === "") {
+                document.getElementById("localisationError").textContent = "Please enter a localisation.";
                 hasError = true;
             }
 
@@ -170,6 +170,7 @@ if (
         <div class="container py-5">
             <h1 class="display-1 text-white">Create Service</h1>
             <a href="servicelist.php" class="btn btn-secondary">Services</a>
+            <a href="dash.php" class="btn btn-secondary py-md-3 px-md-5">dashboard</a>
         </div>
     </div>
 
@@ -196,10 +197,10 @@ if (
 
                         <!-- Localisation -->
                         <div class="mb-3">
-                            <label for="localisation">Localisation</label>
-                            <textarea id="localisation" name="localisation" rows="5" class="form-control" required></textarea>
-                            <div id="localisationError" class="error-text"></div>
-                        </div>
+    <label for="localisation" class="form-label">Localisation</label>
+    <input type="text" id="localisation" name="localisation" class="form-control" required>
+    <div id="localisationError" class="error-text"></div> <!-- Error message element -->
+</div>
 
 
                         <!-- Price -->
