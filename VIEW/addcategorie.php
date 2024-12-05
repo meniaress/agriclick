@@ -1,32 +1,42 @@
 <?php
 include_once '../CONTROLLER/CategorieC.php';
 
-
-
-
 $errorMessage = "";
-$successMessage = "" ;
+$successMessage = "";
 
 // create user
 $Categorie = null;
 
 // create an instance of the controller
 $CategorieC = new CategorieC();
-if (		
-    isset($_POST["NomCategorie"])
-){
-    if ( !empty($_POST["NomCategorie"]) )
-    {   
-        $Categorie = new Categorie(
-            null,
-            $_POST['NomCategorie']
-        );
-        $CategorieC->ajouterCategorie($Categorie);
-        header("Location:indexcategorie.php?successMessage= Categorie ajoutée avec successee");
+if (isset($_POST["NomCategorie"])) {
+    if (!empty($_POST["NomCategorie"]) && !empty($_FILES["imageCategorie"]["name"])) {
+        // Handle file upload
+        $targetDir = "";
+        $targetFile = $targetDir . basename($_FILES["imageCategorie"]["name"]);
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["imageCategorie"]["tmp_name"]);
+        if ($check !== false) {
+            if (move_uploaded_file($_FILES["imageCategorie"]["tmp_name"], $targetFile)) {
+                $Categorie = new Categorie(
+                    null,
+                    $_POST['NomCategorie'],
+                    $targetFile
+                );
+                $CategorieC->ajouterCategorie($Categorie);
+                header("Location:indexcategorie.php?successMessage=Categorie ajoutée avec succès");
+            } else {
+                $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Erreur lors du téléchargement de l'image !</label>";
+            }
+        } else {
+            $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Le fichier n'est pas une image valide !</label>";
+        }
+    } else {
+        $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Une information manquante !</label>";
     }
-    else
-        $errorMessage = "<label id = 'form' style = 'color: red; font-weight: bold;'>&emsp;Une Information manquant !</label>   ";    
-}   
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -126,88 +136,82 @@ if (
         </div>
     </div>
 </head>
-    <title>Categories</title>
+<title>Categories</title>
     <script>
         function validateForm() {
-    var NomCategorie = document.getElementById("NomCategorie").value;
-    
-    if (NomCategorie.trim() === "") {
-        alert("Tous les champs sont obligatoires.");
-        return false;
-    }
-    
-    if (NomCategorie.length <= 5) {
-        alert("Le nom du Categorie doit contenir plus de 5 caractères.");
-        return false;
-    }
-    
-    var firstChar = NomCategorie.charAt(0);
-    if (firstChar !== firstChar.toUpperCase()) {
-        alert("Le nom du Categorie doit commencer par une lettre majuscule.");
-        return false;
-    }
-    
+            var NomCategorie = document.getElementById("NomCategorie").value;
+            var imageCategorie = document.getElementById("imageCategorie").value;
 
-    if (/\d/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de chiffres.");
-        return false;
-    }
-    
-    
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de signes spéciaux.");
-        return false;
-    }
-    
-    return true;
-}
+            if (NomCategorie.trim() === "" || imageCategorie.trim() === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+
+            if (NomCategorie.length <= 5) {
+                alert("Le nom du Categorie doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            var firstChar = NomCategorie.charAt(0);
+            if (firstChar !== firstChar.toUpperCase()) {
+                alert("Le nom du Categorie doit commencer par une lettre majuscule.");
+                return false;
+            }
+
+            if (/\d/.test(NomCategorie)) {
+                alert("Le nom du Categorie ne doit pas contenir de chiffres.");
+                return false;
+            }
+
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(NomCategorie)) {
+                alert("Le nom du Categorie ne doit pas contenir de signes spéciaux.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
 </head>
-    <body>
+<body>
     <style>
-  .error-message {
-    color: red;
-    font-size: 0.8em;
-    margin-top: 0.2em;
-  }
-     </style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 0.2em;
+        }
+    </style>
 
-  
     <div class="container my-5">
-    <center><h1>Nouveau categorie</h1></center>
-    <hr>
-    <br>
-        
-      
+        <center><h1>Nouveau categorie</h1></center>
+        <hr>
+        <br>
 
-
-        <form method="post" class="form" name="form"  id="form" enctype="multipart/form-data" onsubmit="return validateForm()">
-
-
-
+        <form method="post" class="form" name="form" id="form" enctype="multipart/form-data" onsubmit="return validateForm()">
             <!--------------------------------------------nom ------------------------------------------------->
-            <div class=" input-group mb-3 ">
-                <label class="col-sm-3 col-form-label "> Nom Categorie </label>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Nom Categorie</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control"  name="NomCategorie" id="NomCategorie"  placeholder= "nomCategorie">
+                    <input type="text" class="form-control" name="NomCategorie" id="NomCategorie" placeholder="nomCategorie">
                 </div>
             </div>
- <!---------------------------------------------Buttons---------------------------------------------->
- <div class="row mb-5">
-             <div class="offset-sm-3 col-sm-3 d-grid">
-                <button  type="submit" class="btn btn-primary" name = "Ajouter"  id ="Ajouter">ajouter</button>
-             </div>
-             <div class="col-sm-3 d-grid">
-                 <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorie.php" role="button">quitter</a>
-             </div>
-          </div>
-
-
-
-
-
+            <!--------------------------------------------image ------------------------------------------------->
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Image Categorie</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" name="imageCategorie" id="imageCategorie">
+                </div>
+            </div>
+            <!---------------------------------------------Buttons---------------------------------------------->
+            <div class="row mb-5">
+                <div class="offset-sm-3 col-sm-3 d-grid">
+                    <button type="submit" class="btn btn-primary" name="Ajouter" id="Ajouter">ajouter</button>
+                </div>
+                <div class="col-sm-3 d-grid">
+                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorie.php" role="button">quitter</a>
+                </div>
+            </div>
         </form>
-        </div>
+    </div>
         <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

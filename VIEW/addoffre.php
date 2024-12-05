@@ -15,25 +15,43 @@ if (
     isset($_POST["localisation"]) &&
     isset($_POST["travailOffre"]) &&
     isset($_POST["salaire"]) &&
-    isset($_POST["idCategorie"])
+    isset($_POST["idCategorie"]) &&
+    isset($_FILES["imageOffre"])
 ) {
     if (
         !empty($_POST["localisation"]) &&
         !empty($_POST["travailOffre"]) &&
         !empty($_POST["salaire"]) &&
-        !empty($_POST["idCategorie"])
+        !empty($_POST["idCategorie"]) &&
+        !empty($_FILES["imageOffre"]["name"])
     ) {
-        $Offre = new Offre(
-            null,
-            $_POST['localisation'],
-            $_POST['travailOffre'],
-            $_POST['salaire'],
-            $_POST['idCategorie']
-        );
-        $OffreC->ajouterOffre($Offre);
-        header("Location:indexCategorie.php?successMessage=Offre ajoutée avec succès");
+        // Handle file upload
+        $targetDir = "";
+        $targetFile = $targetDir . basename($_FILES["imageOffre"]["name"]);
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["imageOffre"]["tmp_name"]);
+        if ($check !== false) {
+            if (move_uploaded_file($_FILES["imageOffre"]["tmp_name"], $targetFile)) {
+                $Offre = new Offre(
+                    null,
+                    $_POST['localisation'],
+                    $_POST['travailOffre'],
+                    $_POST['salaire'],
+                    $_POST['idCategorie'],
+                    $targetFile
+                );
+                $OffreC->ajouterOffre($Offre);
+                header("Location:indexCategorie.php?successMessage=Offre ajoutée avec succès");
+            } else {
+                $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Erreur lors du téléchargement de l'image !</label>";
+            }
+        } else {
+            $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Le fichier n'est pas une image valide !</label>";
+        }
     } else {
-        $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Une Information manquante !</label>";
+        $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Une information manquante !</label>";
     }
 }
 ?>
@@ -140,8 +158,9 @@ if (
             var localisation = document.getElementById("localisation").value;
             var travailOffre = document.getElementById("travailOffre").value;
             var salaire = document.getElementById("salaire").value;
+            var imageOffre = document.getElementById("imageOffre").value;
 
-            if (localisation.trim() === "" || travailOffre.trim() === "" || salaire.trim() === "") {
+            if (localisation.trim() === "" || travailOffre.trim() === "" || salaire.trim() === "" || imageOffre.trim() === "") {
                 alert("Tous les champs sont obligatoires.");
                 return false;
             }
@@ -171,7 +190,9 @@ if (
             margin-top: 0.2em;
         }
     </style>
-   <div class="container my-5">
+</head>
+<body>
+    <div class="container my-5">
         <center><h1>Nouvelle offre</h1></center>
         <hr>
         <br>
@@ -195,16 +216,22 @@ if (
                     <input type="text" class="form-control" name="salaire" id="salaire" placeholder="Salaire">
                 </div>
             </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Image Offre</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" name="imageOffre" id="imageOffre">
+                </div>
+            </div>
             <div class="row mb-5">
                 <div class="offset-sm-3 col-sm-3 d-grid">
                     <button type="submit" class="btn btn-primary" name="Ajouter" id="Ajouter">Ajouter</button>
                 </div>
                 <div class="col-sm-3 d-grid">
-                <a class="btn btn-secondary py-md-3 px-md-5" href="indexoffre.php?idCategorie=<?php echo $idCategorie; ?>" role="button">Quitter</a>
+                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexoffre.php?idCategorie=<?php echo $idCategorie; ?>" role="button">Quitter</a>
                 </div>
             </div>
         </form>
-        </div>
+    </div>
      <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

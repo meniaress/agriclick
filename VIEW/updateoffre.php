@@ -22,9 +22,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $travailOffre = $_POST['travailOffre'];
             $salaire = $_POST['salaire'];
             $idCategorie = $_POST['idCategorie'];
-            $offreC->modifierOffre($idOffre, $localisation, $travailOffre, $salaire, $idCategorie);
-            header('Location: indexoffre.php?idCategorie=' . $idCategorie);
-            exit;
+            
+            // Handle file upload
+            if (isset($_FILES["imageOffre"]) && !empty($_FILES["imageOffre"]["name"])) {
+                $targetDir = "";
+                $targetFile = $targetDir . basename($_FILES["imageOffre"]["name"]);
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+                // Check if image file is a actual image or fake image
+                $check = getimagesize($_FILES["imageOffre"]["tmp_name"]);
+                if ($check !== false) {
+                    if (move_uploaded_file($_FILES["imageOffre"]["tmp_name"], $targetFile)) {
+                        $imageOffre = $targetFile;
+                    } else {
+                        $error = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Erreur lors du téléchargement de l'image !</label>";
+                    }
+                } else {
+                    $error = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Le fichier n'est pas une image valide !</label>";
+                }
+            } else {
+                $imageOffre = $offre['imageOffre']; // Use existing image if no new image is uploaded
+            }
+
+            if (empty($error)) {
+                $offreC->modifierOffre($idOffre, $localisation, $travailOffre, $salaire, $idCategorie, $imageOffre);
+                header('Location: indexoffre.php?idCategorie=' . $idCategorie);
+                exit;
+            }
         }
     }
 }
@@ -173,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <center><h1>Modifier Offre</h1></center>
         <hr>
         <br>
-        <form method="POST" class="form" onsubmit="return validateForm()">
+        <form method="POST" class="form" enctype="multipart/form-data" onsubmit="return validateForm()">
             <input type="hidden" name="idOffre" value="<?php echo $offre['idOffre']; ?>">
             <input type="hidden" name="idCategorie" value="<?php echo $idCategorie; ?>">
             <div class="input-group mb-3">
@@ -194,6 +218,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" class="form-control" name="salaire" id="salaire" value="<?php echo $offre['salaire']; ?>" placeholder="Salaire">
                 </div>
             </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Image Offre</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" name="imageOffre" id="imageOffre">
+                </div>
+            </div>
             <div class="row mb-5">
                 <div class="offset-sm-3 col-sm-3 d-grid">
                     <button type="submit" class="btn btn-primary">Modifier</button>
@@ -204,6 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </div>
+
     <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

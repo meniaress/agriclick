@@ -121,10 +121,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
                         echo "<td>" . $Cat['nomCategorie'] . "</td>";
                         echo "<td><img src='" . $Cat['imageCategorie'] . "' alt='Image Categorie' style='width: 100px; height: auto;'></td>";
                         echo '<td>';
-                        echo '<a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">modifier</a> ';
-                        echo '<a class="btn btn-primary" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">supprimer</a> ';
-                        echo '<a class="btn btn-secondary" href="indexoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">voir les offres</a> ';
-                        echo '<a class="btn btn-secondary" href="addoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">ajouter offre</a>';
+                        echo '<a class="btn btn-secondary" href="indexadminof.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">voir les offres</a> ';
                         echo '</td>';
                         echo "</tr>";
                     }
@@ -132,7 +129,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
                 ?>
             </tbody>
         </table>
-        <a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">ajouter categorie</a>
+        
     </div>
 <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">

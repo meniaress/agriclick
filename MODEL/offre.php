@@ -5,15 +5,17 @@ class Offre
     private ?string $localisation = null;
     private ?string $travailOffre = null;
     private ?float $salaire = null;
-    private ?int $idCategorie = null; // Add this line
+    private ?int $idCategorie = null;
+    private ?string $imageOffre = null; 
 
-    public function __construct($id = null, $localisation, $travailOffre, $salaire, $idCategorie = null) // Add $idCategorie parameter
+    public function __construct($id = null, $localisation, $travailOffre, $salaire, $idCategorie = null, $imageOffre = null) // Add $imageOffre parameter
     {
         $this->idOffre = $id;
         $this->localisation = $localisation;
         $this->travailOffre = $travailOffre;
         $this->salaire = $salaire;
-        $this->idCategorie = $idCategorie; // Initialize $idCategorie
+        $this->idCategorie = $idCategorie;
+        $this->imageOffre = $imageOffre;
     }
 
     public function getIdOffre()
@@ -59,6 +61,16 @@ class Offre
     public function setIdCategorie($idCategorie) 
     {
         $this->idCategorie = $idCategorie;
+    }
+
+    public function getImageOffre()
+    {
+        return $this->imageOffre;
+    }
+
+    public function setImageOffre($imageOffre)
+    {
+        $this->imageOffre = $imageOffre;
     }
 }
 ?>

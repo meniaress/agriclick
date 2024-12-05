@@ -1,15 +1,17 @@
 <?php 
-include '../CONTROLLER/CategorieC.php';
-$CatC = new CategorieC();
-$list = $CatC->trierCategorieParPremiereLettre();
+include '../CONTROLLER/OffreC.php';
+$OffreC = new OffreC();
+
+$idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : null;
+$list = $OffreC->getOffresByCategorie($idCategorie);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AGRICLICK - Organic Farm Website </title>
+    <title>AGRICLICK - Organic Farm Website</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet"href="style.css">
+    <link rel="stylesheet" href="style.css">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -31,8 +33,8 @@ $list = $CatC->trierCategorieParPremiereLettre();
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-     <!-- Topbar Start -->
-     <div class="container-fluid px-5 d-none d-lg-block">
+    <!-- Topbar Start -->
+    <div class="container-fluid px-5 d-none d-lg-block">
         <div class="row gx-5 py-3 align-items-center">
             <div class="col-lg-3">
                 <div class="d-flex align-items-center justify-content-start">
@@ -57,7 +59,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
         </div>
     </div>
     <!-- Topbar End -->
-      <!-- Navbar Start -->
+    <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
         <a href="index.html" class="navbar-brand d-flex d-lg-none">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
@@ -85,7 +87,6 @@ $list = $CatC->trierCategorieParPremiereLettre();
                 <a href="contact.html" class="nav-item nav-link">reclamation</a>
             </div>
         </div>
-        
     </nav>
     <!-- Navbar End -->
     <!-- Hero Start -->
@@ -93,7 +94,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
         <div class="container py-5">
             <div class="row justify-content-start">
                 <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 text-white mb-md-4">categorie travail</h1>
+                    <h1 class="display-1 text-white mb-md-4">Offres de travail</h1>
                     <a href="index.html" class="btn btn-primary py-md-3 px-md-5 me-3">Home</a>
                     <a href="about.html" class="btn btn-secondary py-md-3 px-md-5">About</a>
                 </div>
@@ -101,40 +102,37 @@ $list = $CatC->trierCategorieParPremiereLettre();
         </div>
     </div>
     <!-- Hero End -->
-
-
-    <h1 id="root">CATEGORIE DE TRAVAIL</h1>
+    <h1 id="root">OFFRES DE TRAVAIL</h1>
     <div class="container">
         <table class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Nom Categorie</th>
-                    <th>Image Categorie</th>
-                    <th>Actions</th>
+                    <th>Localisation</th>
+                    <th>Travail</th>
+                    <th>Salaire</th>
+                    <th>Image Offre</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 <?php 
                 if ($list) {
-                    foreach ($list as $Cat) {
+                    foreach ($list as $Offre) {
                         echo "<tr>";
-                        echo "<td>" . $Cat['nomCategorie'] . "</td>";
-                        echo "<td><img src='" . $Cat['imageCategorie'] . "' alt='Image Categorie' style='width: 100px; height: auto;'></td>";
-                        echo '<td>';
-                        echo '<a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">modifier</a> ';
-                        echo '<a class="btn btn-primary" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">supprimer</a> ';
-                        echo '<a class="btn btn-secondary" href="indexoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">voir les offres</a> ';
-                        echo '<a class="btn btn-secondary" href="addoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">ajouter offre</a>';
-                        echo '</td>';
+                        echo "<td>" . $Offre['localisation'] . "</td>";
+                        echo "<td>" . $Offre['travailOffre'] . "</td>";
+                        echo "<td>" . $Offre['salaire'] . "</td>";
+                        echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
                         echo "</tr>";
                     }
                 }
                 ?>
             </tbody>
         </table>
-        <a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">ajouter categorie</a>
+        
+        <a href="indexcategorieclient.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
     </div>
-<!-- Footer Start -->
+ <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
@@ -225,4 +223,4 @@ $list = $CatC->trierCategorieParPremiereLettre();
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 </body>
-</html>  
+</html>    

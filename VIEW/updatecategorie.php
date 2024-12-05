@@ -17,9 +17,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($_POST["idCategorie"]) && !empty($_POST['nomCategorie'])) {
             $idCategorie = $_POST["idCategorie"];
             $nomCategorie = $_POST['nomCategorie'];
-            $categorieC->modifierNomCategorie($idCategorie, $nomCategorie);
-            header('Location: indexcategorie.php');
-            exit;
+            
+            // Handle file upload
+            if (isset($_FILES["imageCategorie"]) && !empty($_FILES["imageCategorie"]["name"])) {
+                $targetDir = "";
+                $targetFile = $targetDir . basename($_FILES["imageCategorie"]["name"]);
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+                // Check if image file is a actual image or fake image
+                $check = getimagesize($_FILES["imageCategorie"]["tmp_name"]);
+                if ($check !== false) {
+                    if (move_uploaded_file($_FILES["imageCategorie"]["tmp_name"], $targetFile)) {
+                        $imageCategorie = $targetFile;
+                    } else {
+                        $error = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Erreur lors du téléchargement de l'image !</label>";
+                    }
+                } else {
+                    $error = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Le fichier n'est pas une image valide !</label>";
+                }
+            } else {
+                $imageCategorie = $categorie['imageCategorie']; // Use existing image if no new image is uploaded
+            }
+
+            if (empty($error)) {
+                $categorieC->modifierNomCategorie($idCategorie, $nomCategorie, $imageCategorie);
+                header('Location: indexcategorie.php');
+                exit;
+            }
         }
     }
 }
@@ -126,38 +150,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Modifier Categorie</title>
     <script>
         function validateForm() {
-    var NomCategorie = document.getElementById("NomCategorie").value;
-    
-    if (NomCategorie.trim() === "") {
-        alert("Tous les champs sont obligatoires.");
-        return false;
-    }
-    
-    if (NomCategorie.length <= 5) {
-        alert("Le nom du Categorie doit contenir plus de 5 caractères.");
-        return false;
-    }
-    
-    var firstChar = NomCategorie.charAt(0);
-    if (firstChar !== firstChar.toUpperCase()) {
-        alert("Le nom du Categorie doit commencer par une lettre majuscule.");
-        return false;
-    }
-    
+            var NomCategorie = document.getElementById("NomCategorie").value;
+            var imageCategorie = document.getElementById("imageCategorie").value;
 
-    if (/\d/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de chiffres.");
-        return false;
-    }
-    
-    
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(NomCategorie)) {
-        alert("Le nom du Categorie ne doit pas contenir de signes spéciaux.");
-        return false;
-    }
-    
-    return true;
-}
+            if (NomCategorie.trim() === "" || imageCategorie.trim() === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+
+            if (NomCategorie.length <= 5) {
+                alert("Le nom du Categorie doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            var firstChar = NomCategorie.charAt(0);
+            if (firstChar !== firstChar.toUpperCase()) {
+                alert("Le nom du Categorie doit commencer par une lettre majuscule.");
+                return false;
+            }
+
+            if (/\d/.test(NomCategorie)) {
+                alert("Le nom du Categorie ne doit pas contenir de chiffres.");
+                return false;
+            }
+
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(NomCategorie)) {
+                alert("Le nom du Categorie ne doit pas contenir de signes spéciaux.");
+                return false;
+            }
+
+            return true;
+        }
     </script>
 </head>
 <body>
@@ -165,12 +188,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <center><h1>Modifier Categorie</h1></center>
         <hr>
         <br>
-        <form method="POST" class="form" onsubmit="return validateForm()">
+        <form method="POST" class="form" enctype="multipart/form-data" onsubmit="return validateForm()">
             <input type="hidden" name="idCategorie" value="<?php echo $categorie['idCategorie']; ?>">
             <div class="input-group mb-3">
                 <label class="col-sm-3 col-form-label">Nom Categorie</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="nomCategorie" id="nomCategorie" value="<?php echo $categorie['nomCategorie']; ?>" placeholder="nomCategorie">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Image Categorie</label>
+                <div class="col-sm-6">
+                    <input type="file" class="form-control" name="imageCategorie" id="imageCategorie">
                 </div>
             </div>
             <div class="row mb-5">

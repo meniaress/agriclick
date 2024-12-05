@@ -1,9 +1,7 @@
 <?php 
-
 include '../CONTROLLER/CategorieC.php';
-$CatC= new CategorieC();
-$list=$CatC->afficherCategorie();
-
+$CatC = new CategorieC();
+$list = $CatC->trierCategorieParPremiereLettre();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,31 +104,33 @@ $list=$CatC->afficherCategorie();
 
 
     <h1 id="root">CATEGORIE DE TRAVAIL</h1>
-    <div class ="container">
-    <table class ="table table-hover table-bordered table-striped">
-        <thead>
-            <tr>
-                
-                <th>nom categorie</th>
-            </tr>
-        </thead>
-        <?php 
-            if($list){
-                foreach($list as $Cat){
-                echo "<tr>";
-               
-                echo "<td>" . $Cat['nomCategorie'] . "</td>";
-                
-                echo '<td><a class="btn btn-secondary" href="listeoffres.php" role="button">voir les offres</a>
-                      </td>';
-                echo "</tr>";
-
+    <div class="container">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nom Categorie</th>
+                    <th>Image Categorie</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                if ($list) {
+                    foreach ($list as $Cat) {
+                        echo "<tr>";
+                        echo "<td>" . $Cat['nomCategorie'] . "</td>";
+                        echo "<td><img src='" . $Cat['imageCategorie'] . "' alt='Image Categorie' style='width: 100px; height: auto;'></td>";
+                        echo '<td>';
+                        echo '<a class="btn btn-secondary" href="indexoffreclient.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">voir les offres</a> ';
+                        echo '</td>';
+                        echo "</tr>";
+                    }
                 }
-
-            }
-        ?>
-    </table> 
-</div>
+                ?>
+            </tbody>
+        </table>
+        
+    </div>
 <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

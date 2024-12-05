@@ -1,7 +1,9 @@
 <?php 
 include '../CONTROLLER/OffreC.php';
 $OffreC = new OffreC();
-$list = $OffreC->afficherOffre();
+
+$idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : null;
+$list = $OffreC->getOffresByCategorie($idCategorie);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +102,6 @@ $list = $OffreC->afficherOffre();
         </div>
     </div>
     <!-- Hero End -->
-
     <h1 id="root">OFFRES DE TRAVAIL</h1>
     <div class="container">
         <table class="table table-hover table-bordered table-striped">
@@ -109,20 +110,27 @@ $list = $OffreC->afficherOffre();
                     <th>Localisation</th>
                     <th>Travail</th>
                     <th>Salaire</th>
+                    <th>Image Offre</th>
+                    
                 </tr>
             </thead>
-            <?php 
+            <tbody>
+                <?php 
                 if ($list) {
                     foreach ($list as $Offre) {
                         echo "<tr>";
                         echo "<td>" . $Offre['localisation'] . "</td>";
                         echo "<td>" . $Offre['travailOffre'] . "</td>";
                         echo "<td>" . $Offre['salaire'] . "</td>";
+                        echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
                         echo "</tr>";
                     }
                 }
-            ?>
+                ?>
+            </tbody>
         </table>
+        
+        <a href="indexadmincat.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
     </div>
  <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">

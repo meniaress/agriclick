@@ -110,21 +110,28 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                     <th>Localisation</th>
                     <th>Travail</th>
                     <th>Salaire</th>
+                    <th>Image Offre</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <?php 
+            <tbody>
+                <?php 
                 if ($list) {
                     foreach ($list as $Offre) {
                         echo "<tr>";
                         echo "<td>" . $Offre['localisation'] . "</td>";
                         echo "<td>" . $Offre['travailOffre'] . "</td>";
                         echo "<td>" . $Offre['salaire'] . "</td>";
-                        echo '<td><a class="btn btn-primary" href="updateoffre.php?idOffre=' . $Offre['idOffre'] .'" role="button">modifier</a></td>';
-                        echo '<td><a class="btn btn-primary" href="deleteoffre.php?idOffre=' . $Offre['idOffre'] .'" role="button">supprimer</a></td>';
+                        echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
+                        echo '<td>';
+                        echo '<a class="btn btn-primary" href="updateoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button">modifier</a> ';
+                        echo '<a class="btn btn-primary" href="deleteoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button">supprimer</a>';
+                        echo '</td>';
                         echo "</tr>";
                     }
                 }
-            ?>
+                ?>
+            </tbody>
         </table>
         <a href="addoffre.php?idCategorie=<?php echo $idCategorie; ?>" class="btn btn-secondary py-md-3 px-md-5">ajouter offre</a>
         <a href="indexCategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
