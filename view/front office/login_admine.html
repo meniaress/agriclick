@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>se connecter</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f6f5f7;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #004200;
+            color: white;
+            border: none;
+            padding: 12px 45px;
+            font-size: 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: transform 80ms ease-in;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1> Se connecter en tant que admine</h1>
+        <form id="resetForm"  method="POST" >
+            <label for="username">Nom d'admine :</label>
+            <input type="text" id="username" name="username" >
+            <label for="new_password"> Mot de Passe :</label>
+            <input type="password" id="new_password" name="new_password" >
+
+            <div id="passwordMessage"></div>
+            <br> <br>
+
+            <button type="submit" onclick="login()">Se connecter</button>
+        </form>
+    </div>
+
+    <script>
+        /*
+        function validatePassword() {
+            const password = document.getElementById("new_password").value;
+            const passwordMessage = document.getElementById("passwordMessage");
+
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+
+            if (passwordPattern.test(password)) {
+                passwordMessage.innerHTML = "Mot de passe correct";
+                passwordMessage.className = "valid";
+                return true; // Soumettre le formulaire
+            } else {
+                passwordMessage.innerHTML = "Le mot de passe doit contenir entre 8 et 16 caractères, incluant au moins 1 lettre majuscule, 1 lettre minuscule, et 1 chiffre.";
+                passwordMessage.className = "invalid";
+                return false; // Empêcher la soumission
+            }
+        }
+
+        
+
+        document.getElementById("new_password").addEventListener("input", validatePassword); */
+        function  login(){
+const username=document.getElementById('username').value;
+const username=document.getElementById('new_password').value;
+if(username="zeineb && new_password=147"){
+    window.location.href=http:"//localhost/projet/view/back%20office/client_liste.php"
+}else 
+alert("")
+
+}
+
+
+        
+    </script>
+</body>
+</html>
