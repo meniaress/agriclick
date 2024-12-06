@@ -1,9 +1,9 @@
 <?php 
-include '../CONTROLLER/OffreC.php';
-$OffreC = new OffreC();
+include '../CONTROLLER/PostulationC.php';
+$PostulationC = new PostulationC();
 
-$idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : null;
-$list = $OffreC->getOffresByCategorie($idCategorie);
+$idOffre = isset($_GET['idOffre']) ? $_GET['idOffre'] : null;
+$list = $PostulationC->getPostulationsByOffre($idOffre);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +31,7 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-</head>
+    </head>
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid px-5 d-none d-lg-block">
@@ -102,31 +102,30 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
         </div>
     </div>
     <!-- Hero End -->
-    <h1 id="root">OFFRES DE TRAVAIL</h1>
+    <h1 id="root">POSTULATIONS</h1>
     <div class="container">
         <table class="table table-hover table-bordered table-striped">
             <thead>
                 <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Âge</th>
                     <th>Localisation</th>
-                    <th>Travail</th>
-                    <th>Salaire</th>
-                    <th>Image Offre</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
                 if ($list) {
-                    foreach ($list as $Offre) {
+                    foreach ($list as $Postulation) {
                         echo "<tr>";
-                        echo "<td>" . $Offre['localisation'] . "</td>";
-                        echo "<td>" . $Offre['travailOffre'] . "</td>";
-                        echo "<td>" . $Offre['salaire'] . "</td>";
-                        echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
+                        echo "<td>" . $Postulation['nom'] . "</td>";
+                        echo "<td>" . $Postulation['prenom'] . "</td>";
+                        echo "<td>" . $Postulation['age'] . "</td>";
+                        echo "<td>" . $Postulation['localisationp'] . "</td>";
                         echo '<td>';
-                        echo '<a class="btn btn-primary" href="updateoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button">modifier</a> ';
-                        echo '<a class="btn btn-primary" href="deleteoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button">supprimer</a>';
-                        echo '<a class="btn btn-secondary" href="indexpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">voir les postulations</a>';
+                        echo '<a class="btn btn-primary" href="updatepostulation.php?idPostulation=' . $Postulation['idPostulation'] . '" role="button">modifier</a> ';
+                        echo '<a class="btn btn-primary" href="deletepostulation.php?idPostulation=' . $Postulation['idPostulation'] . '" role="button">supprimer</a>';
                         echo '</td>';
                         echo "</tr>";
                     }
@@ -134,11 +133,9 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                 ?>
             </tbody>
         </table>
-        <a href="addoffre.php?idCategorie=<?php echo $idCategorie; ?>" class="btn btn-secondary py-md-3 px-md-5">ajouter offre</a>
-        <a href="indexCategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
-    </div>
- <!-- Footer Start -->
-<div class="container-fluid bg-footer bg-primary text-white mt-5">
+        <a href="indexcategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
+    </div>  
+    <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
                 <div class="col-lg-8 col-md-6">
@@ -228,4 +225,4 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 </body>
-</html>    
+</html>     

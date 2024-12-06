@@ -1,9 +1,44 @@
-<?php 
-include '../CONTROLLER/OffreC.php';
-$OffreC = new OffreC();
+<?php
+include_once '../CONTROLLER/PostulationC.php';
 
-$idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : null;
-$list = $OffreC->getOffresByCategorie($idCategorie);
+$errorMessage = "";
+$successMessage = "";
+
+// create postulation
+$Postulation = null;
+
+// create an instance of the controller
+$PostulationC = new PostulationC();
+$idOffre = isset($_GET['idOffre']) ? $_GET['idOffre'] : null;
+
+if (
+    isset($_POST["nom"]) &&
+    isset($_POST["prenom"]) &&
+    isset($_POST["age"]) &&
+    isset($_POST["localisationp"]) &&
+    isset($_POST["idOffre"])
+) {
+    if (
+        !empty($_POST["nom"]) &&
+        !empty($_POST["prenom"]) &&
+        !empty($_POST["age"]) &&
+        !empty($_POST["localisationp"]) &&
+        !empty($_POST["idOffre"])
+    ) {
+        $Postulation = new Postulation(
+            null,
+            $_POST['nom'],
+            $_POST['prenom'],
+            $_POST['age'],
+            $_POST['localisationp'],
+            $_POST['idOffre']
+        );
+        $PostulationC->ajouterPostulation($Postulation);
+        header("Location:indexcategorieclient.php?idOffre=$idOffre&successMessage=Postulation ajoutée avec succès");
+    } else {
+        $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Une information manquante !</label>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,10 +66,10 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-</head>
+    </head>
 <body>
-    <!-- Topbar Start -->
-    <div class="container-fluid px-5 d-none d-lg-block">
+     <!-- Topbar Start -->
+     <div class="container-fluid px-5 d-none d-lg-block">
         <div class="row gx-5 py-3 align-items-center">
             <div class="col-lg-3">
                 <div class="d-flex align-items-center justify-content-start">
@@ -59,7 +94,7 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
         </div>
     </div>
     <!-- Topbar End -->
-    <!-- Navbar Start -->
+      <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
         <a href="index.html" class="navbar-brand d-flex d-lg-none">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
@@ -87,6 +122,7 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                 <a href="contact.html" class="nav-item nav-link">reclamation</a>
             </div>
         </div>
+        
     </nav>
     <!-- Navbar End -->
     <!-- Hero Start -->
@@ -94,51 +130,115 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
         <div class="container py-5">
             <div class="row justify-content-start">
                 <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 text-white mb-md-4">Offres de travail</h1>
+                    <h1 class="display-1 text-white mb-md-4">categorie travail</h1>
                     <a href="index.html" class="btn btn-primary py-md-3 px-md-5 me-3">Home</a>
                     <a href="about.html" class="btn btn-secondary py-md-3 px-md-5">About</a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Hero End -->
-    <h1 id="root">OFFRES DE TRAVAIL</h1>
-    <div class="container">
-        <table class="table table-hover table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Localisation</th>
-                    <th>Travail</th>
-                    <th>Salaire</th>
-                    <th>Image Offre</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                if ($list) {
-                    foreach ($list as $Offre) {
-                        echo "<tr>";
-                        echo "<td>" . $Offre['localisation'] . "</td>";
-                        echo "<td>" . $Offre['travailOffre'] . "</td>";
-                        echo "<td>" . $Offre['salaire'] . "</td>";
-                        echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
-                        echo '<td>';
-                        echo '<a class="btn btn-primary" href="updateoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button">modifier</a> ';
-                        echo '<a class="btn btn-primary" href="deleteoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button">supprimer</a>';
-                        echo '<a class="btn btn-secondary" href="indexpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">voir les postulations</a>';
-                        echo '</td>';
-                        echo "</tr>";
-                    }
-                }
-                ?>
-            </tbody>
-        </table>
-        <a href="addoffre.php?idCategorie=<?php echo $idCategorie; ?>" class="btn btn-secondary py-md-3 px-md-5">ajouter offre</a>
-        <a href="indexCategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
+    <title>Postulations</title>
+    <script>
+    function validateForm() {
+            var nom = document.getElementById("nom").value;
+            var prenom = document.getElementById("prenom").value;
+            var age = document.getElementById("age").value;
+            var localisationp = document.getElementById("localisationp").value;
+
+            if (nom.trim() === "" || prenom.trim() === "" || age.trim() === "" || localisationp.trim() === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+
+            if (nom.length <= 3) {
+                alert("Le nom doit contenir plus de 3 caractères.");
+                return false;
+            }
+
+            if (prenom.length <= 2) {
+                alert("Le prénom doit contenir plus de 3 caractères.");
+                return false;
+            }
+
+            if (isNaN(age) || age <= 0) {
+                alert("L'âge doit être un nombre positif.");
+                return false;
+            }
+
+            if (localisationp.length <= 5) {
+                alert("La localisation doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            var specialChars = /[!@#$%^&*(),.?":{}|<>0-9]/;
+            if (specialChars.test(nom)) {
+                alert("Le nom ne doit pas contenir de chiffres ou de signes spéciaux.");
+                return false;
+            }
+
+            if (specialChars.test(prenom)) {
+                alert("Le prénom ne doit pas contenir de chiffres ou de signes spéciaux.");
+                return false;
+            }
+            if (specialChars.test(localisationp)) {
+                alert("La localisation ne doit pas contenir de chiffres ou de signes spéciaux.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 0.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <center><h1>Nouvelle postulation</h1></center>
+        <hr>
+        <br>
+        <form method="post" class="form" name="form" id="form" onsubmit="return validateForm()">
+            <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Nom</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Prénom</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Âge</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="age" id="age" placeholder="Âge">
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <label class="col-sm-3 col-form-label">Localisation</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="localisationp" id="localisationp" placeholder="Localisation">
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="offset-sm-3 col-sm-3 d-grid">
+                    <button type="submit" class="btn btn-primary" name="Ajouter" id="Ajouter">Ajouter</button>
+                </div>
+                <div class="col-sm-3 d-grid">
+                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorieclient.php?idOffre=<?php echo $idOffre; ?>" role="button">Quitter</a>
+                </div>
+            </div>
+        </form>
     </div>
  <!-- Footer Start -->
-<div class="container-fluid bg-footer bg-primary text-white mt-5">
+ <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
                 <div class="col-lg-8 col-md-6">

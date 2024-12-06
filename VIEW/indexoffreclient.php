@@ -111,6 +111,7 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                     <th>Travail</th>
                     <th>Salaire</th>
                     <th>Image Offre</th>
+                    <th>Actions</th>
                     
                 </tr>
             </thead>
@@ -123,6 +124,9 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                         echo "<td>" . $Offre['travailOffre'] . "</td>";
                         echo "<td>" . $Offre['salaire'] . "</td>";
                         echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
+                        echo "<td>";
+                        echo '<a class="btn btn-secondary" href="addpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">ajouter postulation</a>';
+                        echo "</td>";
                         echo "</tr>";
                     }
                 }
