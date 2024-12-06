@@ -1,16 +1,16 @@
 <?php
-include_once("repofferc.php"); // Assurez-vous que le chemin est correct
+include_once("repofferc.php"); // Ensure the path is correct
 include_once("../model/rep.php");
 
 class ReponseController {
     private $reponseOfferC;
 
     public function __construct() {
-        $this->reponseOfferC = new ReponseOfferC(); // Utilisez le nom de classe correct
+        $this->reponseOfferC = new ReponseOfferC(); // Use the correct class name
     }
 
     public function addReponse($reponse) {
-        return $this->reponseOfferC->add($reponse); // Assurez-vous que cette méthode existe dans ReponseOfferC
+        return $this->reponseOfferC->add($reponse); // Ensure this method exists in ReponseOfferC
     }
 
     public function showReponseOffer() {
@@ -18,10 +18,16 @@ class ReponseController {
         echo "<table border='1'>
         <tr>
             <th>Contenu</th>
+            <th>Admin</th>
+            <th>Type</th>
+            <th>Date de Réponse</th>
         </tr>";
         foreach ($offers as $offer) {
             echo "<tr>
                 <td>{$offer['contenu']}</td>
+                <td>{$offer['admin']}</td>
+                <td>{$offer['type']}</td>
+                <td>{$offer['date_rep']}</td>
             </tr>";
         }
         echo "</table>";
@@ -32,7 +38,7 @@ class ReponseController {
         $db = Config::getConnexion();
         try {
             $list = $db->query($sql);
-            return $list;
+            return $list->fetchAll(PDO::FETCH_ASSOC); // Fetch results as an associative array
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
         }

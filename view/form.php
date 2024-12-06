@@ -178,7 +178,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
     
                 <div class="dropdown-menu m-6">
-                    <a href="../controllers/Listerecuser.php" class="dropdown-item">ma liste de reclamation</a>
+                    <a href="../controllers/listrectraitee.php" class="dropdown-item">mes reclamations traitees</a>
+                    <a href="../controllers/Listerecuser.php" class="dropdown-item">mes reclamations non traitees</a>
+
                 </div>
             <?php endif; ?>
 

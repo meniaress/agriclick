@@ -20,7 +20,7 @@ function supprimerreponse($id) {
 if (isset($_GET['id_rep'])) {
     $id = $_GET['id_rep'];
     supprimerreponse($id);
-    header('Location: listrep.php'); // Redirigez vers la liste après la suppression
+    header('Location: dashboard/listrep.php'); // Redirigez vers la liste après la suppression
     exit();
 }
 ?>

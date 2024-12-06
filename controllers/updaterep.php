@@ -37,17 +37,21 @@ if (isset($_GET['id_rep']) && !empty($_GET['id_rep'])) { // Check if 'id_rep' is
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contenu = trim($_POST["contenu"]);
+    $admin = trim($_POST["admin"]);
+    $type = trim($_POST["type"]);
 
-    if (!empty($contenu)) {
+    if (!empty($contenu) && !empty($admin) && !empty($type)) {
         // Mettre à jour la réponse
-        $sql = "UPDATE reponse SET contenu = :contenu WHERE id_rep = :id_rep"; // Use 'id_rep' in the query
+        $sql = "UPDATE reponse SET contenu = :contenu, admin = :admin, type = :type WHERE id_rep = :id_rep"; // Use 'id_rep' in the query
         $req = $db->prepare($sql);
         $req->bindValue(':contenu', $contenu);
+        $req->bindValue(':admin', $admin);
+        $req->bindValue(':type', $type);
         $req->bindValue(':id_rep', $id_rep); // Bind the correct variable
         
         try {
             $req->execute();
-            header('Location: listrep.php?success=1'); // Redirect to the response list after update
+            header('Location: dashboard/listrep.php?success=1'); // Redirect to the response list after update
             exit();
         } catch (Exception $e) {
             echo '<h1>Error: Could not update response.</h1>';
@@ -91,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container-fluid bg-primary py-5 bg-hero mb-5">
         <div class="container py-5">
             <div class="row justify-content-start">
-                <div class="col-lg-8 text-center text-lg-start">
+ <div class="col-lg-8 text-center text-lg-start">
                     <h1 class="display-1 text-white mb-md-4">Modifier Réponse</h1>
                 </div>
             </div>
@@ -113,6 +117,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row g-3">
                     <div class="col-12">
                         <input type="text" name="contenu" class="form-control bg-light border-0 px-4" placeholder="Votre réponse" style="height: 55px;" value="<?php echo htmlspecialchars($offer['contenu']); ?>" required>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" name="admin" class="form-control bg-light border-0 px-4" placeholder="Nom de l'admin" style="height: 55px;" value="<?php echo htmlspecialchars($offer['admin']); ?>" required>
+                    </div>
+                    <div class="col-12">
+                        <h6>Type:</h6>
+                        <div>
+                            <input type="radio" id="normale" name="type" value="normale" <?php echo ($offer['type'] == 'normale') ? 'checked' : ''; ?>>
+                            <label for="normale">Normale</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="positive" name="type" value="positive" <?php echo ($offer['type'] == 'positive') ? 'checked' : ''; ?>>
+                            <label for="positive">Positive</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="negative" name="type" value="negative" <?php echo ($offer['type'] == 'negative') ? 'checked' : ''; ?>>
+                            <label for="negative">Négative</label>
+                        </div>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-secondary w-100 py-3" type="submit">Modifier</button>

@@ -8,8 +8,8 @@ $email = 'khadijaderbel123@gmail.com'; // Email fixe pour lequel afficher les r�
 class ReclamationList {
     
     // Méthode pour afficher les réclamations d'un utilisateur spécifique
-    public function AfficherReclamation($email) {
-        $sql = 'SELECT * FROM reclamtion WHERE email = :email'; // Utilisation de :email
+    public function AfficherReclamationNonTraitees($email) {
+        $sql = 'SELECT * FROM reclamtion WHERE email = :email AND status = "non traitée"'; // Assurez-vous que le nom de la table est correct
         $db = Config::getConnexion(); // Assurez-vous que cette méthode renvoie une instance PDO
         try {
             $stmt = $db->prepare($sql);
@@ -24,7 +24,7 @@ class ReclamationList {
 
 // Créer une instance de la classe ReclamationList
 $reclamationList = new ReclamationList();
-$offers = $reclamationList->AfficherReclamation($email); // Récupérer les réclamations de cet email
+$offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupérer les réclamations de cet email
 
 session_start(); // Démarrer la session
 ?>
@@ -98,7 +98,7 @@ session_start(); // Démarrer la session
             background-color: #003300; /* Légère teinte plus foncée pour le survol */
         }
         .btn-delete {
-            background-color: #ff5f33; /* Rouge pour la suppression */
+            background-color: #ff5333; /* Rouge pour la suppression */
         }
         .btn-delete:hover {
             background-color: #c82333; /* Légère teinte plus foncée pour le survol */
@@ -108,10 +108,28 @@ session_start(); // Démarrer la session
             text-align: center;
             margin: 20px 0;
             font-size: 18px;
-            color: #004200;
+            color: #004200; /* Couleur verte pour le lien de retour */
         }
-       
+        .countdown {
+            font-weight: bold;
+            color: #d9534f; /* Couleur rouge pour le compteur */
+        }
     </style>
+    <script>
+        function startCountdown(seconds, element) {
+            let interval = setInterval(function() {
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    element.innerHTML = 'Temps écoulé';
+                } else {
+                    let minutes = Math.floor(seconds / 60);
+                    let secs = seconds % 60;
+                    element.innerHTML = `${minutes}m ${secs}s`;
+                    seconds--;
+                }
+            }, 1000);
+        }
+    </script>
 </head>
 <body>
 
@@ -145,44 +163,62 @@ session_start(); // Démarrer la session
                     <th>Sujet</th>
                     <th>Message</th>
                     <th>Actions</th>
+                    <th>Temps restant</th> <!-- Nouvelle colonne pour le temps restant -->
                 </tr>
             </thead>
             <tbody>
                 <?php
                 // Afficher les réclamations
                 if (empty($offers)) {
-                    echo '<tr><td colspan="5">Aucune réclamation trouvée.</td></tr>';
+                    echo '<tr><td colspan="6">Aucune réclamation trouvée.</td></tr>';
                 } else {
                     foreach ($offers as $offer) {
-                        echo '<tr>';
+                        $dateCreation = new DateTime($offer['date_creation']);
+                        $dateActuelle = new DateTime();
+                        $interval = $dateActuelle->diff($dateCreation);
+                        $tempsRestant = 3600 - ($interval->h * 3600 + $interval->i * 60 + $interval->s); // Calculer le temps restant en secondes
+
+                        
+                        
+                        // Vérifier si le temps restant est positif
+                        if ($tempsRestant > 0) {
+                            echo "<tr>";
+                        echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
+                        echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
+                        echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
+                        echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
+                        echo "<td class='actions'>";
+                        echo "<a href ='updaterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn'>Modifier</a>";
+                        echo "<a href='deleterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn btn-delete'>Supprimer</a>";
+                        echo "</td>";
+                            echo "<td class='countdown' data-seconds='$tempsRestant'>" . floor($tempsRestant / 60) . " minutes</td>";
+                        } else {
+                            echo "<tr>";
                         echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
                         
-                        // Récupérer la date de création
-                        $date_creation = new DateTime($offer['date_creation']);
-                        $date_actuelle = new DateTime();
-                        $interval = $date_actuelle->diff($date_creation);
-                        
-                        // Vérifier si moins d'une heure s'est écoulée depuis la création
-                        if ($interval->h < 1 && $interval->days == 0) {
-                            echo '<td class="actions">
-                                    <a href="updaterecu.php?id=' . $offer['id'] . '" class="btn">Modifier</a>
-                                    <a href="deleterecu.php?id=' . $offer['id'] . '" class="btn btn-delete">Annuler la réclamation</a>
-                                  </td>';
-                        } else {
-                            echo '<td class="actions">
-                                    <span>Modification/Déletion fermée</span>
-                                  </td>';
+                            echo '<td class="actions"><span>Modification/Déletion fermée</span></td>';
+
+                            echo '<td class="countdown">Temps écoulé</td>'; // Indiquer que le temps est écoulé
                         }
-                        
-                        echo '</tr>';
+                        echo "</tr>";
                     }
                 }
                 ?>
             </tbody>
         </table>
+        <a href="index.php" class="return-link">Retour à l'accueil </a>
     </div>
+
+    <script>
+        document.querySelectorAll('.countdown').forEach(function(element) {
+            const seconds = parseInt(element.getAttribute('data-seconds'));
+            if (seconds > 0) {
+                startCountdown(seconds, element);
+            }
+        });
+    </script>
 </body>
 </html>

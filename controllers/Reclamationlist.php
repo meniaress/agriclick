@@ -1,130 +1,146 @@
 <?php
-// Inclure le fichier de configuration de la base de données
+// Include the database configuration file
 require_once 'database.php';
 include_once '../model/Reclamation.php';
 
 class ReclamationList {
-    
-    // Méthode pour afficher les réclamations
+    // Method to display complaints
     public function AfficherReclamation() {
-        $sql = 'SELECT * FROM reclamtion'; // Assurez-vous que le nom de la table est correct
-        $db = Config::getConnexion(); // Assurez-vous que cette méthode renvoie une instance PDO
+        $sql = 'SELECT * FROM reclamtion'; // Ensure the table name is correct
+        $db = Config::getConnexion(); // Ensure this method returns a PDO instance
         try {
             $list = $db->query($sql);
-            return $list->fetchAll(PDO::FETCH_ASSOC); // Récupérer tous les résultats
+            return $list->fetchAll(PDO::FETCH_ASSOC); // Retrieve all results
         } catch (Exception $e) {
-            die('Erreur: ' . $e->getMessage());
+            die('Error: ' . $e->getMessage());
         }
     }
 }
 
-// Créer une instance de la classe ReclamationList
+// Create an instance of the ReclamationList class
 $reclamationList = new ReclamationList();
-$offers = $reclamationList->AfficherReclamation(); // Récupérer les réclamations
+$offers = $reclamationList->AfficherReclamation(); // Retrieve complaints
 
-session_start(); // Démarrer la session
+session_start(); // Start the session
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des réclamations</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7fc;
-        }
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-        }
-        table {
-            width: 80%;
-            margin: 30px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 12px 20px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #004200; /* Couleur verte */
-            color: #fff;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-        .actions {
-            display: flex; /* Flexbox pour aligner les boutons côte à côte */
-            justify-content: center; /* Centrer les boutons */
-        }
-        .btn {
-            padding: 5px 10px;
-            background-color: #004200; /* Boutons avec couleur verte */
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            margin-right: 10px; /* Espace entre les boutons */
-        }
-        .btn:hover {
-            background-color: #003300; /* Légère teinte plus foncée pour le survol */
-        }
-        .btn-delete {
-            background-color: #ff5f33; /* Rouge pour la suppression */
-        }
-        .btn-delete:hover {
-            background-color: #c82333; /* Légère teinte plus foncée pour le survol */
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>agriCLICK Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="img/icon.png" />
 </head>
 <body>
-    <h1>Liste des réclamations</h1>
+    <div class="container-scroller">
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="img/icon.png" alt="logo"/></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
+                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link active" href="#">
+                            Gestion des Réclamations
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Sujet</th>
-                <th>Message</th>
-                <th>status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-<?php
-// Afficher les réclamations
-foreach ($offers as $offer) {
-    echo '<tr>';
-    echo '<td>' . htmlspecialchars($offer['id']) . '</td>';
-    echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
-    echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
-    echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
-    echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
-    echo '<td>' . (isset($offer['status']) && $offer['status'] !== '' ? htmlspecialchars($offer['status']) : 'Non défini') . '</td>'; // Vérification de 'status'
-    
-    echo '<td class="actions">
-            <a href="updaterec.php?id=' . htmlspecialchars($offer['id']) . '" class="btn">Modifier</a>
-            <a href="deleterec.php?id=' . htmlspecialchars($offer['id']) . '" class="btn btn-delete">Supprimer</a>
-          </td>';
-    
-    echo '</tr>';
-}
-?>
-</tbody>
-    </table>
+        <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <div class="d-flex sidebar-profile">
+                            <div class="sidebar-profile-image">
+                                <img src="img/faces/face29.png" alt="image">
+                                <span class="sidebar-status-indicator"></span>
+                            </div>
+                            <div class="sidebar-profile-name">
+                                <p class="sidebar-name">Elyes Khiari</p>
+                                <p class="sidebar-designation">Welcome</p>
+                            </div>
+                        </div>
+                        <p class="sidebar-menu-title">Dash menu</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <h1 class="mb-4">Liste des Réclamations</h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class ```php
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Email</th>
+                                            <th>Sujet</th>
+                                            <th>Message</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Display complaints
+                                        foreach ($offers as $offer) {
+                                            echo '<tr>';
+                                            echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
+                                            echo '<td>' . (isset($offer['status']) && $offer['status'] !== '' ? htmlspecialchars($offer['status']) : 'Non défini') . '</td>'; // Check for 'status'
+                                            
+                                            echo '<td class="actions">
+                                                    <a href="updaterec.php?id=' . htmlspecialchars($offer['id']) . '" class="btn btn-warning btn-sm">Modifier</a>
+                                                    <a href="deleterec.php?id=' . htmlspecialchars($offer['id']) . '" class="btn btn-danger btn-sm">Supprimer</a>
+                                                    <a href="../view/reponse.php?id=' . htmlspecialchars($offer['id']) . '" class="btn btn-info btn-sm">Répondre</a>
+                                                  </td>';
+                                            
+                                            echo '</tr>';
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php if (empty($offers)): ?>
+                                <div class="text-center mt-4">
+                                    <p class="text-muted">Aucune réclamation trouvée.</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- base:js -->
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
 </body>
 </html>
