@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // Updated pattern to accept letters and numbers but not only numbers
         var pattern = /^(?=.*[A-Za-z])[A-Za-z0-9 ]{3,}$/;
         if(!pattern.test(descriptionerrorValue)){
-            descriptionerrorElement.innerHTML = "La destination doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
+            descriptionerrorElement.innerHTML = "La description doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
             descriptionerrorElement.style.color = "red";
         } else {
             descriptionerrorElement.innerHTML = "Correct";
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // Updated pattern to accept letters and numbers but not only numbers
         var pattern = /^(?=.*[A-Za-z])[A-Za-z0-9 ]{3,}$/;
         if(!pattern.test(localisationerrorValue)){
-            localisationerrorElement.innerHTML = "La destination doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
+            localisationerrorElement.innerHTML = "La localisation doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
             localisationerrorElement.style.color = "red";
         } else {
             localisationerrorElement.innerHTML = "Correct";

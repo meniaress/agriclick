@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+    
 
 
 <!DOCTYPE html>
@@ -176,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Page Header -->
     <div class="container-fluid bg-primary py-5 bg-hero mb-5">
         <div class="container py-5">
-            <h1 class="display-1 text-white">Create Service</h1>
+            <h1 class="display-1 text-white">update Service</h1>
             <a href="servicelist.php" class="btn btn-secondary">Services</a>
         </div>
     </div>
@@ -186,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card shadow-sm p-4">
-                    <h2 class="text-center mb-4">Update the Service</h2>
+
                     <form method="POST" action="serviceUpdate.php">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($service->getId()) ?>">
 
