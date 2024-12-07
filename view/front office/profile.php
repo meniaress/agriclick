@@ -5,6 +5,7 @@ include_once 'C:\xampp\htdocs\projet\model\client.php';
 include_once 'C:\xampp\htdocs\projet\config.php';
 include_once 'C:\xampp\htdocs\projet\controller\clientc.php';
 
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -13,6 +14,9 @@ $userId = $_SESSION['user_id'];
 $clientC = new ClientC();
 $client = $clientC->getClientById($userId);
 $photoPath = 'C:\xampp\htdocs\projet\uploads' . $client['photo'];
+
+$userRole = $client['choix']; 
+$isVeterinarian = $client['choix'] === 'Vétérinaire';
 ?>
 
 <!DOCTYPE html>
@@ -21,18 +25,43 @@ $photoPath = 'C:\xampp\htdocs\projet\uploads' . $client['photo'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil utilisateur</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
   
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    /* Suppression du centrage global */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    height: 100vh;
+}
+
 
         .container {
             display: flex;
@@ -254,11 +283,50 @@ $photoPath = 'C:\xampp\htdocs\projet\uploads' . $client['photo'];
 
 
 
+
+
     </style>
     
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
+       
+       <a href="index.html" class="navbar-brand d-flex d-lg-none">
+           <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK
+       </h1>
+       </a>
 
+       
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarCollapse">
+           <div class="navbar-nav mx-auto py-0">
+               <a href=""id="returnHome" class="nav-item nav-link ">Home</a>
+               <a href="" class="nav-item nav-link">About</a>
+               <a href="" class="nav-item nav-link">JOB OFFERS</a>
+               <?php if ($isVeterinarian): ?>
+                <a href="" class="nav-item nav-link"> suivi veterinaire</a> <!-- Lien spécifique pour vétérinaire -->
+<?php endif; ?>
+               <a href="" class="nav-item nav-link">RECLAMATION</a>
+               
+
+            
+               
+              
+         
+
+           </div>
+           <div class="d-flex">
+               <a href="http://localhost/projet/view/front office/profile.php" class="nav-item nav-link active" id="signin-btn">Voir le profil</a>
+               <a href="http://localhost/projet/controller/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
+               
+           </div>
+       </div>
+   </nav>
+   <!-- Navbar End -->
+<br>
+<br>
 <div class="container">
    
     <div class="profile-section">
@@ -293,7 +361,7 @@ $photoPath = 'C:\xampp\htdocs\projet\uploads' . $client['photo'];
         <div class="action-container">
     <div class="action-buttons">
         <a href="updateprofile.php">Modifier</a>
-        <a href="#" id="returnHome">Accueil</a>
+    <!--    <a href="#" id="returnHome">Accueil</a>    -->
     </div>
 
     <div class="settings-menu">
@@ -303,7 +371,7 @@ $photoPath = 'C:\xampp\htdocs\projet\uploads' . $client['photo'];
         <ul class="dropdown-menu">
             <li><a href="http://localhost/projet/view/front office/reset_password.html">Changer le mot de passe</a></li>
             <li><a href="http://localhost/projet/controller/deconnexion.php">Se déconnecter</a></li>
-            <li><a href="http://localhost/projet/view/front%20office/login.html">Créer un nouveau compte</a></li>
+            
             
         </ul>
     </div>
@@ -321,7 +389,7 @@ $photoPath = 'C:\xampp\htdocs\projet\uploads' . $client['photo'];
 </div>
 
 <script>
-    document.getElementById('returnHome').addEventListener('click', function(event) {
+   ( document.getElementById('returnHome')).addEventListener('click', function(event)   {
         event.preventDefault();
 
         var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
@@ -371,7 +439,6 @@ dropdown.addEventListener('mouseleave', () => {
             });
         });
     </script>
-
 
 
 

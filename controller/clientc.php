@@ -145,18 +145,6 @@ public function getClientsByUsernameAndEmail($username, $email) {
     
     
     
-    public function rechercherClientsParRole($role) {
-        $sql = "SELECT * FROM client WHERE choix = :role";
-        $db = config::getConnexion();
-        try {
-            $query = $db->prepare($sql);
-            $query->bindParam(':role', $role, PDO::PARAM_STR);
-            $query->execute();
-            return $query->fetchAll();
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
-    }
 
     
     public function searchClients($role, $nom_utilisateur) {
@@ -191,9 +179,42 @@ public function getClientsByUsernameAndEmail($username, $email) {
     }
 
     
+    /*
+    public function doesEmailExist($email) {
+        $db = config::getConnexion();
+        $query = $db->prepare("SELECT COUNT(*) FROM client WHERE email = :email");
+        $query->execute(['email' => $email]);
+        return $query->fetchColumn() > 0;
+    }
     
+    public function updatePassword($email, $hashedPassword) {
+        $db = config::getConnexion();
+        $query = $db->prepare("UPDATE client SET password = :password WHERE email = :email");
+        $query->execute([
+            'password' => $hashedPassword,
+            'email' => $email
+        ]);
+    }
+*/
+public function getClientByEmail($email) {
+    try {
+        $db = Config::getConnexion();
+        $query = $db->prepare("SELECT * FROM client WHERE email = :email");
+        $query->bindParam(':email', $email);
+        $query->execute();
+        return $query->fetch(); // Retourne un seul résultat ou `false` si aucun
+    } catch (Exception $e) {
+        die("Erreur : " . $e->getMessage());
+    }
+}
+ 
     
 }
+
+
+
+
+
 
 
 ?>

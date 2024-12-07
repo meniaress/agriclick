@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom_utilisateur = $_POST['username'];
     $password = $_POST['password'];
 
+    
    
     $clientC = new ClientC();
 
