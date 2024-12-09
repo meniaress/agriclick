@@ -125,7 +125,19 @@ $services = $serviceController->listServices();
                 <h2 class="fw-bold">Our Services</h2>
                 <p class="text-muted">Browse through our diverse range of services offered by expert freelancers.</p>
             </div>
-
+            <div class="container py-5">
+                <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search for services..." aria-label="Search for services...">
+                <div class="row">
+        <div class="col-md-6">
+            <label for="minPrice" class="form-label">Minimum Price:</label>
+            <input type="number" id="minPrice" class="form-control" placeholder="Min Price">
+        </div>
+        <div class="col-md-6">
+            <label for="maxPrice" class="form-label">Maximum Price:</label>
+            <input type="number" id="maxPrice" class="form-control" placeholder="Max Price">
+        </div>
+    </div>
+            </div>
             <!-- Service List Content -->
             <div class="row g-4">
                 <?php if (!empty($services)): ?>
@@ -133,9 +145,9 @@ $services = $serviceController->listServices();
                         <div class="col-lg-4 col-md-6">
                             <div class="service-item bg-white text-center p-4 shadow-sm rounded">
                             
-                                <h4 class="fw-bold"><?= htmlspecialchars($service['title']) ?></h4>
-                                <p class="text-muted mb-3"><?= htmlspecialchars($service['description']) ?></p>
-                                <p class="text-muted mb-3"><?= htmlspecialchars($service['tarif']) ?></p>
+                            <h4 class="service-title fw-bold"><?= htmlspecialchars($service['title']) ?></h4>
+                            <p class="service-description"><?= htmlspecialchars($service['description']) ?></p>
+                            <p class="service-price text-muted mb-3"><?= htmlspecialchars($service['tarif']) ?></p>
                                 <p class="text-muted mb-3"><?= htmlspecialchars($service['type']) ?></p>
                                 <a href="serviceDetails.php?id=<?= $service['id'] ?>" class="btn btn-outline-primary mt-3">View Details</a>
                                 <a href="ServiceUpdate.php?id=<?= $service['id'] ?>" class="btn btn-secondary mt-3">Update</a> |
@@ -245,5 +257,40 @@ $services = $serviceController->listServices();
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const minPriceInput = document.getElementById("minPrice");
+    const maxPriceInput = document.getElementById("maxPrice");
+    const serviceItems = document.querySelectorAll(".service-item");
 
+    function filterServices() {
+        const query = searchInput.value.toLowerCase();
+        const minPrice = parseFloat(minPriceInput.value) || 0; // Default to 0 if empty
+        const maxPrice = parseFloat(maxPriceInput.value) || Infinity; // Default to Infinity if empty
+
+        serviceItems.forEach(function (item) {
+            const title = item.querySelector(".service-title").textContent.toLowerCase();
+            const description = item.querySelector(".service-description").textContent.toLowerCase();
+            const price = parseFloat(item.querySelector(".service-price").textContent) || 0; // Ensure numeric value
+
+            const matchesQuery = title.includes(query) || description.includes(query);
+            const withinPriceRange = price >= minPrice && price <= maxPrice;
+
+            if (matchesQuery && withinPriceRange) {
+                item.style.display = ""; // Show the item
+            } else {
+                item.style.display = "none"; // Hide the item
+            }
+        });
+    }
+
+    searchInput.addEventListener("keyup", filterServices);
+    minPriceInput.addEventListener("input", filterServices);
+    maxPriceInput.addEventListener("input", filterServices);
+});
+
+    </script>
+</body>
 </html>
+    

@@ -6,6 +6,7 @@ class ServiceController
 {
     public function listServices()
     {
+        
         $sql = "SELECT * FROM services";
         $db = (new config)->getConnection();
         try {

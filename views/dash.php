@@ -11,6 +11,7 @@ $services = $serviceController->listServices();
 $commandes = $commandeController->listCommandes();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +29,73 @@ $commandes = $commandeController->listCommandes();
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="img/icon.png" />
+    <script src="js/addService.js"></script>
+
+<script src="js/main.js"></script>
+
+<!-- Custom JavaScript for Validation -->
+<script>
+    function validateForm(event) {
+        event.preventDefault();
+
+        // Clear previous errors
+        const errorElements = document.querySelectorAll(".error-text");
+        errorElements.forEach(el => el.textContent = "");
+
+        let hasError = false;
+
+        // Validate Title
+        const title = document.getElementById("title");
+        if (title.value.trim() === "") {
+            document.getElementById("titleError").textContent = "Service title is required.";
+            hasError = true;
+        }
+
+        // Validate Description
+        const description = document.getElementById("description");
+        if (description.value.trim() === "") {
+            document.getElementById("descriptionError").textContent = "Description is required.";
+            hasError = true;
+        }
+
+        // Validate Price
+        const tarif = document.getElementById("tarif");
+        if (tarif.value.trim() === "" || isNaN(tarif.value) || tarif.value <= 0) {
+            document.getElementById("tarifError").textContent = "Please enter a valid price.";
+            hasError = true;
+        }
+
+        // Validate Category
+        const category = document.getElementById("category");
+        if (category.value === "") {
+            document.getElementById("categoryError").textContent = "Please select a category.";
+            hasError = true;
+        }
+
+
+         // Validate Localisation
+         const localisation = document.getElementById("localisation");
+        if (localisation.value === "") {
+            document.getElementById("localisationError").textContent = "Please enter a localisation.";
+            hasError = true;
+        }
+
+        if (!hasError) {
+            alert("Form submitted successfully!");
+            event.target.submit();
+        }
+    }
+</script>
+
+<style>
+    .error-text {
+        color: red;
+        font-size: 0.875rem;
+    }
+</style>
 </head>
+
+
 <body>
 <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
@@ -247,7 +314,7 @@ $commandes = $commandeController->listCommandes();
             <?php endif; ?>
                     </tbody>
                 </table>
-                <a href="ServiceCreation.php" class="btn btn-primary">Add New Service</a>
+                <a href="#" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#addServiceModal">Add New Service</a>
             </div>
 
             <div class="col-md-6">
@@ -289,5 +356,69 @@ $commandes = $commandeController->listCommandes();
     </div>
 
     <script src="js/bootstrap.bundle.min.js"></script>
+
+<!-- Add New Service Modal -->
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="ServiceCreation.php" onsubmit="return validateModalForm(event)">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Service Title</label>
+                        <input type="text" id="modalTitle" name="title" class="form-control" required>
+                        <div id="titleError" class="error-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="modalDescription" name="description" class="form-control" required></textarea>
+                        <div id="descriptionError" class="error-text"></div>
+                        
+                    </div>
+                    <div class="mb-3">
+                        <label for="localisation" class="form-label">Localisation</label>
+                        <input type="text" id="modalLocalisation" name="localisation" class="form-control" required>
+                        <div id="localisationError" class="error-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tarif" class="form-label">Tarif</label>
+                        <input type="text" id="modalTarif" name="tarif" class="form-control" required>
+                        <div id="modalTarifError" class="error-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type</label>
+                        <select id="modalType" name="type" class="form-select" required>
+                            <option value="per-hour">Per Hour</option>
+                            <option value="per-task">Per Task</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" id="modalCategory" name="category" class="form-control" required>
+                        <div id="modalCategoryError" class="error-text"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Service</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
