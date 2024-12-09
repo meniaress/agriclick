@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include_once("../controllers/repcontroller.php"); // Ensure this file contains the ReponseController class
+include_once("repcontroller.php"); // Ensure this file contains the ReponseController class
 include_once("../model/rep.php"); // Ensure the path is correct
 
 $reponsecontroller = new ReponseController(); // Correct class name
@@ -67,85 +67,144 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Modifier Réponse</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="img/favicon.ico" rel="icon">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <script>
-        // Function to hide the success message after 20 seconds
-        function hideMessage() {
-            const messageElement = document.getElementById('successMessage');
-            if (messageElement) {
-                messageElement.style.display = 'none';
-            }
+    <title>Modifier Réponse - agriCLICK Admin</title>
+    <link rel="stylesheet" href="dashboard/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="dashboard/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="dashboard/css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="dashboard/img/icon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none; /* Hide error message by default */
         }
-        window.onload = function() {
-            setTimeout(hideMessage, 20000); // Hide after 20 seconds
-        };
-    </script>
+    </style>
 </head>
 <body>
-    <!-- Hero Start -->
-    <div class="container-fluid bg-primary py-5 bg-hero mb-5">
-        <div class="container py-5">
-            <div class="row justify-content-start">
- <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 text-white mb-md-4">Modifier Réponse</h1>
+    <div class="container-scroller">
+        <!-- Navbar -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="dashboard/img/icon.png" alt="logo"/></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="dashboard/img/logo-mini.svg" alt="logo"/></a>
+                <button class="navbar-toggler navbar-toggler align-self-center d ```html
+                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link" href="#">Gestion des Utilisateurs</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link" href="#">Gestion des Partenariats</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link" href="#">Gestion des offres</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link" href="Reclamationlist.php">Gestion des RECLAMATIONS</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link active" href="#">Gestion des REPONSES</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Sidebar -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <div class="d-flex sidebar-profile">
+                        <div class="sidebar-profile-image">
+                            <img src="dashboard/img/faces/face29.png" alt="image">
+                            <span class="sidebar-status-indicator"></span>
+                        </div>
+                        <div class="sidebar-profile-name">
+                            <p class="sidebar-name">Khadija Derbel</p>
+                            <p class="sidebar-designation">Welcome</p>
+                        </div>
+                    </div>
+                    <div class="nav-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="search">
+                                    <i class="typcn typcn-zoom"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="sidebar-menu-title">Dash menu</p>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
+                    </a>
+                </li>
+                <!-- Add other sidebar items here -->
+            </ul>
+        </nav>
+        <!-- Main Panel -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0 font-weight-bold">Modifier Réponse</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 d-flex grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <?php if (isset($_GET['success'])): ?>
+                                    <p class="alert alert-success">Votre réponse a été mise à jour avec succès!</p>
+                                <?php endif; ?>
+                                <form method="POST" action="">
+                                    <div class="mb-3">
+                                        <label for="contenu" class="form-label">Votre Réponse</label>
+                                        <input type="text" name="contenu" class="form-control bg-light border-0 px-4" placeholder="Votre réponse" style="height: 55px;" value="<?php echo htmlspecialchars($offer['contenu']); ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="admin" class="form-label">Nom de l'admin</label>
+                                        <input type="text" name="admin" class="form-control bg-light border-0 px-4" placeholder="Nom de l'admin" style="height: 55px;" value="<?php echo htmlspecialchars($offer['admin']); ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Type de Réponse:</label>
+                                        <div>
+                                            <input type="radio" id="normale" name="type" value="normale" <?php echo ($offer['type'] == 'normale') ? 'checked' : ''; ?>>
+                                            <label for="normale">Normale</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="positive" name="type" value="positive" <?php echo ($offer['type'] == 'positive') ? 'checked' : ''; ?>>
+                                            <label for="positive">Positive</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="negative" name="type" value="negative" <?php echo ($offer['type'] == 'negative') ? 'checked' : ''; ?>>
+                                            <label for="negative">Négative</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Modifier</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Hero End -->
-
-    <!-- Form Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="mx-auto text-center mb-5" style="max-width: 500px;">
-                <h6 class="text-primary text-uppercase">Modifier Réponse</h6>
-                <h1 class="display-5">Veuillez modifier votre réponse</h1>
-            </div>
-            <?php if (isset($_GET['success'])): ?>
-                <p id="successMessage" style="color: green;">Votre réponse a été mise à jour avec succès!</p>
-            <?php endif; ?>
-            <form method="POST" action="">
-                <div class="row g-3">
-                    <div class="col-12">
-                        <input type="text" name="contenu" class="form-control bg-light border-0 px-4" placeholder="Votre réponse" style="height: 55px;" value="<?php echo htmlspecialchars($offer['contenu']); ?>" required>
-                    </div>
-                    <div class="col-12">
-                        <input type="text" name="admin" class="form-control bg-light border-0 px-4" placeholder="Nom de l'admin" style="height: 55px;" value="<?php echo htmlspecialchars($offer['admin']); ?>" required>
-                    </div>
-                    <div class="col-12">
-                        <h6>Type:</h6>
-                        <div>
-                            <input type="radio" id="normale" name="type" value="normale" <?php echo ($offer['type'] == 'normale') ? 'checked' : ''; ?>>
-                            <label for="normale">Normale</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="positive" name="type" value="positive" <?php echo ($offer['type'] == 'positive') ? 'checked' : ''; ?>>
-                            <label for="positive">Positive</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="negative" name="type" value="negative" <?php echo ($offer['type'] == 'negative') ? 'checked' : ''; ?>>
-                            <label for="negative">Négative</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-secondary w-100 py-3" type="submit">Modifier</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- Form End -->
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <!-- base:js -->
+    <script src="dashboard/vendors/js/vendor.bundle.base.js"></script>
+    <script src="dashboard/js/off-canvas.js"></script>
+    <script src="dashboard/js/hoverable-collapse.js"></script>
+    <script src="dashboard/js/template.js"></script>
+    <script src="dashboard/js/settings.js"></script>
+    <script src="dashboard/js/todolist.js"></script>
 </body>
 </html>

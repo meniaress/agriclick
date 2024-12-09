@@ -52,6 +52,7 @@ session_start(); // Démarrer la session
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="img/icon.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container-scroller">
@@ -145,6 +146,7 @@ session_start(); // Démarrer la session
                                         </select>
                                         <button type="submit">Rechercher</button>
                                     </form>
+                                    <button id="download-pdf" class="btn btn-primary">Télécharger PDF</button>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover">
@@ -199,5 +201,58 @@ session_start(); // Démarrer la session
     <script src="js/template.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/todolist.js"></script>
+    <!-- Ajoutez ce bouton dans votre HTML -->
+
+    <script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('l', 'pt', 'a4'); // Format paysage
+
+        // Titre
+        doc.setFontSize(16);
+        doc.text('Liste des Réponses', 14, 22);
+
+        // Espace entre le titre et les en-têtes
+        const spaceBetweenTitleAndHeader = 20; // Ajustez cette valeur pour plus ou moins d'espace
+        let startY = 30 + spaceBetweenTitleAndHeader; // Nouvelle position Y pour les en-têtes
+
+        // En-têtes de colonnes
+        doc.setFontSize(12); // Augmenter la taille de la police des en-têtes
+        const headers = ['Sujet de Réclamation', 'Message de Réclamation', 'Contenu', 'Admin', 'Type', 'Date de Réponse'];
+        const columnWidths = [150, 150, 150, 100, 100, 120]; // Largeurs des colonnes
+        let startX = 14;
+
+        // Dessiner les en-têtes
+        headers.forEach((header, index) => {
+            doc.text(header, startX, startY);
+            startX += columnWidths[index];
+        });
+
+        // Dessiner une ligne sous les en-têtes
+        doc.setLineWidth(1);
+        doc.line(14, startY + 5, 14 + columnWidths.reduce((a, b) => a + b, 0), startY + 5); // Ligne horizontale
+
+        // Récupérer les données de la table
+        const rows = document.querySelectorAll('table tbody tr');
+        let y = startY + 20; // Position Y pour les lignes de données
+
+        rows.forEach(row => {
+            const cols = row.querySelectorAll('td');
+            startX = 14; // Réinitialiser la position X pour chaque ligne
+
+            for (let i = 0; i < cols.length - 1; i++) {
+                const text = doc.splitTextToSize(cols[i].innerText, columnWidths[i]); // Diviser le texte pour qu'il tienne dans la colonne
+                doc.text(text, startX, y);
+                startX += columnWidths[i]; // Avancer à la prochaine colonne
+            }
+
+            y += 30; // Augmenter la hauteur des lignes
+        });
+
+        // Télécharger le PDF
+        doc.save('liste_reponses.pdf');
+    });
+</script>
+
 </body>
 </html>

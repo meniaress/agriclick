@@ -85,10 +85,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <a class="nav-link" href="#">Gestion des offres</a>
                     </li>
                     <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link" href="../Reclamationlist.php">Gestion des RECLAMATIONS</a>
+                        <a class="nav-link" href="../controllers/Reclamationlist.php">Gestion des RECLAMATIONS</a>
                     </li>
                     <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link active" href="#">Gestion des REPONSES</a>
+                        <a class="nav-link active" href="../controllers\dashboard\listrep.php">Gestion des REPONSES</a>
                     </li>
                 </ul>
             </div>

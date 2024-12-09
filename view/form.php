@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="service.html" class="nav-item nav-link">Service</a>
                 <a href="product.html" class="nav-item nav-link">Product</a>
                 <div class="nav-item dropdown">
-
+                
                 <a href="reclamation.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
                 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
     

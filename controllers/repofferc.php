@@ -49,18 +49,16 @@ class ReponseOfferC {
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Ensure to use FETCH_ASSOC
     }
 
-    // Other methods if necessary
-}
-public function recherchertype($type) {
-    $sql = "SELECT * FROM reponse WHERE type = :type"; // Corrected the column name to 'type'
-    $db = Config::getConnexion();
-    try {
-        $query = $db->prepare($sql);
-        $query->bindParam(':type', $type, PDO::PARAM_STR);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC); // Ensure to use FETCH_ASSOC
-    } catch (Exception $e) {
-        die('Erreur: ' . $e->getMessage());
+    public function recherchertype($type) {
+        $sql = "SELECT * FROM reponse WHERE type = :type"; // Corrected the column name to 'type'
+        try {
+            $query = $this->db->prepare($sql);
+            $query->bindParam(':type', $type, PDO::PARAM_STR);
+            $query->execute();
+            return $query->fetchAll(PDO::FETCH_ASSOC); // Ensure to use FETCH_ASSOC
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
     }
 }
 ?>

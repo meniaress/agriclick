@@ -95,7 +95,7 @@ session_start(); // Démarrer la session
             margin-right: 10px; /* Espace entre les boutons */
         }
         .btn:hover {
-            background-color: #003300; /* Légère teinte plus foncée pour le survol */
+            background-color: # 003300; /* Légère teinte plus foncée pour le survol */
         }
         .btn-delete {
             background-color: #ff5333; /* Rouge pour la suppression */
@@ -147,7 +147,14 @@ session_start(); // Démarrer la session
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Service</a>
                 <a href="product.html" class="nav-item nav-link">Product</a>
-                <a href="../view/form.php" class="nav-item nav-link">Reclamation</a>
+              
+                <a href="../view/reclamation.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
+                <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+                    <div class="dropdown-menu m-6">
+                        <a href="listrectraitee.php" class="dropdown-item">mes reclamations traitees</a>
+                        <a href="Listerecuser.php" class="dropdown-item">mes reclamations non traitees</a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
@@ -178,32 +185,29 @@ session_start(); // Démarrer la session
                         $interval = $dateActuelle->diff($dateCreation);
                         $tempsRestant = 3600 - ($interval->h * 3600 + $interval->i * 60 + $interval->s); // Calculer le temps restant en secondes
 
-                        
-                        
                         // Vérifier si le temps restant est positif
                         if ($tempsRestant > 0) {
                             echo "<tr>";
-                        echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
-                        echo "<td class='actions'>";
-                        echo "<a href ='updaterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn'>Modifier</a>";
-                        echo "<a href='deleterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn btn-delete'>Supprimer</a>";
-                        echo "</td>";
+                            echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
+                            echo "<td class='actions'>";
+                            echo "<a href ='updaterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn'>Modifier</a>";
+                            echo "<a href='deleter ecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn btn-delete'>Supprimer</a>";
+                            echo "</td>";
                             echo "<td class='countdown' data-seconds='$tempsRestant'>" . floor($tempsRestant / 60) . " minutes</td>";
+                            echo "</tr>";
                         } else {
                             echo "<tr>";
-                        echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
-                        
+                            echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
                             echo '<td class="actions"><span>Modification/Déletion fermée</span></td>';
-
                             echo '<td class="countdown">Temps écoulé</td>'; // Indiquer que le temps est écoulé
+                            echo "</tr>";
                         }
-                        echo "</tr>";
                     }
                 }
                 ?>
