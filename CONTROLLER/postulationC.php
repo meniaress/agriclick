@@ -96,6 +96,19 @@ class PostulationC
             echo 'Erreur: ' . $e->getMessage();
         }
     }
+    function updatePostulationStatus($idPostulation, $etat)
+    {
+        $sql = "UPDATE postulation SET etat = :etat WHERE idPostulation = :idPostulation";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':etat', $etat, PDO::PARAM_STR);
+            $query->bindValue(':idPostulation', $idPostulation, PDO::PARAM_INT);
+            $query->execute();
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
+    }
 
     function getPostulationsByOffre($idOffre)
     {

@@ -227,7 +227,7 @@ if (
                     <button type="submit" class="btn btn-primary" name="Ajouter" id="Ajouter">Ajouter</button>
                 </div>
                 <div class="col-sm-3 d-grid">
-                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexoffre.php?idCategorie=<?php echo $idCategorie; ?>" role="button">Quitter</a>
+                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorie.php?idCategorie=<?php echo $idCategorie; ?>" role="button">Quitter</a>
                 </div>
             </div>
         </form>

@@ -101,39 +101,34 @@ $list = $CatC->trierCategorieParPremiereLettre();
         </div>
     </div>
     <!-- Hero End -->
-
-
     <h1 id="root">CATEGORIE DE TRAVAIL</h1>
+<div class="container-fluid py-5">
     <div class="container">
-        <table class="table table-hover table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Nom Categorie</th>
-                    <th>Image Categorie</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                if ($list) {
-                    foreach ($list as $Cat) {
-                        echo "<tr>";
-                        echo "<td>" . $Cat['nomCategorie'] . "</td>";
-                        echo "<td><img src='" . $Cat['imageCategorie'] . "' alt='Image Categorie' style='width: 100px; height: auto;'></td>";
-                        echo '<td>';
-                        echo '<a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">modifier</a> ';
-                        echo '<a class="btn btn-primary" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">supprimer</a> ';
-                        echo '<a class="btn btn-secondary" href="indexoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">voir les offres</a> ';
-                        echo '<a class="btn btn-secondary" href="addoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">ajouter offre</a>';
-                        echo '</td>';
-                        echo "</tr>";
-                    }
+        <div class="row g-5">
+            <?php 
+            if ($list) {
+                foreach ($list as $Cat) {
+                    echo '<div class="col-lg-4 col-md-6">';
+                    echo '<div class="service-item bg-light text-center p-5">';
+                    echo '<img src="' . $Cat['imageCategorie'] . '" alt="Image Categorie" style="width: 200px; height: auto;" class="mb-3">';
+                    echo '<h4>' . $Cat['nomCategorie'] . '</h4>';
+                    echo '<div class="mt-3">';
+                    echo '<a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-edit"></i></a> ';
+                    echo '<a class="btn btn-danger" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-trash"></i></a> ';
+                    echo '<a class="btn btn-secondary" href="indexoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-eye"></i></a> ';
+                    echo '<a class="btn btn-primary" href="addoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">Ajouter offre</a>';
+                    echo '</div>'; // Close actions div
+                    echo '</div>'; // Close service-item div
+                    echo '</div>'; // Close column div
                 }
-                ?>
-            </tbody>
-        </table>
-        <a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">ajouter categorie</a>
+            }
+            ?>
+        </div>
     </div>
+</div>
+<a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">Ajouter categorie</a>
+
+    
 <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

@@ -101,36 +101,28 @@ $list = $CatC->trierCategorieParPremiereLettre();
         </div>
     </div>
     <!-- Hero End -->
-
-
     <h1 id="root">CATEGORIE DE TRAVAIL</h1>
+<div class="container-fluid py-5">
     <div class="container">
-        <table class="table table-hover table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Nom Categorie</th>
-                    <th>Image Categorie</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                if ($list) {
-                    foreach ($list as $Cat) {
-                        echo "<tr>";
-                        echo "<td>" . $Cat['nomCategorie'] . "</td>";
-                        echo "<td><img src='" . $Cat['imageCategorie'] . "' alt='Image Categorie' style='width: 100px; height: auto;'></td>";
-                        echo '<td>';
-                        echo '<a class="btn btn-secondary" href="indexoffreclient.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">voir les offres</a> ';
-                        echo '</td>';
-                        echo "</tr>";
-                    }
+        <div class="row g-5">
+            <?php 
+            if ($list) {
+                foreach ($list as $Cat) {
+                    echo '<div class="col-lg-4 col-md-6">';
+                    echo '<div class="service-item bg-light text-center p-5">';
+                    echo '<img src="' . $Cat['imageCategorie'] . '" alt="Image Categorie" style="width: 100px; height: auto;" class="mb-3">';
+                    echo '<h4>' . $Cat['nomCategorie'] . '</h4>';
+                    echo '<div class="mt-3">';
+                    echo '<a class="btn btn-secondary" href="indexoffreclient.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">Voir les Offres</a>';
+                    echo '</div>'; // Close actions div
+                    echo '</div>'; // Close service-item div
+                    echo '</div>'; // Close column div
                 }
-                ?>
-            </tbody>
-        </table>
-        
+            }
+            ?>
+        </div>
     </div>
+</div>
 <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">

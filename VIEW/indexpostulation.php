@@ -4,6 +4,15 @@ $PostulationC = new PostulationC();
 
 $idOffre = isset($_GET['idOffre']) ? $_GET['idOffre'] : null;
 $list = $PostulationC->getPostulationsByOffre($idOffre);
+
+if (isset($_POST['action']) && isset($_POST['idPostulation'])) {
+    $action = $_POST['action'];
+    $idPostulation = $_POST['idPostulation'];
+    $etat = ($action == 'accepter') ? 'postulation acceptee' : 'postulation refusee';
+    $PostulationC->updatePostulationStatus($idPostulation, $etat);
+    header("Location: indexpostulation.php?idOffre=$idOffre");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +103,7 @@ $list = $PostulationC->getPostulationsByOffre($idOffre);
         <div class="container py-5">
             <div class="row justify-content-start">
                 <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 text-white mb-md-4">Offres de travail</h1>
+                    <h1 class="display-1 text-white mb-md-4">Postulations</h1>
                     <a href="index.html" class="btn btn-primary py-md-3 px-md-5 me-3">Home</a>
                     <a href="about.html" class="btn btn-secondary py-md-3 px-md-5">About</a>
                 </div>
@@ -103,38 +112,51 @@ $list = $PostulationC->getPostulationsByOffre($idOffre);
     </div>
     <!-- Hero End -->
     <h1 id="root">POSTULATIONS</h1>
-    <div class="container">
-        <table class="table table-hover table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Âge</th>
-                    <th>Localisation</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                if ($list) {
-                    foreach ($list as $Postulation) {
-                        echo "<tr>";
-                        echo "<td>" . $Postulation['nom'] . "</td>";
-                        echo "<td>" . $Postulation['prenom'] . "</td>";
-                        echo "<td>" . $Postulation['age'] . "</td>";
-                        echo "<td>" . $Postulation['localisationp'] . "</td>";
-                        echo '<td>';
-                        echo '<a class="btn btn-primary" href="updatepostulation.php?idPostulation=' . $Postulation['idPostulation'] . '" role="button">modifier</a> ';
-                        echo '<a class="btn btn-primary" href="deletepostulation.php?idPostulation=' . $Postulation['idPostulation'] . '" role="button">supprimer</a>';
-                        echo '</td>';
-                        echo "</tr>";
+<div class="container">
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Âge</th>
+                <th>Localisation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            if ($list) {
+                foreach ($list as $Postulation) {
+                    echo "<tr>";
+                    echo "<td>" . $Postulation['nom'] . "</td>";
+                    echo "<td>" . $Postulation['prenom'] . "</td>";
+                    echo "<td>" . $Postulation['age'] . "</td>";
+                    echo "<td>" . $Postulation['localisationp'] . "</td>";
+                    echo '<td>';
+                    if ($Postulation['etat'] == 'postulation acceptee') {
+                        echo 'postulation acceptee';
+                    } elseif ($Postulation['etat'] == 'postulation refusee') {
+                        echo 'postulation refusee';
+                    } else {
+                        echo '<form method="post" style="display:inline-block;">';
+                        echo '<input type="hidden" name="idPostulation" value="' . $Postulation['idPostulation'] . '">';
+                        echo '<button type="submit" name="action" value="accepter" class="btn btn-primary">accepter</button>';
+                        echo '</form>';
+                        echo '<form method="post" style="display:inline-block;">';
+                        echo '<input type="hidden" name="idPostulation" value="' . $Postulation['idPostulation'] . '">';
+                        echo '<button type="submit" name="action" value="refuser" class="btn btn-primary">refuser</button>';
+                        echo '</form>';
+                        echo 'En attente';
                     }
+                    echo '</td>';
+                    echo "</tr>";
                 }
-                ?>
-            </tbody>
-        </table>
-        <a href="indexcategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
-    </div>  
+            }
+            ?>
+        </tbody>
+    </table>
+    <a href="indexcategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
+</div>   
     <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">

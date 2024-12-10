@@ -103,39 +103,30 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
     </div>
     <!-- Hero End -->
     <h1 id="root">OFFRES DE TRAVAIL</h1>
+<div class="container-fluid py-5">
     <div class="container">
-        <table class="table table-hover table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Localisation</th>
-                    <th>Travail</th>
-                    <th>Salaire</th>
-                    <th>Image Offre</th>
-                    <th>Actions</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                if ($list) {
-                    foreach ($list as $Offre) {
-                        echo "<tr>";
-                        echo "<td>" . $Offre['localisation'] . "</td>";
-                        echo "<td>" . $Offre['travailOffre'] . "</td>";
-                        echo "<td>" . $Offre['salaire'] . "</td>";
-                        echo "<td><img src='" . $Offre['imageOffre'] . "' alt='Image Offre' style='width: 100px; height: auto;'></td>";
-                        echo "<td>";
-                        echo '<a class="btn btn-secondary" href="addpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">ajouter postulation</a>';
-                        echo "</td>";
-                        echo "</tr>";
-                    }
+        <div class="row g-5">
+            <?php 
+            if ($list) {
+                foreach ($list as $Offre) {
+                    echo '<div class="col-lg-4 col-md-6">';
+                    echo '<div class="service-item bg-light text-center p-5">';
+                    echo '<img src="' . $Offre['imageOffre'] . '" alt="Image Offre" style="width: 100px; height: auto;" class="mb-3">';
+                    echo '<h4>' . $Offre['travailOffre'] . '</h4>';
+                    echo '<p>Localisation: ' . $Offre['localisation'] . '</p>';
+                    echo '<p>Salaire: ' . $Offre['salaire'] . '</p>';
+                    echo '<div class="mt-3">';
+                    echo '<a class="btn btn-secondary" href="addpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">Ajouter Postulation</a>';
+                    echo '</div>'; // Close actions div
+                    echo '</div>'; // Close service-item div
+                    echo '</div>'; // Close column div
                 }
-                ?>
-            </tbody>
-        </table>
-        
-        <a href="indexcategorieclient.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
+            }
+            ?>
+        </div>
     </div>
+</div>
+<a href="indexcategorieclient.php" class="btn btn-secondary py-md-3 px-md-5">Retourner</a>
  <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
