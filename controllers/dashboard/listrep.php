@@ -9,7 +9,7 @@ class ReponseList {
         // Join the reponse table with the reclamation table
         $sql = 'SELECT r.*, rec.sujet, rec.message 
                 FROM reponse r 
-                JOIN reclamtion rec ON r.id_rec = rec.id'; // Adjust the table and column names as necessary
+                JOIN reclamtion rec ON r.id_rec = rec.id'; // Ajustez les noms de table et de colonne si nécessaire
 
         // If a type is specified, filter the results
         if ($type) {
@@ -42,17 +42,14 @@ session_start(); // Démarrer la session
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Liste des Réponses - agriCLICK Admin</title>
-    <!-- base:css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="img/icon.png" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container-scroller">
@@ -85,115 +82,94 @@ session_start(); // Démarrer la session
                 </ul>
             </div>
         </nav>
-        <!-- Sidebar -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item">
-                    <div class="d-flex sidebar-profile">
-                        <div class="sidebar-profile-image">
-                            
-                            <img src="img/faces/face29.png" alt="image">
-                            <span class="sidebar-status-indicator"></span>
-                        </div>
-                        <div class="sidebar-profile-name">
-                            <p class="sidebar-name">Khadija Derbel</p>
-                            <p class="sidebar-designation">Welcome</p>
-                        </div>
-                    </div>
-                    <div class="nav-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="search">
-                                    <i class="typcn typcn-zoom"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="sidebar-menu-title">Dash menu</p>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <i class="typcn typcn-device-desktop menu-icon"></i>
-                        <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
-                    </a>
-                </li>
-                <!-- Add other sidebar items here -->
-            </ul>
-        </nav>
-        <!-- Main Panel -->
-        <div class="main-panel">
-            <div class="content-wrapper">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h3 class="mb-0 font-weight-bold">Liste des Réponses</h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 d-flex grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                                    <h4 class="card-title">Liste des Réponses</h4>
-                                    <!-- Recherche par type -->
-                                    <form method="GET" action="listrep.php" style="text-align: center; margin:20px;">
-                                        <label for="type">Recherche par type de réponse:</label>
-                                        <select name="type" id="type">
-                                            <option value="">--Tous les types--</option>
-                                            <option value="normale" <?php echo (isset($type) && $type == 'normale') ? 'selected' : ''; ?>>Normale</option>
-                                            <option value="positive" <?php echo (isset($type) && $type == 'positive') ? 'selected' : ''; ?>>Positive</option>
-                                            <option value="negative" <?php echo (isset($type) && $type == 'negative') ? 'selected' : ''; ?>>Négative</option>
-                                        </select>
-                                        <button type="submit">Rechercher</button>
-                                    </form>
-                                    <button id="download-pdf" class="btn btn-primary">Télécharger PDF</button>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover">
-                                        <thead class="table-primary">
-                                            <tr>
-                                                <th>Sujet de Réclamation</th>
-                                                <th>Message de Réclamation</th>
-                                                <th>Contenu</th>
-                                                <th>Admin</th>
-                                                <th>Type</th>
-                                                <th>Date de Réponse</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($responses as $response) {
-                                                echo '<tr>'; 
-                                                echo '<td>' . htmlspecialchars($response['sujet']) . '</td>';
-                                                echo '<td>' . htmlspecialchars($response['message']) . '</td>';
-                                                echo '<td>' . htmlspecialchars($response['contenu']) . '</td>';
-                                                echo '<td>' . htmlspecialchars($response['admin']) . '</td>';
-                                                echo '<td>' . htmlspecialchars($response['type']) . '</td>';
-                                                echo '<td>' . htmlspecialchars($response['date_rep']) . '</td>';
-                                                echo '<td class="actions">
-                                                        <a href="../updaterep.php?id_rep=' . htmlspecialchars($response['id_rep']) . '" class="btn btn-warning btn-sm">Modifier</a>
-                                                        <a href="../deleterep.php?id_rep=' . htmlspecialchars($response['id_rep']) . '" class="btn btn-danger btn-sm">Supprimer</a>
-                                                      </td>';
-                                                echo '</tr>';
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <?php if (empty($responses)): ?>
-                                    <div class="text-center mt-4">
-                                        <p class="text-muted">Aucune réponse trouvée.</p>
-                                    </div>
-                                <?php endif; ?>
 
+        <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <div class="d-flex sidebar-profile">
+                            <div class="sidebar-profile image">
+                                <img src="img/faces/face29.png" alt="image">
+                                <span class="sidebar-status-indicator"></span>
                             </div>
+                            <div class="sidebar-profile-name">
+                                <p class="sidebar-name">Khadija Derbel</p>
+                                <p class="sidebar-designation">Welcome</p>
+                            </div>
+                        </div>
+                        <p class="sidebar-menu-title">Dash menu</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <h1 class="mb-4">Liste des Réponses</h1>
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="GET" action="listrep.php" style="text-align: center; margin:20px;">
+                                <label for="type">Recherche par type de réponse:</label>
+                                <select name="type" id="type">
+                                    <option value="">--Tous les types--</option>
+                                    <option value="normale" <?php echo (isset($type) && $type == 'normale') ? 'selected' : ''; ?>>Normale</option>
+                                    <option value="positive" <?php echo (isset($type) && $type == 'positive') ? 'selected' : ''; ?>>Positive</option>
+                                    <option value="negative" <?php echo (isset($type) && $type == 'negative') ? 'selected' : ''; ?>>Négative</option>
+                                </select>
+                                <button type="submit">Rechercher</button>
+                            </form>
+                            <button id="download-pdf" class="btn btn-primary">Télécharger PDF</button>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Sujet de Réclamation</th>
+                                            <th>Message de Réclamation</th>
+                                            <th>Contenu</th>
+                                            <th>Admin</th>
+                                            <th>Type</th>
+                                            <th>Date de Réponse</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($responses as $response) {
+                                            echo '<tr>'; 
+                                            echo '<td>' . htmlspecialchars($response['sujet']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($response['message']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($response['contenu']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($response['admin']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($response['type']) . '</td>';
+                                            echo '<td>' . htmlspecialchars($response['date_rep']) . '</td>';
+                                            echo '<td class="actions">
+                                                    <a href="../updaterep.php?id_rep=' . htmlspecialchars($response['id_rep']) . '" class="btn btn-warning btn-sm">Modifier</a>
+                                                    <a href="../deleterep.php?id_rep=' . htmlspecialchars($response['id_rep']) . '" class="btn btn-danger btn-sm">Supprimer</a>
+                                                  </td>';
+                                            echo '</tr>';
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <?php if (empty($responses)): ?>
+                                <div class="text-center mt-4">
+                                    <p class="text-muted">Aucune réponse trouvée.</p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <script src="js/off-canvas.js"></script>
@@ -201,8 +177,6 @@ session_start(); // Démarrer la session
     <script src="js/template.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/todolist.js"></script>
-    <!-- Ajoutez ce bouton dans votre HTML -->
-
     <script>
     document.getElementById('download-pdf').addEventListener('click', function () {
         const { jsPDF } = window.jspdf;
@@ -252,7 +226,6 @@ session_start(); // Démarrer la session
         // Télécharger le PDF
         doc.save('liste_reponses.pdf');
     });
-</script>
-
+    </script>
 </body>
 </html>
