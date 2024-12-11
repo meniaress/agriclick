@@ -1,8 +1,8 @@
 <?php
 
-class Consult {
+class Consults {
     private $id_consult;
-    private ?string $nomanimal;
+    private ?int $id_ani; // Use id_ani for the animal ID
     private ?string $nomp;
     private ?string $telp;
     private ?string $antmedicaux;
@@ -10,8 +10,8 @@ class Consult {
     private ?string $reco;
     private ?DateTime $datec;
 
-    public function __construct($nomanimal, $nomp, $telp, $antmedicaux, $diagnostic, $reco, $datec) {
-        $this->nomanimal = $nomanimal;
+    public function __construct($id_ani, $nomp, $telp, $antmedicaux, $diagnostic, $reco, $datec) {
+        $this->id_ani = $id_ani; // Set the animal ID
         $this->nomp = $nomp;
         $this->telp = $telp;
         $this->antmedicaux = $antmedicaux;
@@ -25,8 +25,8 @@ class Consult {
         return $this->id_consult;
     }
 
-    public function getNomAnimal() {
-        return $this->nomanimal;
+    public function getIdAni() { // Getter for animal ID
+        return $this->id_ani;
     }
 
     public function getNomP() {
@@ -58,8 +58,8 @@ class Consult {
         $this->id_consult = $id;
     }
 
-    public function setNomAnimal($nomanimal) {
-        $this->nomanimal = $nomanimal;
+    public function setIdAni($id_ani) { // Setter for animal ID
+        $this->id_ani = $id_ani;
     }
 
     public function setNomP($nomp) {
@@ -83,7 +83,7 @@ class Consult {
     }
 
     public function setDateC($datec) {
-        $this->datec = $datec ? new DateTime($datec) : null;
-    }
+        $this->datec = $datec;
+}
 }
 ?>

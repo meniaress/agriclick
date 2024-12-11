@@ -27,6 +27,41 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <title>Jeu Dino</title>
+    <style>
+       #gameContainer {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ajustez la hauteur selon vos besoins */
+    border: 2px solid #000; /* Bordure pour le cadre du jeu */
+    overflow: hidden; /* Pour cacher les obstacles qui sortent du cadre */
+}
+
+#dino {
+    position: absolute;
+    bottom: 20px;
+    left: 50px;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(165, 132, 14);
+}
+
+.obstacle {
+    position: absolute;
+    bottom: 20px;
+    width: 20px;
+    height: 50px;
+    background-color: rgb(7, 30, 4);
+}
+
+#score {
+    position: absolute;
+    top: 10px; /* Position en haut de l'écran */
+    left: 10px; /* Position à gauche */
+    font-size: 24px; /* Taille de la police */
+    color: black; /* Couleur du texte */
+}
+    </style>
 </head>
 
 <body>
@@ -131,7 +166,15 @@
         </div>
     </div>
     <!-- Animal Form End -->
-
+    <div class="container-fluid py-5">
+    <div class="container">
+        <h2 class="mb-4">Aventure du Chat: Cliquez pour Gagner!</h2>
+        <div id="gameContainer" style="position: relative; width: 100%; height: 300px; border: 2px solid #000;">
+            <div id="score">Score: 0</div> <!-- Élément pour afficher le score -->
+            <div id="dino"></div>
+        </div>
+    </div>
+</div>
     <!-- affichage -->
     <?php
     
@@ -153,12 +196,12 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         
-                                        <th scope="col">Animal Name</th>
-                                        <th scope="col">Species</th>
-                                        <th scope="col">Gender</th>
-                                        <th scope="col">Breed</th>
-                                        <th scope="col">Weight</th>
-                                        <th scope="col">Birth Date</th>
+                                        <th scope="col">Nom de l'animal</th>
+                                        <th scope="col">Espéce</th>
+                                        <th scope="col">genre</th>
+                                        <th scope="col">race</th>
+                                        <th scope="col">poids</th>
+                                        <th scope="col">Date de naissance</th>
                                         <th scope="col">Age</th>
                                         <th scope="col">Actions</th>
                                     </tr>
@@ -259,8 +302,93 @@ document.getElementById('animalForm').addEventListener('submit', function(event)
         document.getElementById('animalForm').submit(); // Submit the form manually
     }
 });
-</script>
 
+</script>
+<script>let gameStarted = false; // Variable to track if the game has started
+const dino = document.getElementById('dino');
+const scoreDisplay = document.getElementById('score'); // Élément pour afficher le score
+let isJumping = false;
+let score = 0; // Initialisation du score
+
+// Écouteur d'événements pour le saut
+document.addEventListener('keydown', function(event) {
+    // Prevent default action for space key
+    if (event.code === 'Space') {
+        event.preventDefault(); // Prevent scrolling
+        if (!isJumping) {
+            isJumping = true;
+            dino.style.bottom = '150px'; // Position de saut
+            setTimeout(() => {
+                dino.style.bottom = '20px'; // Position normale
+                isJumping = false;
+            }, 500);
+        }
+    }
+});
+
+// Function to start the game
+function startGame() {
+    if (!gameStarted) {
+        gameStarted = true; // Set the game as started
+        setInterval(createObstacle, 2000); // Start creating obstacles
+    }
+}
+
+// Add click event listener to the game container
+document.getElementById('gameContainer').addEventListener('click', startGame);
+
+// Function to create an obstacle
+function createObstacle() {
+    const obstacle = document.createElement('div');
+    obstacle.classList.add('obstacle');
+    obstacle.style.left = '100%'; // Commence à droite de l'écran
+    gameContainer.appendChild(obstacle);
+    moveObstacle(obstacle);
+}
+
+// Function to move the obstacle
+function moveObstacle(obstacle) {
+    let position = gameContainer.offsetWidth; // Utilise la largeur du conteneur
+    const interval = setInterval(() => {
+        if (position < -20) {
+            clearInterval(interval);
+            obstacle.remove();
+            updateScore(); // Met à jour le score lorsque l'obstacle est évité
+        } else {
+            position -= 5; // Vitesse de l'obstacle
+            obstacle.style.left = position + 'px';
+
+            // Vérification de collision
+            if (checkCollision(obstacle)) {
+                alert('Game Over! Votre score est : ' + score);
+                clearInterval(interval);
+                location.reload(); // Redémarre le jeu
+            }
+        }
+    }, 20);
+}
+
+// Function to check collision
+function checkCollision(obstacle) {
+    const dinoRect = dino.getBoundingClientRect();
+    const obstacleRect = obstacle.getBoundingClientRect();
+
+    return !(
+        dinoRect.right < obstacleRect.left ||
+        dinoRect.left > obstacleRect.right ||
+        dinoRect.bottom < obstacleRect.top ||
+        dinoRect.top > obstacleRect.bottom
+    );
+}
+
+// Function to update the score
+function updateScore() {
+    score++; // Incrémente le score
+    scoreDisplay.textContent = 'Score: ' + score; // Met à jour l'affichage du score
+}
+
+
+            </script>
     <!-- About Start -->
     <div class="container-fluid about pt-5">
         <div class="container">

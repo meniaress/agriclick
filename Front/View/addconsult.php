@@ -1,39 +1,27 @@
 <?php
-// Include the database configuration file
-include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\config.php';
+// Start the session if needed
+session_start();
 
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
-    $id_animal = $_POST['id_animal'];
-    $nomp = $_POST['nomp'];
-    $telp = $_POST['telp'];
-    $antmedicaux = $_POST['antmedicaux'];
-    $diagnostic = $_POST['diagnostic'];
-    $reco = $_POST['reco'];
-    $datec = $_POST['datec'];
+    // Include necessary files
+    include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Controller\crudconsult.php';
+    include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Model\consults.php';
 
-    try {
-        // Prepare the insert query
-        $stmt = $pdo->prepare("INSERT INTO consultation (id_animal, nomp, telp, antmedicaux, diagnostic, reco, datec) 
-                               VALUES (:id_ani, :nomp, :telp, :antmedicaux, :diagnostic, :reco, :datec)");
+    // Validate and set id_ani
+    $id_ani = (int)$_POST['id_ani']; // Assuming id_ani is passed from the form
 
-        // Bind the parameters
-        $stmt->bindParam(':id_animal', $id_animal);
-        $stmt->bindParam(':nomp', $nomp);
-        $stmt->bindParam(':telp', $telp);
-        $stmt->bindParam(':antmedicaux', $antmedicaux);
-        $stmt->bindParam(':diagnostic', $diagnostic);
-        $stmt->bindParam(':reco', $reco);
-        $stmt->bindParam(':datec', $datec);
+    // Create a new Consults object
+    $consult = new Consults($id_ani, $_POST['nomp'], $_POST['telp'], $_POST['antmedicaux'], $_POST['diagnostic'], $_POST['reco'], $_POST['datec']);
 
-        // Execute the query
-        $stmt->execute();
+    // Create an instance of the controller
+    $consultController = new CrudConsult();
 
-        // Redirect or show success message
-        echo "Consultation has been successfully added!";
-    } catch (PDOException $e) {
-        // If something goes wrong, show the error message
-        echo "Error: " . $e->getMessage();
-    }
+    // Call the method to add the consultation
+    $consultController->addConsult($consult);
+
+    // Redirect to the consultation page
+    header("Location: consult.php");
+    exit(); // Always call exit after header redirection
 }
 ?>

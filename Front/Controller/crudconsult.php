@@ -1,6 +1,6 @@
 <?php
 include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\config.php';
-include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Model\conuslts.php';
+include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Model\consults.php';
 include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Model\animals.php';
 
 class Crudconsult
@@ -17,17 +17,17 @@ class Crudconsult
         }
     }
 
-    public function addconsult($consult,$id_ani)
+    public function addconsult($consult)
     {
-        $sql = "INSERT INTO consultation (id_ani,nomanimal, nomp, telp, antmedicaux, diagnostic, reco, datec) 
-                VALUES (:id_ani,:nomanimal, :nomp, :telp, :antmedicaux, :diagnostic, :reco, :datec)";
+        $sql = "INSERT INTO consultation ( id_ani,nomp, telp, antmedicaux, diagnostic, reco, datec) 
+                VALUES ( :id_ani,:nomp, :telp, :antmedicaux, :diagnostic, :reco, :datec)";
         $db = config::getConnexion();
         
         try {
             $req = $db->prepare($sql);
             $req->execute([
-                'id_ani' => $id_ani,
-                'nomanimal' => $consult->getNomAnimal(),
+                'id_ani' => $consult->getIdAni(),
+                //'nom_ani' => $consult->getNomAnimal(),
                 'nomp' => $consult->getNomP(),
                 'telp' => $consult->getTelP(),
                 'antmedicaux' => $consult->getAntMedicaux(),
@@ -68,9 +68,9 @@ class Crudconsult
         }
     }
 
-    function updateconsult($id, $nomanimal, $nomp, $telp, $antmedicaux, $diagnostic, $reco, $datec)
+    function updateconsult($id, $id_ani, $nomp, $telp, $antmedicaux, $diagnostic, $reco, $datec)
     {
-        $sql = "UPDATE consultation SET nomanimal = :nomanimal, nomp = :nomp, telp = :telp, 
+        $sql = "UPDATE consultation SET id_ani = :id_ani, nomp = :nomp, telp = :telp, 
                 antmedicaux = :antmedicaux, diagnostic = :diagnostic, reco = :reco, datec = :datec 
                 WHERE id_consult = :id";
 
@@ -79,7 +79,7 @@ class Crudconsult
             $query = $db->prepare($sql);
             $query->execute([
                 'id' => $id,
-                'nomanimal' => $nomanimal,
+                'id_ani' => $id_ani,
                 'nomp' => $nomp,
                 'telp' => $telp,
                 'antmedicaux' => $antmedicaux,
@@ -93,13 +93,13 @@ class Crudconsult
     }
     public function listConsultations()
 {
-    $sql = "SELECT c.id_consult, c.diagnostic, c.datec, a.name AS nom_animal 
+    $sql = "SELECT c.id_consult,c.nomp,c.telp,c.antmedicaux, c.diagnostic,c.reco, c.datec, a.nom_ani AS nom_ani
             FROM consultation c
-            JOIN animal a ON c.id_animal = a.id_animal"; // Join consultation with animal
+            LEFT JOIN animal a ON c.id_ani = a.id_ani"; // Join consultation with animal
     $db = config::getConnexion();
     try {
         $query = $db->query($sql);
-        return $query->fetchAll(); // Fetch all consultations with animal details
+        return $query->fetchAll(PDO::FETCH_ASSOC); // Fetch all consultations with animal details
     } catch (Exception $e) {
         die('Error list: ' . $e->getMessage());
     }
@@ -107,7 +107,7 @@ class Crudconsult
 
 public function getAllAnimals() {
     // SQL query to fetch id and name of all animals
-    $sql = "SELECT id_ani, name FROM animal"; 
+    $sql = "SELECT id_ani, nom_ani FROM animal"; 
     $db = config::getConnexion();
     
     try {

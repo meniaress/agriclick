@@ -78,7 +78,7 @@
                             $animalList = $consultController->getAllAnimals();
                             if (!empty($animalList)) {
                                 foreach ($animalList as $animal) {
-                                    echo "<option value='" . $row["id_ani"] . "'>" . $row["nom_ani"]  . "</option>";
+                                    echo "<option value='" . $animal["id_ani"] . "'>" . $animal["nom_ani"]  . "</option>";
                                 }
                             } else {
                                 echo "<option>No animals found</option>";
@@ -86,6 +86,9 @@
                             ?>
                         </select>
                     </div>
+                    <div
+                    <input type="hidden" name="id_ani" value="1">
+                    </form>
 
                     <div class="mb-3">
                         <label for="nomp" class="form-label">Nom propriétaire</label>
@@ -124,7 +127,12 @@
     </div>
 </div>
 <!-- consult Form End -->
-
+<?php
+    
+    include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Controller\crudconsult.php';
+    $consultController = new Crudconsult();
+    $consultList = $consultController->listconsult();
+    ?>
 <!-- affichage -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
@@ -155,7 +163,8 @@
                                 <tr>
                                     <th scope="row"><?= $index++; ?></th>
                                     <td hidden="hidden"><?= $consult['id_consult']; ?></td>
-                                    <td><?= $consult['nomanimal']; ?></td>
+                                    <td hidden="hidden"><?= $consult['id_ani']; ?></td>
+                                    <td><?= isset($consult['nomanimal']) && !empty($consult['nomanimal']) ? $consult['nomanimal'] : 'Unknown'; ?></td>
                                     <td><?= $consult['nomp']; ?></td>
                                     <td><?= $consult['telp']; ?></td>
                                     <td><?= $consult['antmedicaux']; ?></td>
@@ -185,7 +194,7 @@
 <!-- end affichage -->
 
 
-    <script>
+   <script>
 document.getElementById('consult').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
 
