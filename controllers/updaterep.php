@@ -115,6 +115,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </nav>
         <!-- Sidebar -->
+    <div class="container-fluid page-body-wrapper">
+
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
@@ -199,6 +201,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+ </div>
+
     <!-- base:js -->
     <script src="dashboard/vendors/js/vendor.bundle.base.js"></script>
     <script src="dashboard/js/off-canvas.js"></script>

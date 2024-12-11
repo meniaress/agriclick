@@ -90,6 +90,13 @@ session_start(); // Start the session
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link " href="dashboard/statistiques.php">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title ">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
+                        
+                    </a>
+                </li>
                 </ul>
             </nav>
 

@@ -68,52 +68,48 @@ session_start();
                 </ul>
             </div>
         </nav>
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item">
-                    <div class="d-flex sidebar-profile">
-                        <div class="sidebar-profile-image">
-                            
-                            <img src="img/faces/face29.png" alt="image">
-                            <span class="sidebar-status-indicator"></span>
-                        </div>
-                        <div class="sidebar-profile-name">
-                            <p class="sidebar-name">Khadija Derbel</p>
-                            <p class="sidebar-designation">Welcome</p>
-                        </div>
-                    </div>
-                    <div class="nav-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="search">
-                                    <i class="typcn typcn-zoom"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="sidebar-menu-title">Dash menu</p>
-                    
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <i class="typcn typcn-device-desktop menu-icon"></i>
-                        <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
-                        
-                    </a>
-                    </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="statistiques.php">
-                        <i class="typcn typcn-device-desktop menu-icon"></i>
-                        <span class="menu-title ">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
-                        
-                    </a>
-                </li>
-                <!-- Add other sidebar items here -->
-            </ul>
-        </nav>
 
         <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <div class="d-flex sidebar-profile">
+                            <div class="sidebar-profile-image">
+                                <img src="img/faces/face29.png" alt="image">
+                                <span class="sidebar-status-indicator"></span>
+                            </div>
+                            <div class="sidebar-profile-name">
+                                <p class="sidebar-name">Khadija Derbel</p>
+                                <p class="sidebar-designation">Welcome</p>
+                            </div>
+                        </div>
+                        <div class="nav-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="search <i class="typcn typcn-zoom"></i>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="sidebar-menu-title">Dash menu</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="statistiques.php">
+                            <i class="typcn typcn-chart-bar menu-icon"></i>
+                            <span class="menu-title">Statistiques des Réponses</span>
+                        </a>
+                    </li>
+                    <!-- Add other sidebar items here -->
+                </ul>
+            </nav>
+
             <div class="main-panel">
                 <div class="content-wrapper">
                     <h3 class="mb-4">Statistiques des Réponses</h3>
@@ -139,7 +135,7 @@ session_start();
                             $normal = $row['count']; 
                         } elseif ($row['type'] === 'positive') {
                             $positive = $row['count']; 
-                        } elseif ($row[' type'] === 'negative') {
+                        } elseif ($row['type'] === 'negative') {
                             $negative = $row['count']; 
                         }
                     }

@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($nom) && !empty($email) && !empty($sujet) && !empty($message)) {
         // Mettre à jour la réclamation
-        $sql = "UPDATE reclamation SET nom = :nom, email = :email, sujet = :sujet, message = :message, status = :status WHERE id = :id"; // Corrected table name
+        $sql = "UPDATE reclamtion SET nom = :nom, email = :email, sujet = :sujet, message = :message, status = :status WHERE id = :id"; // Corrected table name
         $req = $db->prepare($sql);
         $req->bindValue(':nom', $nom);
         $req->bindValue(':email', $email);
@@ -113,6 +113,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </nav>
         <!-- Sidebar -->
+        <div class="container-fluid page-body-wrapper">
+
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
                 <li class="nav-item">
@@ -199,6 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
     <!-- base:js -->

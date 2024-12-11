@@ -79,6 +79,7 @@ session_start(); // Démarrer la session
                     <li class="nav-item d-none d-lg-flex">
                         <a class="nav-link active" href="#">Gestion des REPONSES</a>
                     </li>
+                    
                 </ul>
             </div>
         </nav>
@@ -105,6 +106,12 @@ session_start(); // Démarrer la session
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                    <a class="nav-link " href="statistiques.php">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title ">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
+                        
+                    </a>
                 </ul>
             </nav>
 
