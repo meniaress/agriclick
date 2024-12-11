@@ -4,6 +4,48 @@ $PostulationC = new PostulationC();
 
 $idOffre = isset($_GET['idOffre']) ? $_GET['idOffre'] : null;
 $list = $PostulationC->getPostulationsByOffre($idOffre);
+// Fonction pour exporter les postulations au format CSV
+function exportPostulationsToCSV($postulations)
+{
+    // Nom du fichier CSV de sortie
+    $filename = 'postulations_export.csv';
+
+    // Ouverture du fichier en écriture
+    $fp = fopen($filename, 'w');
+
+    // En-têtes du fichier CSV
+    $headers = array('IdPostulation', 'Nom', 'Prenom', 'Age', 'Localisation', 'IdOffre','etat');
+    fputcsv($fp, $headers);
+
+    // Écriture des données de postulation dans le fichier CSV
+    foreach ($postulations as $postulation) {
+        fputcsv($fp, array(
+            $postulation['idPostulation'],
+            $postulation['nom'],
+            $postulation['prenom'],
+            $postulation['age'],
+            $postulation['localisationp'],
+            $postulation['idOffre'],
+            $postulation['etat']
+        ));
+    }
+
+    // Fermeture du fichier
+    fclose($fp);
+
+    // Envoi du fichier CSV au navigateur
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    readfile($filename);
+
+    // Suppression du fichier CSV après l'envoi
+    unlink($filename);
+}
+
+if (isset($_POST['export'])) {
+    exportPostulationsToCSV($list);
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -236,6 +278,9 @@ $list = $PostulationC->getPostulationsByOffre($idOffre);
                 ?>
             </tbody>
         </table>
+        <form method="post">
+            <button type="submit" name="export" class="btn btn-success">Exporter</button>
+        </form>
         <a href="indexadmincat.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
    <!-- Footer Start -->
    <!-- base:js -->

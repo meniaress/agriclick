@@ -165,12 +165,12 @@ if (
                 return false;
             }
 
-            if (localisation.length <= 5) {
+            if (localisation.length <= 3) {
                 alert("La localisation doit contenir plus de 5 caractères.");
                 return false;
             }
 
-            if (travailOffre.length <= 5) {
+            if (travailOffre.length <= 3) {
                 alert("Le travail doit contenir plus de 5 caractères.");
                 return false;
             }

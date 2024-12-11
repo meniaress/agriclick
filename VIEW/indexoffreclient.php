@@ -3,7 +3,10 @@ include '../CONTROLLER/OffreC.php';
 $OffreC = new OffreC();
 
 $idCategorie = isset($_GET['idCategorie']) ? $_GET['idCategorie'] : null;
-$list = $OffreC->getOffresByCategorie($idCategorie);
+$minSalaire = isset($_GET['minSalaire']) ? $_GET['minSalaire'] : null;
+$maxSalaire = isset($_GET['maxSalaire']) ? $_GET['maxSalaire'] : null;
+
+$list = $OffreC->getOffresByCategorie($idCategorie, $minSalaire, $maxSalaire);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,6 +108,20 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
     <h1 id="root">OFFRES DE TRAVAIL</h1>
 <div class="container-fluid py-5">
     <div class="container">
+        <form method="GET" action="indexoffreclient.php">
+            <input type="hidden" name="idCategorie" value="<?php echo $idCategorie; ?>">
+            <div class="row mb-3">
+                <div class="col">
+                    <input type="number" name="minSalaire" class="form-control" placeholder="Min Salaire" value="<?php echo $minSalaire; ?>">
+                </div>
+                <div class="col">
+                    <input type="number" name="maxSalaire" class="form-control" placeholder="Max Salaire" value="<?php echo $maxSalaire; ?>">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Filtrer</button>
+                </div>
+            </div>
+        </form>
         <div class="row g-5">
             <?php 
             if ($list) {
@@ -117,6 +134,7 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                     echo '<p>Salaire: ' . $Offre['salaire'] . '</p>';
                     echo '<div class="mt-3">';
                     echo '<a class="btn btn-secondary" href="addpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">Ajouter Postulation</a>';
+                    echo '<a class="btn btn-primary" href="indexresult.php?idOffre=' . $Offre['idOffre'] . '" role="button">voir les resultats</a>';
                     echo '</div>'; // Close actions div
                     echo '</div>'; // Close service-item div
                     echo '</div>'; // Close column div

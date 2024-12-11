@@ -116,9 +116,9 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
                     echo '<p>Localisation: ' . $Offre['localisation'] . '</p>';
                     echo '<p>Salaire: ' . $Offre['salaire'] . '</p>';
                     echo '<div class="mt-3">';
-                    echo '<a class="btn btn-primary" href="updateoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button"><i class="fas fa-edit"></i></a>';
+                    echo '<a class="btn btn-secondary" href="updateoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button"><i class="fas fa-edit"></i></a>';
                     echo '<a class="btn btn-danger" href="deleteoffre.php?idOffre=' . $Offre['idOffre'] . '" role="button"><i class="fas fa-trash"></i></a>';
-                    echo '<a class="btn btn-secondary" href="indexpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">Voir les Postulations</a>';
+                    echo '<a class="btn btn-primary" href="indexpostulation.php?idOffre=' . $Offre['idOffre'] . '" role="button">Voir les Postulations</a>';
                     echo '</div>'; // Close actions div
                     echo '</div>'; // Close service-item div
                     echo '</div>'; // Close column div
@@ -128,7 +128,7 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
         </div>
     </div>
 </div>
-<a href="addoffre.php?idCategorie=<?php echo $idCategorie; ?>" class="btn btn-secondary py-md-3 px-md-5">Ajouter Offre</a>
+<a href="addoffre.php?idCategorie=<?php echo $idCategorie; ?>" class="btn btn-primary py-md-3 px-md-5">Ajouter Offre</a>
 <a href="indexCategorie.php" class="btn btn-secondary py-md-3 px-md-5">Retourner</a>
  <!-- Footer Start -->
 <div class="container-fluid bg-footer bg-primary text-white mt-5">

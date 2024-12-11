@@ -96,16 +96,32 @@ class OffreC
             echo 'Erreur: ' . $e->getMessage();
         }
     }
-
-    function getOffresByCategorie($idCategorie)
+    function getOffresByCategorie($idCategorie, $minSalaire = null, $maxSalaire = null)
 {
-    $sql = "SELECT * FROM offre WHERE idCategorie = :idCategorie ORDER BY salaire DESC";
+    $sql = "SELECT * FROM offre WHERE idCategorie = :idCategorie";
+    
+    if ($minSalaire !== null) {
+        $sql .= " AND salaire >= :minSalaire";
+    }
+    if ($maxSalaire !== null) {
+        $sql .= " AND salaire <= :maxSalaire";
+    }
+    
+    $sql .= " ORDER BY salaire DESC";
+    
     $db = config::getConnexion();
     try {
         $query = $db->prepare($sql);
         $query->bindValue(':idCategorie', $idCategorie, PDO::PARAM_INT);
+        
+        if ($minSalaire !== null) {
+            $query->bindValue(':minSalaire', $minSalaire, PDO::PARAM_INT);
+        }
+        if ($maxSalaire !== null) {
+            $query->bindValue(':maxSalaire', $maxSalaire, PDO::PARAM_INT);
+        }
+        
         $query->execute();
-
         $offres = $query->fetchAll();
         return $offres;
     } catch (Exception $e) {

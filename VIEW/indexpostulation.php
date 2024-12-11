@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 include '../CONTROLLER/PostulationC.php';
 $PostulationC = new PostulationC();
 
@@ -13,6 +14,48 @@ if (isset($_POST['action']) && isset($_POST['idPostulation'])) {
     header("Location: indexpostulation.php?idOffre=$idOffre");
     exit;
 }
+function exportPostulationsToCSV($postulations)
+{
+    // Nom du fichier CSV de sortie
+    $filename = 'postulations_export.csv';
+
+    // Ouverture du fichier en écriture
+    $fp = fopen($filename, 'w');
+
+    // En-têtes du fichier CSV
+    $headers = array('IdPostulation', 'Nom', 'Prenom', 'Age', 'Localisation', 'IdOffre','etat');
+    fputcsv($fp, $headers);
+
+    // Écriture des données de postulation dans le fichier CSV
+    foreach ($postulations as $postulation) {
+        fputcsv($fp, array(
+            $postulation['idPostulation'],
+            $postulation['nom'],
+            $postulation['prenom'],
+            $postulation['age'],
+            $postulation['localisationp'],
+            $postulation['idOffre'],
+            $postulation['etat']
+        ));
+    }
+
+    // Fermeture du fichier
+    fclose($fp);
+
+    // Envoi du fichier CSV au navigateur
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    readfile($filename);
+
+    // Suppression du fichier CSV après l'envoi
+    unlink($filename);
+}
+
+if (isset($_POST['export'])) {
+    exportPostulationsToCSV($list);
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,51 +155,55 @@ if (isset($_POST['action']) && isset($_POST['idPostulation'])) {
     </div>
     <!-- Hero End -->
     <h1 id="root">POSTULATIONS</h1>
-<div class="container">
-    <table class="table table-hover table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Âge</th>
-                <th>Localisation</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            if ($list) {
-                foreach ($list as $Postulation) {
-                    echo "<tr>";
-                    echo "<td>" . $Postulation['nom'] . "</td>";
-                    echo "<td>" . $Postulation['prenom'] . "</td>";
-                    echo "<td>" . $Postulation['age'] . "</td>";
-                    echo "<td>" . $Postulation['localisationp'] . "</td>";
-                    echo '<td>';
-                    if ($Postulation['etat'] == 'postulation acceptee') {
-                        echo 'postulation acceptee';
-                    } elseif ($Postulation['etat'] == 'postulation refusee') {
-                        echo 'postulation refusee';
-                    } else {
-                        echo '<form method="post" style="display:inline-block;">';
-                        echo '<input type="hidden" name="idPostulation" value="' . $Postulation['idPostulation'] . '">';
-                        echo '<button type="submit" name="action" value="accepter" class="btn btn-primary">accepter</button>';
-                        echo '</form>';
-                        echo '<form method="post" style="display:inline-block;">';
-                        echo '<input type="hidden" name="idPostulation" value="' . $Postulation['idPostulation'] . '">';
-                        echo '<button type="submit" name="action" value="refuser" class="btn btn-primary">refuser</button>';
-                        echo '</form>';
-                        echo 'En attente';
+    <div class="container">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Âge</th>
+                    <th>Localisation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                if ($list) {
+                    foreach ($list as $Postulation) {
+                        echo "<tr>";
+                        echo "<td>" . $Postulation['nom'] . "</td>";
+                        echo "<td>" . $Postulation['prenom'] . "</td>";
+                        echo "<td>" . $Postulation['age'] . "</td>";
+                        echo "<td>" . $Postulation['localisationp'] . "</td>";
+                        echo '<td>';
+                        if ($Postulation['etat'] == 'postulation acceptee') {
+                            echo 'deja fait';
+                        } elseif ($Postulation['etat'] == 'postulation refusee') {
+                            echo 'deja fait';
+                        } else {
+                            echo '<form method="post" style="display:inline-block;">';
+                            echo '<input type="hidden" name="idPostulation" value="' . $Postulation['idPostulation'] . '">';
+                            echo '<button type="submit" name="action" value="accepter" class="btn btn-primary">accepter</button>';
+                            echo '</form>';
+                            echo '<form method="post" style="display:inline-block;">';
+                            echo '<input type="hidden" name="idPostulation" value="' . $Postulation['idPostulation'] . '">';
+                            echo '<button type="submit" name="action" value="refuser" class="btn btn-primary">refuser</button>';
+                            echo '</form>';
+                            echo 'En attente';
+                        }
+                        echo '</td>';
+                        echo "</tr>";
                     }
-                    echo '</td>';
-                    echo "</tr>";
                 }
-            }
-            ?>
-        </tbody>
-    </table>
-    <a href="indexcategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
-</div>   
+                ?>
+            </tbody>
+        </table>
+        <form method="post">
+            <button type="submit" name="export" class="btn btn-primary py-md-3 px-md-5">Exporter</button>
+        </form>
+        <br>
+        <a href="indexcategorie.php" class="btn btn-secondary py-md-3 px-md-5">retourne</a>
+    </div>   
     <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">

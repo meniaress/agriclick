@@ -113,7 +113,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
                     echo '<img src="' . $Cat['imageCategorie'] . '" alt="Image Categorie" style="width: 200px; height: auto;" class="mb-3">';
                     echo '<h4>' . $Cat['nomCategorie'] . '</h4>';
                     echo '<div class="mt-3">';
-                    echo '<a class="btn btn-primary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-edit"></i></a> ';
+                    echo '<a class="btn btn-secondary" href="updatecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-edit"></i></a> ';
                     echo '<a class="btn btn-danger" href="deletecategorie.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-trash"></i></a> ';
                     echo '<a class="btn btn-secondary" href="indexoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button"><i class="fas fa-eye"></i></a> ';
                     echo '<a class="btn btn-primary" href="addoffre.php?idCategorie=' . $Cat['idCategorie'] . '" role="button">Ajouter offre</a>';
@@ -126,7 +126,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
         </div>
     </div>
 </div>
-<a href="addcategorie.php" class="btn btn-secondary py-md-3 px-md-5">Ajouter categorie</a>
+<a href="addcategorie.php" class="btn btn-primary py-md-3 px-md-5">Ajouter categorie</a>
 
     
 <!-- Footer Start -->

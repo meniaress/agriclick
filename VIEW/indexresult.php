@@ -1,49 +1,19 @@
 <?php
-include_once '../CONTROLLER/PostulationC.php';
-
-$errorMessage = "";
-$successMessage = "";
-
-// create postulation
-$Postulation = null;
-
-// create an instance of the controller
+include '../CONTROLLER/PostulationC.php';
 $PostulationC = new PostulationC();
-$idOffre = isset($_GET['idOffre']) ? $_GET['idOffre'] : null;
 
-if (
-    isset($_POST["nom"]) &&
-    isset($_POST["prenom"]) &&
-    isset($_POST["age"]) &&
-    isset($_POST["localisationp"]) &&
-    isset($_POST["idOffre"])
-) {
-    if (
-        !empty($_POST["nom"]) &&
-        !empty($_POST["prenom"]) &&
-        !empty($_POST["age"]) &&
-        !empty($_POST["localisationp"]) &&
-        !empty($_POST["idOffre"])
-    ) {
-        // Check if the combination of nom and prenom already exists
-        $existingPostulation = $PostulationC->checkIfExists($_POST['nom'], $_POST['prenom']);
-        if ($existingPostulation) {
-            $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Nom et prénom existent déjà !</label>";
-        } else {
-            $Postulation = new Postulation(
-                null,
-                $_POST['nom'],
-                $_POST['prenom'],
-                $_POST['age'],
-                $_POST['localisationp'],
-                $_POST['idOffre']
-            );
-            $PostulationC->ajouterPostulation($Postulation);
-            header("Location:indexcategorieclient.php?idOffre=$idOffre&successMessage=Postulation ajoutée avec succès");
-        }
-    } else {
-        $errorMessage = "<label id='form' style='color: red; font-weight: bold;'>&emsp;Une information manquante !</label>";
-    }
+$idOffre = isset($_GET['idOffre']) ? $_GET['idOffre'] : null;
+$searchNom = isset($_GET['searchNom']) ? $_GET['searchNom'] : '';
+
+$list = $PostulationC->getPostulationsByOffre($idOffre, $searchNom);
+
+if (isset($_POST['action']) && isset($_POST['idPostulation'])) {
+    $action = $_POST['action'];
+    $idPostulation = $_POST['idPostulation'];
+    $etat = ($action == 'accepter') ? 'postulation acceptee' : 'postulation refusee';
+    $PostulationC->updatePostulationStatus($idPostulation, $etat);
+    header("Location: indexresult.php?idOffre=$idOffre&searchNom=$searchNom");
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -74,8 +44,8 @@ if (
     <link href="css/style.css" rel="stylesheet">
     </head>
 <body>
-     <!-- Topbar Start -->
-     <div class="container-fluid px-5 d-none d-lg-block">
+    <!-- Topbar Start -->
+    <div class="container-fluid px-5 d-none d-lg-block">
         <div class="row gx-5 py-3 align-items-center">
             <div class="col-lg-3">
                 <div class="d-flex align-items-center justify-content-start">
@@ -100,7 +70,7 @@ if (
         </div>
     </div>
     <!-- Topbar End -->
-      <!-- Navbar Start -->
+    <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
         <a href="index.html" class="navbar-brand d-flex d-lg-none">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
@@ -128,7 +98,6 @@ if (
                 <a href="contact.html" class="nav-item nav-link">reclamation</a>
             </div>
         </div>
-        
     </nav>
     <!-- Navbar End -->
     <!-- Hero Start -->
@@ -136,116 +105,52 @@ if (
         <div class="container py-5">
             <div class="row justify-content-start">
                 <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 text-white mb-md-4">categorie travail</h1>
+                    <h1 class="display-1 text-white mb-md-4">RESULTATS</h1>
                     <a href="index.html" class="btn btn-primary py-md-3 px-md-5 me-3">Home</a>
                     <a href="about.html" class="btn btn-secondary py-md-3 px-md-5">About</a>
                 </div>
             </div>
         </div>
     </div>
-    <title>Postulations</title>
-    <script>
-    function validateForm() {
-        var nom = document.getElementById("nom").value;
-        var prenom = document.getElementById("prenom").value;
-        var age = document.getElementById("age").value;
-        var localisationp = document.getElementById("localisationp").value;
-
-        if (nom.trim() === "" || prenom.trim() === "" || age.trim() === "" || localisationp.trim() === "") {
-            alert("Tous les champs sont obligatoires.");
-            return false;
-        }
-
-        if (nom.length <= 3) {
-            alert("Le nom doit contenir plus de 3 caractères.");
-            return false;
-        }
-
-        if (prenom.length <= 2) {
-            alert("Le prénom doit contenir plus de 3 caractères.");
-            return false;
-        }
-
-        if (isNaN(age) || age <= 0) {
-            alert("L'âge doit être un nombre positif.");
-            return false;
-        }
-
-        if (localisationp.length <= 5) {
-            alert("La localisation doit contenir plus de 5 caractères.");
-            return false;
-        }
-
-        var specialChars = /[!@#$%^&*(),.?":{}|<>0-9]/;
-        if (specialChars.test(nom)) {
-            alert("Le nom ne doit pas contenir de chiffres ou de signes spéciaux.");
-            return false;
-        }
-
-        if (specialChars.test(prenom)) {
-            alert("Le prénom ne doit pas contenir de chiffres ou de signes spéciaux.");
-            return false;
-        }
-        if (specialChars.test(localisationp)) {
-            alert("La localisation ne doit pas contenir de chiffres ou de signes spéciaux.");
-            return false;
-        }
-
-        return true;
-    }
-    </script>
-    <style>
-        .error-message {
-            color: red;
-            font-size: 0.8em;
-            margin-top: 0.2em;
-        }
-    </style>
-</head>
-<body>
-    <div class="container my-5">
-        <center><h1>Nouvelle postulation</h1></center>
-        <hr>
-        <br>
-        <form method="post" class="form" name="form" id="form" onsubmit="return validateForm()">
+    <!-- Hero End -->
+    <h1 id="root">RESULTATS</h1>
+    <div class="container">
+        <form method="GET" action="indexresult.php">
             <input type="hidden" name="idOffre" value="<?php echo $idOffre; ?>">
             <div class="input-group mb-3">
-                <label class="col-sm-3 col-form-label">Nom</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="nom" id="nom" placeholder="Nom">
-                </div>
+                <input type="text" class="form-control" name="searchNom" placeholder="Rechercher par nom" value="<?php echo htmlspecialchars($searchNom); ?>">
+                <button class="btn btn-primary" type="submit">Rechercher</button>
             </div>
-            <div class="input-group mb-3">
-                <label class="col-sm-3 col-form-label">Prénom</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Prénom">
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <label class="col-sm-3 col-form-label">Âge</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="age" id="age" placeholder="Âge">
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <label class="col-sm-3 col-form-label">Localisation</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="localisationp" id="localisationp" placeholder="Localisation">
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="offset-sm-3 col-sm-3 d-grid">
-                    <button type="submit" class="btn btn-primary" name="Ajouter" id="Ajouter">Ajouter</button>
-                </div>
-                <div class="col-sm-3 d-grid">
-                    <a class="btn btn-secondary py-md-3 px-md-5" href="indexcategorieclient.php?idOffre=<?php echo $idOffre; ?>" role="button">Quitter</a>
-                </div>
-            </div>
-            <?php if ($errorMessage) echo $errorMessage; ?>
         </form>
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Âge</th>
+                    <th>Localisation</th>
+                    <th>État</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                if ($list) {
+                    foreach ($list as $Postulation) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($Postulation['nom']) . "</td>";
+                        echo "<td>" . htmlspecialchars($Postulation['prenom']) . "</td>";
+                        echo "<td>" . htmlspecialchars($Postulation['age']) . "</td>";
+                        echo "<td>" . htmlspecialchars($Postulation['localisationp']) . "</td>";
+                        echo "<td>" . htmlspecialchars($Postulation['etat']) . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+        <a href="indexcategorieclient.php" class="btn btn-secondary py-md-3 px-md-5">retourner</a>
     </div>
- <!-- Footer Start -->
- <div class="container-fluid bg-footer bg-primary text-white mt-5">
+    <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
                 <div class="col-lg-8 col-md-6">
@@ -335,4 +240,4 @@ if (
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
 </body>
-</html>    
+</html>     

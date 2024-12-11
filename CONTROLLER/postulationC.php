@@ -96,6 +96,7 @@ class PostulationC
             echo 'Erreur: ' . $e->getMessage();
         }
     }
+
     function updatePostulationStatus($idPostulation, $etat)
     {
         $sql = "UPDATE postulation SET etat = :etat WHERE idPostulation = :idPostulation";
@@ -110,17 +111,41 @@ class PostulationC
         }
     }
 
-    function getPostulationsByOffre($idOffre)
+    function getPostulationsByOffre($idOffre, $searchNom = '')
     {
         $sql = "SELECT * FROM postulation WHERE idOffre = :idOffre";
+        if ($searchNom) {
+            $sql .= " AND nom LIKE :searchNom";
+        }
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
             $query->bindValue(':idOffre', $idOffre, PDO::PARAM_INT);
+            if ($searchNom) {
+                $searchNom = '%' . $searchNom . '%';
+                $query->bindValue(':searchNom', $searchNom, PDO::PARAM_STR);
+            }
             $query->execute();
 
             $postulations = $query->fetchAll();
             return $postulations;
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
+    }
+
+    // New method to check if a combination of nom and prenom exists
+    function checkIfExists($nom, $prenom)
+    {
+        $sql = "SELECT * FROM postulation WHERE nom = :nom AND prenom = :prenom";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->execute([
+                'nom' => $nom,
+                'prenom' => $prenom
+            ]);
+            return $query->fetch();
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
         }
