@@ -7,9 +7,9 @@ class Client {
     private $password;
     private $telephone;
     private $choix;
-    private $photo; // Nouvel attribut pour la photo de profil
-
-    // Constructor modifié pour inclure la photo
+    private $photo; 
+    private $date_creation;
+   
     public function __construct($nom, $prenom, $nom_utilisateur, $email, $password, $telephone, $choix, $photo = null) {
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -18,10 +18,11 @@ class Client {
         $this->password = $password;
         $this->telephone = $telephone;
         $this->choix = $choix;
-        $this->photo = $photo; // Initialise la photo (valeur par défaut : null)
+        $this->photo = $photo;
+        $this->date_creation = $date_creation; 
     }
 
-    // Getters
+    
     public function getNom() { return $this->nom; }
     public function getPrenom() { return $this->prenom; }
     public function getNomUtilisateur() { return $this->nom_utilisateur; }
@@ -35,5 +36,10 @@ class Client {
     public function setPhoto($photo) {
         $this->photo = $photo;
     }
+
+    public function setDateCreation($date_creation) {
+        $this->date_creation = $date_creation;
+    }
+    
 }
 ?>
