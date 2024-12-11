@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mot de Passe Oublié</title>
+    <title>Réinitialisation du Mot de Passe</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <style>
         * {
@@ -59,26 +59,33 @@
             cursor: pointer;
             text-transform: uppercase;
             font-weight: bold;
-            transition: transform 80ms ease-in;
         }
 
-        button:active {
-            transform: scale(0.95);
+        .valid {
+            color: green;
         }
 
-        button:focus {
-            outline: none;
+        .invalid {
+            color: red;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h1>Mot de Passe Oublié</h1>
-        <form method="post" action="forgot_password.php">
-            <label for="email">Entrez votre email :</label>
-            <input type="text" id="email" name="email"  />
-            <button type="submit">Envoyer</button>
+        <h1>Réinitialisation du Mot de Passe</h1>
+        <form id="resetForm" action="reset_password.php" method="POST">
+            <input type="hidden" name="email" value="<?php echo htmlspecialchars($_GET['email']); ?>">
+        
+            <label for="password">Nouveau Mot de Passe :</label>
+            <input type="password" id="password" name="password" required>
+        
+            <label for="confirm_password">Confirmer le Mot de Passe :</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+        
+            <button type="submit">Réinitialiser le Mot de Passe</button>
         </form>
+        
     </div>
 </body>
+
 </html>
