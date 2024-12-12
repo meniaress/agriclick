@@ -39,6 +39,8 @@ $responses = $reponseList->AfficherReponse($type); // Récupérer les réponses
 
 session_start(); // Démarrer la session
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -50,6 +52,7 @@ session_start(); // Démarrer la session
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="img/icon.png" />
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div class="container-scroller">
@@ -107,11 +110,11 @@ session_start(); // Démarrer la session
                         </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link " href="statistiques.php">
-                        <i class="typcn typcn-device-desktop menu-icon"></i>
-                        <span class="menu-title ">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
-                        
-                    </a>
+                        <a class="nav-link" href="statistiques.php">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 

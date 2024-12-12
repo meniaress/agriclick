@@ -135,7 +135,7 @@ session_start();
                             $normal = $row['count']; 
                         } elseif ($row['type'] === 'positive') {
                             $positive = $row['count']; 
-                        } elseif ($row['type'] === 'negative') {
+                        } elseif ($row['type'] === 'négative') {
                             $negative = $row['count']; 
                         }
                     }
