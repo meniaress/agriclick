@@ -111,8 +111,10 @@ $commandes = $commandeController->listCommandes();
     </div>
     <!-- Hero Section End -->
     <div class="container py-5">
-       
-
+        <div class="container py-5">
+                <input type="text" id="searchInput" class="form-control mb-4" placeholder="Search for services..." aria-label="Search for services...">
+                <div class="row">
+        </div>
         <?php if (!empty($commandes)) : ?>
             <table class="table table-bordered">
                 <thead>
@@ -126,12 +128,12 @@ $commandes = $commandeController->listCommandes();
                 </thead>
                 <tbody>
                 <?php foreach ($commandes as $commande) : ?>
-                    <tr>
-                        <td><?= htmlspecialchars($commande['id']) ?></td>
-                        <td><?= htmlspecialchars($commande['date']) ?></td>
-                        <td><?= htmlspecialchars($commande['paiement']) ?></td>
-                        <td><?= htmlspecialchars($commande['message'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($commande['serviceTitle']) ?></td>
+                    <tr id="commande-item">
+                        <td class="Command-id fw-bold"><?= htmlspecialchars($commande['id']) ?></td>
+                        <td class="Command-date fw-bold"><?= htmlspecialchars($commande['date']) ?></td>
+                        <td class="Command-paiement fw-bold"><?= htmlspecialchars($commande['paiement']) ?></td>
+                        <td class="Command-message fw-bold"><?= htmlspecialchars($commande['message'] ?? '') ?></td>
+                        <td class="Command-serviceTitle fw-bold"><?= htmlspecialchars($commande['serviceTitle']) ?></td>
                         <td>
                             <!-- Update Button -->
                             <form method="GET" action="CommandeUpdate.php" style="display:inline-block;">
@@ -256,5 +258,34 @@ $commandes = $commandeController->listCommandes();
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const commandeItems = document.querySelectorAll("#commande-item");
+
+    function filtercommandes() {
+        const query = searchInput.value.toLowerCase();
+
+        commandeItems.forEach(function (item) {
+            const id = item.querySelector(".Command-id").textContent.toLowerCase();
+            const date = item.querySelector(".Command-date").textContent.toLowerCase();
+            const paiement = item.querySelector(".Command-paiement").textContent.toLowerCase();
+            const message = item.querySelector(".Command-message").textContent.toLowerCase();
+            const title = item.querySelector(".Command-serviceTitle").textContent.toLowerCase();
+
+            const matchesQuery = id.includes(query) || date.includes(query) || paiement.includes(query) || message.includes(query) || title.includes(query);
+
+            if (matchesQuery) {
+                item.style.display = ""; // Show the item
+            } else {
+                item.style.display = "none"; // Hide the item
+            }
+        });
+    }
+
+    searchInput.addEventListener("keyup", filtercommandes);
+});
+
+    </script>
 
 </html>
