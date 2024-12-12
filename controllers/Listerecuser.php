@@ -213,7 +213,7 @@ session_start(); // Démarrer la session
                 ?>
             </tbody>
         </table>
-        <a href="index.php" class="return-link">Retour à l'accueil </a>
+        <a href="../view/form.php?success=1" class="return-link">Retour à l'accueil </a>
     </div>
 
     <script>
