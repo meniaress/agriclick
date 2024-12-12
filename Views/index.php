@@ -120,8 +120,11 @@
                         <h1 class="display-5">Pourquoi Devenir Partenaire?</h1>
                     </div>
                     <p class="mb-4">Devenir partenaire de notre plateforme, c’est rejoindre un réseau dynamique dédié à l’agriculture et à l’alimentation. Ensemble, nous créons des opportunités pour les jeunes, soutenons les agriculteurs et promouvons des solutions innovantes pour un secteur plus durable. En collaborant avec nous, vous bénéficiez d’une visibilité accrue, d’un accès direct à une communauté engagée et d’un impact concret sur le développement local et national. Rejoignez-nous pour construire un avenir prospère et responsable dans le monde agricole.</p>
-
+                                    <!-- Bouton qui fait défiler vers le formulaire -->
+                <a href="#partnership-form" class="btn btn-primary py-md-3 px-md-5">Demander un partenariat</a>
+            </div>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -135,65 +138,19 @@
 <div class="container-fluid py-5">
     <div class="container">
         <div class="row g-5">
-            <!-- Bouton qui fait défiler vers le formulaire dans la section "Features" -->
-            <div class="col-lg-4 col-md-6">
-                <div class="mb-3">
-                    <h6 class="text-primary text-uppercase">Partenaires</h6>
-                    <h1 class="display-5">Formulaire de demande de partenariat</h1>
-                </div>
-                <p class="mb-4">Tempor erat elitr at rebum at at clita. Diam dolor diam ipsum et tempor sit. Clita erat ipsum et lorem et sit sed stet labore</p>
-                <!-- Bouton qui fait défiler vers le formulaire -->
-                <a href="#partnership-form" class="btn btn-primary py-md-3 px-md-5">Remplir</a>
-            </div>
-            
-            <!-- Boîtes des partenaires -->
-            <div class="col-lg-4 col-md-6">
-                <div class="partner-item bg-light text-center p-5 h-100">
-                    <img class="w-100 mb-3" src="img/inatlogo.png" alt="INAT Logo">
-                    <h4>Institut National Agronomique de Tunisie</h4>
-                    <p class="mb-0">Institution leader dans la formation agricole en Tunisie, l'INAT propose des formations, des stages, ou même des conférences sur le site.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="partner-item bg-light text-center p-5 h-100">
-                    <img class="w-100 mb-3" src="img/ministere.png" alt="Ministère de l'Agriculture Logo">
-                    <h4>Ministère de l'Agriculture</h4>
-                    <p class="mb-0">Le Ministère soutient les initiatives locales et offre aux agriculteurs des ressources précieuses, incluant des informations sur les subventions et formations.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="partner-item bg-light text-center p-5 h-100">
-                    <img class="w-100 mb-3" src="img/agrimat.png" alt="Agrimat Logo">
-                    <h4>Agrimat</h4>
-                    <p class="mb-0">Fournisseur d’équipements agricoles, Agrimat promeut ses produits auprès des jeunes agriculteurs pour moderniser leurs outils de travail.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="partner-item bg-light text-center p-5 h-100">
-                    <img class="w-100 mb-3" src="img/bna.png" alt="BNA Logo">
-                    <h4>BNA</h4>
-                    <p class="mb-0">Banque nationale offrant des prêts agricoles et des solutions de financement pour les utilisateurs du site, facilitant leur croissance.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="partner-item bg-light text-center p-5 h-100">
-                    <img class="w-100 mb-3" src="img/agridigital.png" alt="Agridigital Logo">
-                    <h4>Agridigital</h4>
-                    <p class="mb-0">Solution numérique pour la gestion des fermes, Agridigital propose des outils pratiques pour optimiser la production agricole.</p>
-                </div>
-            </div>
+            <!-- Affichage des Partenariats -->
+            <?php
+            require_once '../Models/partnershipsDisplay.php';
+
+            // Affichage des partenariats acceptés uniquement
+            fetchAndDisplayPartnerships(true);  // false pour afficher tous les partenariats, y compris ceux qui sont acceptés
+            ?>   
+          
         </div>
     </div>
 </div>
 
 
-<!-- Affichage des Partenariats -->
-<?php
-require_once '../Models/partnershipsDisplay.php';
-
-// Affichage des partenariats acceptés uniquement
-fetchAndDisplayPartnerships(true);  // false pour afficher tous les partenariats, y compris ceux qui sont acceptés
-?>
 
 
 

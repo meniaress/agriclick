@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <title>AgriCLICK</title>
@@ -51,7 +52,7 @@
                 <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Partenariats</a>
                 <div class="dropdown-menu m-0">
                     <a href="formations.html" class="dropdown-item">Formations</a>
-                    <a href="index.php" class="dropdown-item">Partenaires</a>
+                    <a href="index.html" class="dropdown-item">Partenaires</a>
                 </div>
             </div>
             <a href="about.html" class="nav-item nav-link">About</a>
@@ -72,91 +73,78 @@
     </div>
 </nav>
 <!-- Navbar End -->
+ 
+<!-- Formulaire HTML -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Formulaire d'inscription</h3>
+                </div>
+                <div class="card-body">
+                    <form id="inscriptionForm" action="../Controller/inscriptionform.php" method="post">
 
+                        <div class="mb-3">
+                            <label for="partnerName" class="form-label">Nom de l'organisation</label>
+                            <select class="form-control" name="partnerName" id="partnerName" required>
+                                <option value="">Sélectionner une organisation</option>
+                                <?php
+                                // Remplir le menu déroulant avec les partenaires récupérés via la jointure
+                                foreach ($partenariats as $partenaire) {
+                                    echo "<option value='" . $partenaire['id'] . "'>" . htmlspecialchars($partenaire['nom']) . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-<!-- Blog Start -->
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="mx-auto text-center mb-5" style="max-width: 500px;">
-            <h3 class="text-primary text-uppercase">Workshops et Formations</h3>
-        </div>
-        <!-- Première formation -->
-        <div class="row g-5 align-items-center mb-4">
-            <div class="col-md-4">
-                <div class="blog-item position-relative overflow-hidden">
-                    <img class="img-fluid" src="img/blog-1.png" alt="Formation Agriculture Hydroponique">
-                    <a class="blog-overlay" href="#">
-                        <h4 class="text-white">Formation Agriculture Hydroponique</h4>
-                        <span class="text-white fw-bold">Jan 21, 2025</span>
-                    </a>
+                        <div class="mb-3">
+                            <label for="Name" class="form-label">Nom</label>
+                            <input type="text" class="form-control" name="fullname" placeholder="Entrez votre nom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prename" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" name="prename" placeholder="Entrez votre prénom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="number" class="form-label">Numéro</label>
+                            <input type="text" class="form-control" name="numero" placeholder="Entrez votre numéro de téléphone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adresse E-mail</label>
+                            <input type="email" class="form-control" name="email" placeholder="Entrez votre adresse e-mail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formationName" class="form-label">Nom de la formation</label>
+                            <input type="text" class="form-control" name="formationName" id="formationName" readonly>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">S'inscrire</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-md-7">
-                <h4>Cette formation vous offre :</h4>
-                <ul>
-                    <li>Une introduction théorique aux concepts de l’hydroponie.</li>
-                    <li>Des ateliers pratiques pour installer et entretenir un système hydroponique.</li>
-                    <li>Des techniques pour optimiser la croissance des plantes, réduire l’utilisation d’eau et augmenter les rendements.</li>
-                </ul>
-                <h4>Objectifs de la formation :</h4>
-                <ul>
-                    <li>Comprendre les principes de l’hydroponie.</li>
-                    <li>Savoir choisir le matériel et les nutriments adaptés.</li>
-                    <li>Être capable de concevoir et de gérer un système hydroponique efficace.</li>
-                </ul>
-                <span><strong>Durée :</strong> 3 jours intensifs (avec sessions théoriques et ateliers pratiques).</span><br>
-                <span><strong>Lieu :</strong> Centre de formation agricole, Tunis.</span><br>
-                <span><strong>Prix :</strong> 500 TND (incluant les supports pédagogiques).</span><br>
-                <span><strong>Formation proposée en partenariat avec Agrimat.</strong></span><br>
-                <a href="inscription.php?formation=Formation%20Agriculture%20Hydroponique&partnerName=Institut%National%Agronimique%De%Tunisie" class="btn btn-primary mt-3">S'inscrire</a>
-
-            </div>
-            
-
-            
-            
-
         </div>
-        <br>
-        <!-- Deuxième formation -->
-        <div class="row g-5 align-items-center mb-4">
-            <div class="col-md-4">
-                <div class="blog-item position-relative overflow-hidden">
-                    <img class="img-fluid" src="img/compost.jpg" alt="Atelier Fabrication d'Engrais Naturels">
-                    <a class="blog-overlay" href="#">
-                        <h4 class="text-white">Atelier Fabrication d'Engrais Naturels</h4>
-                        <span class="text-white fw-bold">Jan 28, 2025</span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-7">
-                <h4>Cet atelier vous offre :</h4>
-                <ul>
-                    <li>Une introduction théorique sur les différentes méthodes de fabrication d'engrais naturels.</li>
-                    <li>Des démonstrations pratiques pour créer des engrais à partir de matériaux organiques courants.</li>
-                    <li>Des conseils sur l'utilisation des engrais naturels pour améliorer la qualité du sol et des cultures.</li>
-                </ul>
-                <h4>Objectifs de l'atelier :</h4>
-                <ul>
-                    <li>Comprendre les avantages des engrais naturels pour l'agriculture durable.</li>
-                    <li>Apprendre à fabriquer des engrais à partir de déchets organiques.</li>
-                    <li>Savoir choisir les bons ingrédients pour les besoins spécifiques de chaque type de culture.</li>
-                </ul>
-                <span><strong>Durée :</strong> 1 journée intensive (avec sessions théoriques et pratiques).</span><br>
-                <span><strong>Lieu :</strong> Centre de formation agricole, Tunis.</span><br>
-                <span><strong>Prix :</strong> 200 TND (incluant les supports pédagogiques).</span><br>
-                <span><strong>Formation proposée en partenariat avec l'INAT.</strong></span><br>
-                <a href="inscription.php?formation=Atelier%20Fabrication%20d'Engrais%20Naturels" class="btn btn-primary mt-3">S'inscrire</a>
-
-            </div>
-            
-        </div>
-        <br>
-
-
     </div>
 </div>
-<!-- Blog End -->
+
+<script>
+    // Récupérer le paramètre "formation" depuis l'URL et le remplir dans le champ correspondant
+    const urlParams = new URLSearchParams(window.location.search);
+    const formation = urlParams.get('formation');
+    if (formation) {
+        document.getElementById('formationName').value = decodeURIComponent(formation);
+    }
+</script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+
+
+
 
 
 
