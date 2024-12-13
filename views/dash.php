@@ -294,7 +294,7 @@ $commandes = $commandeController->listCommandes();
                         </tr>
                     </thead>
                     <tbody>
-                    <?php if (!empty($commandes)): ?>
+                    <?php if (!empty($services)): ?>
                         <?php foreach ($services as $service): ?>
                           <tr id="service-row-<?= htmlspecialchars($service['id']) ?>">
                           <td><?= htmlspecialchars($service['id']) ?></td>
@@ -303,7 +303,7 @@ $commandes = $commandeController->listCommandes();
                           <td><?= htmlspecialchars($service['tarif']) ?></td>
                           <td><?= htmlspecialchars($service['type']) ?></td>
                           <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteService(<?= htmlspecialchars($service['id']) ?>)">Delete</button>
+                          <a href="ServiceDeleteDash.php?id=<?php echo $service['id']; ?>" class="btn btn-danger mt-3">Delete</a>
     </td>
 </tr>
                         <?php endforeach; ?>
@@ -340,7 +340,7 @@ $commandes = $commandeController->listCommandes();
     <td><?= htmlspecialchars($commande['serviceTitle']) ?></td>
     <td><?= htmlspecialchars($commande['message'] ?? 'No message') ?></td>
     <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteCommand(<?= htmlspecialchars($commande['id']) ?>)">Delete</button>
+                          <a href="ServiceDeleteDash.php?id=<?php echo $service['id']; ?>" class="btn btn-danger mt-3">Delete</a>
     </td>
 </tr>
                 <?php endforeach; ?>
@@ -351,7 +351,6 @@ $commandes = $commandeController->listCommandes();
             <?php endif; ?>
         </tbody>
     </table>
-    <a href="CommandeCreation.php" class="btn btn-primary">Add New Command</a>
 </div>
     </div>
 
@@ -366,7 +365,7 @@ $commandes = $commandeController->listCommandes();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="ServiceCreation.php" onsubmit="return validateModalForm(event)">
+                <form method="POST" action="ServiceCreationDash.php" onsubmit="return validateModalForm(event)">
                     <div class="mb-3">
                         <label for="title" class="form-label">Service Title</label>
                         <input type="text" id="modalTitle" name="title" class="form-control" required>
@@ -409,7 +408,37 @@ $commandes = $commandeController->listCommandes();
         </div>
     </div>
 </div>
+<script>
+  function deleteService(id) {
+    if (confirm("Are you sure you want to delete this service?")) {
+        // Send a request to the server to delete the service
+        $.ajax({
+            type: "POST",
+            url: "deleteService.php",
+            data: { id: id },
+            success: function() {
+                // Remove the service from the table
+                $("#service-row-" + id).remove();
+            }
+        });
+    }
+}
 
+function deleteCommand(id) {
+    if (confirm("Are you sure you want to delete this command?")) {
+        // Send a request to the server to delete the command
+        $.ajax({
+            type: "POST",
+            url: "deleteCommand.php",
+            data: { id: id },
+            success: function() {
+                // Remove the command from the table
+                $("#command-row-" + id).remove();
+            }
+        });
+    }
+}
+</script>
 
 <!-- Bootstrap CSS -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">

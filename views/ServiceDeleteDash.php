@@ -6,5 +6,4 @@ error_reporting(E_ALL);
 include '../controller/ServiceController.php';
 $serviceController = new ServiceController();
 $serviceController->deleteService($_GET["id"]);
-header('Location:ServiceList.php');
-?>
+header('Location:dash.php');

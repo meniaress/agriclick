@@ -169,7 +169,7 @@ if (
     <div class="container-fluid bg-primary py-5 bg-hero mb-5">
         <div class="container py-5">
             <h1 class="display-1 text-white">Create Service</h1>
-            <a href="servicelist.php" class="btn btn-secondary">Services</a>
+            <a href="servicelist.php" class=" btn btn-secondary py-md-3 px-md-5">Services</a>
             <a href="dash.php" class="btn btn-secondary py-md-3 px-md-5">dashboard</a>
         </div>
     </div>
@@ -222,10 +222,10 @@ if (
                             <div class="position-relative">
                                 <input list="categories" id="category" name="category" class="form-control" placeholder="Select or type a category" required>
                                 <datalist id="categories">
-                                    <option value="Design">
-                                    <option value="Development">
-                                    <option value="Marketing">
-                                    <option value="Writing">
+                                    <option value="jardinerie">
+                                    <option value="mecanique">
+                                    <option value="electronique">
+                                    <option value="plomberie">
                                 </datalist>
                             </div>
                             <div id="categoryError" class="error-text"></div>

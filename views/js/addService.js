@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     var titleElement = document.getElementById("title");
     var descriptionelement = document.getElementById("description");
+    var localisationelement = document.getElementById("localisation");
+    var categoryelement = document.getElementById("category");
 
     titleElement.addEventListener("keyup", function(){
         var titleerrorElement = document.getElementById("titleError");
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // Updated pattern to accept letters and numbers but not only numbers
         var pattern = /^(?=.*[A-Za-z])[A-Za-z0-9 ]{3,}$/;
         if(!pattern.test(categoryerrorValue)){
-            categoryerrorElement.innerHTML = "La destination doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
+            categoryerrorElement.innerHTML = "La categroy doit contenir uniquement des lettres, des chiffres et des espaces, et au moins 3 caractères, avec au moins une lettre.";
             categoryerrorElement.style.color = "red";
         } else {
             categoryerrorElement.innerHTML = "Correct";
