@@ -67,9 +67,7 @@ session_start(); // Démarrer la session
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav mr-lg-2">
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link" href="#">Gestion des Utilisateurs</a>
-                    </li>
+                    
                     <li class="nav-item d-none d-lg-flex">
                         <a class="nav-link" href="#">Gestion des Partenariats</a>
                     </li>
@@ -81,6 +79,9 @@ session_start(); // Démarrer la session
                     </li>
                     <li class="nav-item d-none d-lg-flex">
                         <a class="nav-link active" href="#">Gestion des REPONSES</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link" href="../../view/dash.php">Gestion des commandes et services</a>
                     </li>
                     
                 </ul>
@@ -97,7 +98,7 @@ session_start(); // Démarrer la session
                                 <span class="sidebar-status-indicator"></span>
                             </div>
                             <div class="sidebar-profile-name">
-                                <p class="sidebar-name">Khadija Derbel</p>
+                                <p class="sidebar-name">admin</p>
                                 <p class="sidebar-designation">Welcome</p>
                             </div>
                         </div>

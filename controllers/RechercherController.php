@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once("../controllers/repcontroller.php");
+include_once("repcontroller.php");
 include_once("../model/rep.php");
 
 $reponseController = new ReponseOfferC();

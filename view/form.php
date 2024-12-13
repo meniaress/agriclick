@@ -170,11 +170,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="navbar-nav mx-auto py-0">
                 <a href="index.html" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
+                <a href="ServiceList.php" class="nav-item nav-link">Service</a>
                 <a href="product.html" class="nav-item nav-link">Product</a>
                 <div class="nav-item dropdown">
                 
-                <a href="reclamation.html" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
+                <a href="form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
                 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
     
                 <div class="dropdown-menu m-6">
