@@ -25,18 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($clients) {
         $user_found = false;
 
-        
         foreach ($clients as $client) {
-            if ($client['password'] === $old_password) {
-               
+           
+            if (password_verify($old_password, $client['password'])) {
                 $user_found = true;
                 
-             
+                
+                $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                
                 try {
                     $db = Config::getConnexion();
                     $update_query = "UPDATE client SET password = :password WHERE id = :client_id";
                     $stmt = $db->prepare($update_query);
-                    $stmt->bindParam(':password', $new_password); 
+                    $stmt->bindParam(':password', $hashed_new_password); // Utiliser le mot de passe haché
                     $stmt->bindParam(':client_id', $client['id']);  
 
                     if ($stmt->execute()) {
@@ -57,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-      
         if (!$user_found) {
             echo "<script>
                 alert('Ancien mot de passe incorrect.');
@@ -65,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </script>";
         }
     } else {
-      
         echo "<script>
             alert('Nom d\'utilisateur ou email incorrect.');
             window.location.href = 'http://localhost/projet/view/front%20office/reset_password.html'; // Redirection vers le formulaire

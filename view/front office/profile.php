@@ -321,6 +321,8 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
                <a href="http://localhost/projet/view/front office/profile.php" class="nav-item nav-link active" id="signin-btn">Voir le profil</a>
                <a href="http://localhost/projet/controller/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
                
+               
+               
            </div>
        </div>
    </nav>
@@ -371,6 +373,8 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
         <ul class="dropdown-menu">
             <li><a href="http://localhost/projet/view/front office/reset_password.html">Changer le mot de passe</a></li>
             <li><a href="http://localhost/projet/controller/deconnexion.php">Se déconnecter</a></li>
+          
+
             
             
         </ul>

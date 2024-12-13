@@ -186,7 +186,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Photo de Profil -->
             <label for="photo">Photo de Profil +</label>
             <div class="profile-pic-container">
-                <img id="profile-pic" src="<?php echo htmlspecialchars($client['photo']) ? '/projet/uploads/' . $client['photo'] : 'default_profile.png'; ?>" >
+            <img id="profile-pic" 
+     src="<?php echo htmlspecialchars($client['photo'] ? '/projet/uploads/' . $client['photo'] : '/projet/uploads/default_profile.png'); ?>" >
+
                 <input type="file" name="photo" id="photo" class="file-input" onchange="previewImage(event)">
                 <label for="photo" class="upload-icon">
                     <i class="fas fa-camera"></i>
