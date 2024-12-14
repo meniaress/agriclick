@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Assuming ID is optional and can be null for new reclamations
         $offer = new Reclamation(null, $nom, $email, $sujet, $message, $date_creation, $statut);
         if ($reclamationController->addOffer($offer)) {
+            $_SESSION['email'] = $email; // Stocker l'email dans la session
+
             // Redirect to the same page with a success parameter
             header('Location: form.php?success=1');
             exit();

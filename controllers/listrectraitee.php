@@ -3,14 +3,34 @@
 require_once 'database.php';
 include_once '../model/Reclamation.php';
 
-$email = 'khadijaderbel123@gmail.com'; // Email fixe pour lequel afficher les réclamations
+session_start(); // Démarrer la session
+
+// Vérifiez si l'email a été stocké dans la session
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email']; // Récupérer l'email de la session
+} else {
+    // Si l'email n'est pas défini, rediriger vers la page de connexion
+    header('Location: login.php');
+    exit();
+}
+
+// Vérifiez si l'email existe dans la base de données
+$db = Config::getConnexion();
+$sql = 'SELECT * FROM client WHERE email = :email';
+$stmt = $db->prepare($sql);
+$stmt->bindParam(':email', $email);
+$stmt->execute();
+
+if ($stmt->rowCount() == 0) {
+    header('Location: login.php'); // Rediriger vers la page de connexion si l'email n'existe pas
+    exit();
+}
 
 class ReclamationList {
-    public function AfficherReclamationTraitees($email) {
-        $sql = 'SELECT r.*, rp.contenu AS reponse_contenu, rp.type AS reponse_type 
-                FROM reclamtion r 
-                LEFT JOIN reponse rp ON r.id = rp.id_rec 
-                WHERE r.email = :email AND r.status = "traitée"'; // Assurez-vous que le nom de la table est correct
+    
+    // Méthode pour afficher les réclamations d'un utilisateur spécifique
+    public function AfficherReclamationNonTraitees($email) {
+        $sql = 'SELECT * FROM reclamtion WHERE email = :email AND status = "traitée"'; // Assurez-vous que le nom de la table est correct
         $db = Config::getConnexion(); // Assurez-vous que cette méthode renvoie une instance PDO
         try {
             $stmt = $db->prepare($sql);
@@ -23,12 +43,10 @@ class ReclamationList {
     }
 }
 
+// Créer une instance de la classe ReclamationList
 $reclamationList = new ReclamationList();
-$offers = $reclamationList->AfficherReclamationTraitees($email); // Récupérer les réclamations traitées
-
-session_start(); // Démarrer la session
+$offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupérer les réclamations de cet email
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -127,7 +145,7 @@ session_start(); // Démarrer la session
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Service</a>
                 <a href="product.html" class="nav-item nav-link">Product</a>
-                <a href="../view/form.php" class="nav-item nav-link">Reclamation</a>
+                <a href="../view/form.php" class="nav-link active " >mes reclamations traitee</a>
             </div>
         </div>
     </nav>
@@ -142,8 +160,7 @@ session_start(); // Démarrer la session
                     <th>Email</th>
                     <th>Sujet</th>
                     <th>Message</th>
-                    <th>Type de réponse</th>
-                    <th>Contenu de réponse</th>
+                    
                    
                 </tr>
             </thead>
@@ -159,8 +176,7 @@ session_start(); // Démarrer la session
                         echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['reponse_type']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['reponse_contenu']) . '</td>';
+                        
                        
                         echo "</tr>";
                     }
