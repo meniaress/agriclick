@@ -48,20 +48,29 @@ session_start(); // Start the session
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav mr-lg-2">
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link" href="#">Gestion des Utilisateurs</a>
+                <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link " href="#">Gestion des Partenariats</a>
                     </li>
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link" href="#">Gestion des Partenariats</a>
-                    </li>
-                    <li class="nav-item d-none d-lg-flex">
+                    <li class="nav-item  d-none d-lg-flex">
                         <a class="nav-link" href="#">Gestion des offres</a>
                     </li>
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link active" href="Reclamationlist.php">Gestion des RECLAMATIONS</a>
-                    </li>
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link " href="dashboard/listrep.php">Gestion des REPONSES</a>
+                    <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link active" href="Reclamationlist.php">
+                Gestion des reclamations
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="dashboard/listrep.php">
+                Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link a" href="../view/dash.php">
+                Gestion des commandes et des services
+              </a>
+            </li>
+            <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link"  href="../view/back office/client_liste.php">Gestion des Utilisateurs</a>
                     </li>
                 </ul>
             
@@ -90,6 +99,14 @@ session_start(); // Start the session
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="http://localhost/projet%202/view/back%20office/statistique.php" aria-expanded="false" aria-controls="auth">
+                <i class="typcn typcn-user-add-outline menu-icon"></i>
+                <span class="menu-title">Statistiques des Clients</span>
+                <i class="menu-arrow"></i>
+              </a>
+             
+            </li>
                     <li class="nav-item">
                     <a class="nav-link " href="dashboard/statistiques.php">
                         <i class="typcn typcn-device-desktop menu-icon"></i>

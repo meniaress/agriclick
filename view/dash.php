@@ -109,18 +109,30 @@ $commandes = $commandeController->listCommandes();
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
-          <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link" href="../controllers/Reclamationlist.php">Gestion des RECLAMATIONS</a>
+          <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link " href="#">Gestion des Partenariats</a>
                     </li>
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link " href="../controllers/dashboard/listrep.php">Gestion des REPONSES</a>
+                    <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link" href="#">Gestion des offres</a>
                     </li>
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link active" href="#">
-                Gestion des commandes et services
+                    <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../controllers/Reclamationlist.php">
+                Gestion des reclamations
               </a>
             </li>
-          
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../controllers/dashboard/listrep.php">
+                Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link active" href="dash.php">
+                Gestion des commandes et des services
+              </a>
+            </li>
+            <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link"  href="back office/client_liste.php">Gestion des Utilisateurs</a>
+                    </li>
             
           </ul>
           </div>
@@ -165,6 +177,14 @@ $commandes = $commandeController->listCommandes();
               <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
             </a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="http://localhost/projet%202/view/back%20office/statistique.php" aria-expanded="false" aria-controls="auth">
+                <i class="typcn typcn-user-add-outline menu-icon"></i>
+                <span class="menu-title">Statistiques des Clients</span>
+                <i class="menu-arrow"></i>
+              </a>
+             
+            </li>
           <li class="nav-item">
                     <a class="nav-link " href="../controllers/dashboard/statistiques.php">
                         <i class="typcn typcn-device-desktop menu-icon"></i>
