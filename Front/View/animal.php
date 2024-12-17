@@ -27,7 +27,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <title>Jeu Dino</title>
+    <title>Jeu chat</title>
     <style>
        #gameContainer {
     position: relative;
@@ -39,11 +39,11 @@
 
 #dino {
     position: absolute;
-    bottom: 20px;
+    bottom:20px;
     left: 50px;
     width: 50px;
-    height: 50px;
-    background-color: rgb(165, 132, 14);
+    height: auto;
+   /* background-color: rgb(165, 132, 14);*/
 }
 
 .obstacle {
@@ -57,15 +57,75 @@
 #score {
     position: absolute;
     top: 10px; /* Position en haut de l'écran */
-    left: 10px; /* Position à gauche */
-    font-size: 24px; /* Taille de la police */
+    left: 50px; /* Position à gauche */
+    font-size: 30px; /* Taille de la police */
     color: black; /* Couleur du texte */
 }
+:root {
+    --background-color-light: #ffffff;
+    --text-color-light: #000000;
+    --background-color-dark: #121212;
+    --text-color-dark: #ffffff;
+}
+
+body {
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+}
+
+.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+.toggle-button {
+    position: relative;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #002400;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #000;
+}
+
+.toggle-button i {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+#moon-icon {
+    display: block;
+}
+
+#sun-icon {
+    display: none;
+}
+
+.dark-mode .toggle-button #moon-icon {
+    display: none;
+}
+
+.dark-mode .toggle-button #sun-icon {
+    display: block;
+}
+
+#toggle-text {
+    font-size: 16px;
+    font-weight: bold;
+}
     </style>
+     <meta charset="UTF-8">
+    <title>AJAX Live Search</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
 
 <body>
-    <!-- Topbar Start -->
+    <!-- Topbar Start 
     <div class="container-fluid px-5 d-none d-lg-block">
         <div class="row gx-5 py-3 align-items-center">
             <div class="col-lg-3">
@@ -91,7 +151,7 @@
             </div>
         </div>
     </div>
-    <!-- Topbar End -->
+    -->
 
 
     <!-- Navbar Start -->
@@ -118,9 +178,15 @@
                         <a href="team.html" class="dropdown-item">The Team</a>
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                     </div>
+                    
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
+            <button class="toggle-button" onclick="toggleDarkMode()">
+                    <i class="fas fa-moon" id="moon-icon"></i>
+    <i class="fas fa-sun" id="sun-icon"></i>
+    <span id="toggle-text">Dark Mode</span>
+                    </button>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -171,7 +237,7 @@
         <h2 class="mb-4">Aventure du Chat: Cliquez pour Gagner!</h2>
         <div id="gameContainer" style="position: relative; width: 100%; height: 300px; border: 2px solid #000;">
             <div id="score">Score: 0</div> <!-- Élément pour afficher le score -->
-            <div id="dino"></div>
+            <div id="dino"> <img id="dino" src="chat.png" alt="Chat" style="width: 50px; height: auto; position: absolute; bottom: 20px; left: 50px;"></div>
         </div>
     </div>
 </div>
@@ -179,10 +245,18 @@
     <?php
     
     include_once 'C:\Users\chokr\OneDrive\Bureau\xamppp\htdocs\Agriclickk\Front\Controller\crud.php';
-    $animalController = new CrudAnimals();
-    $animalList = $animalController->listAnimals();
-    ?>
-    
+$animalController = new CrudAnimals();
+
+// Capture search input
+$searchTerm = isset($_POST['search']) ? $_POST['search'] : '';
+
+// Fetch animals based on search term
+if ($searchTerm) {
+    $animalList = $animalController->searchAnimals($searchTerm);
+} else {
+    $animalList = $animalController->listAnimals(); // Fetch all animals if no search term
+}
+?>
     <!-- Table Start -->
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
@@ -190,6 +264,8 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="rounded h-100 p-4" style=" background-color : #002400">
                         <h6 class="mb-4">List of Animals</h6>
+                        <input type="text" name="search" placeholder="Search by name or species" class="form-control mb-3" value="<?= htmlspecialchars($searchTerm); ?>">
+                        <button type="submit" class="btn btn-primary">Search</button>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -213,16 +289,16 @@
                                         foreach ($animalList as $animal) {
                                     ?>
                                     <tr>
-                                        <th scope="row"><?= $index++; ?></th>
-                                        <td hidden="hidden" ><?= $animal['id_ani']; ?></td>
-                                        <td><?= $animal['nom_ani']; ?></td>
-                                        <td><?= $animal['espece']; ?></td>
-                                        <td><?= $animal['genre']; ?></td>
-                                        <td><?= $animal['race']; ?></td>
-                                        <td><?= $animal['poid']; ?></td>
-                                        <td><?= $animal['date_nais']; ?></td>
-                                        <td><?= $animal['age']; ?></td>
-                                        <td>
+                                    <th scope="row"><?= $index++; ?></th>
+                                <td hidden="hidden"><?= $animal['id_ani']; ?></td>
+                                <td><?= htmlspecialchars($animal['nom_ani']); ?></td>
+                                <td><?= htmlspecialchars($animal['espece']); ?></td>
+                                <td><?= htmlspecialchars($animal['genre']); ?></td>
+                                <td><?= htmlspecialchars($animal['race']); ?></td>
+                                <td><?= htmlspecialchars($animal['poid']); ?></td>
+                                <td><?= htmlspecialchars($animal['date_nais']); ?></td>
+                                <td><?= htmlspecialchars($animal['age']); ?></td>
+                                <td>
                                             <a href="deleteanim.php?id_animal=<?php echo $animal['id_ani']; ?>" class="btn btn-outline-danger m-2">Delete</a>
                                             <a href="updateAnimal.php?id_animal=<?= $animal['id_ani']; ?>" class="btn btn-outline-success m-2">Update</a>
                                         </td>
@@ -249,8 +325,101 @@
     </div>
     <!--end affichage-->
 
-
     <script>
+$(document).ready(function() {
+    $('#search').on('keyup', function() {
+        var query = $(this).val();
+        if (query.length > 2) {
+            $.ajax({
+                url: 'search.php',
+                type: 'POST',
+                data: { search: query },
+                success: function(data) {
+                    $('#result').html(data);
+                }
+            });
+        } else {
+            $('#result').html('');
+        }
+    });
+});
+</script>
+    <script>
+       function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    const toggleButton = document.querySelector('.toggle-button');
+    if (isDark) {
+        toggleButton.textContent = 'Light Mode';
+    } else {
+        toggleButton.textContent = ' Dark Mode';
+    }
+}
+script>
+       /* function validateForm() {
+            var nomAni = document.getElementById("nom_ani").value;
+            var espece = document.getElementById("espece").value;
+            var genre = document.getElementById("genre").value;
+            var race = document.getElementById("race").value;
+            var poid = document.getElementById("poid").value;
+            var age = document.getElementById("age").value;
+            var dateNais = document.getElementById("date_nais").value;
+
+            // Check if all fields are filled
+            if (nomAni.trim() === "" || espece.trim() === "" || genre.trim() === "" || race.trim() === "" || poid.trim() === "" || age.trim() === "" || dateNais.trim() === "") {
+                alert("Tous les champs sont obligatoires.");
+                return false;
+            }
+
+            // Validate Animal Name
+            if (nomAni.length <= 5) {
+                alert("Le nom de l'animal doit contenir plus de 5 caractères.");
+                return false;
+            }
+
+            var firstChar = nomAni.charAt(0);
+            if (firstChar !== firstChar.toUpperCase()) {
+                alert("Le nom de l'animal doit commencer par une lettre majuscule.");
+                return false;
+            }
+
+            if (/\d/.test(nomAni)) {
+                alert("Le nom de l'animal ne doit pas contenir de chiffres.");
+                return false;
+            }
+
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(nomAni)) {
+                alert("Le nom de l'animal ne doit pas contenir de signes spéciaux.");
+                return false;
+            }
+
+            // Validate Weight
+            if (isNaN(poid) || poid <= 0) {
+                alert("Le poids doit être un nombre positif.");
+                return false;
+            }
+
+            // Validate Age
+            if (isNaN(age) || age < 0) {
+                alert("L'âge doit être un nombre positif.");
+                return false;
+            }
+
+            // Validate Date of Birth
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(dateNais)) {
+                alert("La date de naissance doit être au format YYYY-MM-DD.");
+                return false;
+            }
+
+            // If all validations pass
+            return true;
+        }*/
+// On page load
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+});
        
 document.getElementById('animalForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent form submission
@@ -389,6 +558,19 @@ function updateScore() {
 
 
             </script>
+          
+<script>
+window.embeddedChatbotConfig = {
+chatbotId: "-Wl1GRqkm6ByF6KeAocQW",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="-Wl1GRqkm6ByF6KeAocQW"
+domain="www.chatbase.co"
+defer>
+</script>
     <!-- About Start -->
     <div class="container-fluid about pt-5">
         <div class="container">

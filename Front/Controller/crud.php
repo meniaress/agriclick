@@ -76,7 +76,7 @@ function deleteAnimals($id)
 
     function listAnimalssolo($idd){
         $sql = "SELECT * FROM animal where id_ani = $idd";
-        $db = config::getConnexion();
+        $db = Config::getConnexion();
         try{
             $liste = $db->query($sql);
             return $liste;
@@ -91,7 +91,7 @@ function deleteAnimals($id)
     $sql = "UPDATE animal SET nom_ani= :nom ,espece=:esp,genre=:ger,
     race=:rac,poid=:poi,date_nais=:dat,age=:age WHERE id_ani = :id";
 
-        $db = config::getConnexion();
+        $db = Config::getConnexion();
         try{
         $query = $db->prepare($sql);
         $query -> execute([
@@ -113,5 +113,13 @@ catch(Exception $e){
 
 
   }
+   // Search for animals by name
+public function searchAnimals($search) {
+        $query = "SELECT * FROM animal WHERE nom_ani LIKE :search";
+        $db = Config::getConnexion(); // Ensure $db is defined
+        $stmt = $db->prepare($query);
+        $stmt->execute(['search' => '%' . $search . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

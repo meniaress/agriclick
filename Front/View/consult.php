@@ -27,6 +27,8 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -192,7 +194,7 @@
     </div>
 </div>
 <!-- end affichage -->
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
    <script>
 document.getElementById('consult').addEventListener('submit', function(event) {
