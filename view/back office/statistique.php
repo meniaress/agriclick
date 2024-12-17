@@ -1,7 +1,7 @@
 <?php
-include_once 'C:\xampp\htdocs\projet%202\model\client.php';
-include_once 'C:\xampp\htdocs\projet%202\controllers\databasee.php';
-require_once 'C:\xampp\htdocs\projet%202\controllers\clientc.php';
+include_once 'C:\xampp\htdocs\projet 2\model\client.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\database.php';
+require_once 'C:\xampp\htdocs\projet 2\controllers\clientc.php';
 
 // Créer une instance du contrôleur ClientC
 $clientC = new ClientC();

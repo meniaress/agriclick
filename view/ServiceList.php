@@ -87,7 +87,7 @@ $services = $serviceController->listServices();
             <div class="navbar-nav mx-auto py-0">
                 <a href="index.html" class="nav-item nav-link ">Accueil</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link active">Services</a>
+                <a href="ServiceList.php" class="nav-item nav-link active">Services</a>
                 
                 <a href="product.html" class="nav-item nav-link">Product</a>
                 <a href="form.php" class="nav-item nav-link">Reclamation</a>
