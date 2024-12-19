@@ -164,24 +164,22 @@ body {
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="index.html" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Service</a>
-                <a href="animal.php" class="nav-item nav-link">Suivi Vétérinaire</a>
+                <a href="product.html" class="nav-item nav-link">Product</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Suivi</a>
                     <div class="dropdown-menu m-0">
-                        <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                        <a href="detail.html" class="dropdown-item">Blog Detail</a>
-                        <a href="feature.html" class="dropdown-item">Features</a>
-                        <a href="team.html" class="dropdown-item">The Team</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="animal.php" class="dropdown-item"> Ajouter un animal </a>
+                        <a href="consult.php" class="dropdown-item">Créer une consultation</a>
                     </div>
-                    
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
+        </div>
             <button class="toggle-button" onclick="toggleDarkMode()">
                     <i class="fas fa-moon" id="moon-icon"></i>
     <i class="fas fa-sun" id="sun-icon"></i>
@@ -619,11 +617,11 @@ defer>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-envelope-open text-white me-2"></i>
-                                <p class="text-white mb-0">info@example.com</p>
+                                <p class="text-white mb-0">agriclick@gmail.com</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-telephone text-white me-2"></i>
-                                <p class="text-white mb-0">+012 345 67890</p>
+                                <p class="text-white mb-0">+21629888973</p>
                             </div>
                             <div class="d-flex mt-4">
                                 <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
