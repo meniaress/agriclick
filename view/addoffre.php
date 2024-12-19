@@ -5,7 +5,7 @@ include_once 'C:\xampp\htdocs\projet 2\controllers\database.php';
 include_once 'C:\xampp\htdocs\projet 2\controllers\clientc.php';
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: http://localhost/projet%202/view//front%20office/login.html");
     exit();
 }
 $userId = $_SESSION['user_id']; 
@@ -111,7 +111,7 @@ if (
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="/projet%202/view/front office/agriculteure.html" class="nav-item nav-link">Home</a>
+                <a href="/projet%202/view/front office/agriculteure.html" class="nav-item nav-link">Accueil</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="indexcategorie.php" class="nav-item nav-link active">cat/of Travail</a>
                 <a href="ServiceList.php" class="nav-item nav-link ">Services</a>

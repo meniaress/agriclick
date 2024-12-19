@@ -12,7 +12,7 @@ $maxSalaire = isset($_GET['maxSalaire']) ? $_GET['maxSalaire'] : null;
 
 $list = $OffreC->getOffresByCategorie($idCategorie, $minSalaire, $maxSalaire);
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: http://localhost/projet%202/view//front%20office/login.html");
     exit();
 }
 $userId = $_SESSION['user_id']; 
@@ -67,7 +67,7 @@ $userRole = $client['choix'];
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-            <a href ="" id="returnHome" class="nav-item nav-link ">Home</a>
+            <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="indexoffreclient.php" class="nav-item nav-link active">cat/of Travail</a>
                 <a href="ServiceList.php" class="nav-item nav-link ">Services</a>

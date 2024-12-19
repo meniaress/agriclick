@@ -7,7 +7,7 @@ include_once 'C:\xampp\htdocs\projet 2\controllers\clientc.php';
 
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: http://localhost/projet%202/view//front%20office/login.html");
     exit();
 }
 $userId = $_SESSION['user_id']; 
@@ -306,10 +306,17 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
                <a href="" class="nav-item nav-link">About</a>
                <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
                <a href="http://localhost/projet%202/view/ServiceList.php" class="nav-item nav-link">SERVICES</a>
+               <div class="nav-item dropdown">
 
                <?php if ($isVeterinarian): ?>
-                <a href="" class="nav-item nav-link"> suivi veterinaire</a> <!-- Lien spécifique pour vétérinaire -->
+                    <a href="../meniar/animal.php" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">suivi veterinaire</a>
+                    <div class="dropdown-menu m-0 ">
+                        <a href="../meniar/animal.php" class="dropdown-item"> Ajouter un animal </a>
+                        <a href="../meniar/consult.php" class="dropdown-item">Créer une consultation</a>
+                    </div>
+               
 <?php endif; ?>
+</div>
                <a href="http://localhost/projet%202\view\form.php" class="nav-item nav-link">RECLAMATION</a>
            </div>
            <div class="d-flex">

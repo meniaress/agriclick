@@ -26,11 +26,11 @@ $stmt->bindParam(':email', $email);
 $stmt->execute();
 
 if ($stmt->rowCount() == 0) {
-    header('Location: login.php'); // Rediriger vers la page de connexion si l'email n'existe pas
+    header("Location: http://localhost/projet%202/view//front%20office/login.html");
     exit();
 }
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: http://localhost/projet%202/view//front%20office/login.html");
     exit();
 }
 $userId = $_SESSION['user_id']; 
@@ -161,7 +161,7 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-            <a href ="" id="returnHome" class="nav-item nav-link ">Home</a>
+            <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="../view/indexoffreclient.php" class="nav-item nav-link ">cat/of Travail</a>
                 <a href="../view/ServiceList.php" class="nav-item nav-link ">Services</a>

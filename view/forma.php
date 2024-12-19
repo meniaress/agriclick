@@ -170,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="front officeagriculteure.html" class="nav-item nav-link">Home</a>
+                <a href="front officeagriculteure.html" class="nav-item nav-link">Accueil</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="indexcategorie.php" class="nav-item nav-link ">cat/of Travail</a>
 

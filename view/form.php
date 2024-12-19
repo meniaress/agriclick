@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: http://localhost/projet%202/view//front%20office/login.html");
     exit();
 }
 $userId = $_SESSION['user_id']; 
@@ -48,6 +48,7 @@ $clientC = new ClientC();
 $client = $clientC->getClientById($userId);
 
 $userRole = $client['choix']; 
+$isVeterinarian = $client['choix'] === 'Vétérinaire';
 
 ?>
 
@@ -164,18 +165,26 @@ $userRole = $client['choix'];
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-            <a href ="" id="returnHome" class="nav-item nav-link ">Home</a>
+            <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
 
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
 
                 <a href="ServiceList.php" class="nav-item nav-link">Services</a>
-                <div class="nav-item dropdown">
-                
+                <div class="nav-item  dropdown d-flex">
+                <?php if ($isVeterinarian): ?>
+                <div class="nav-item  dropdown d-flex">
+                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">suivi veterinaire</a>
+                    <div class="dropdown-menu m-1">
+                        <a href="meniar/animal.php" class="dropdown-item"> Ajouter un animal </a>
+                        <a href="meniar/consult.php" class="dropdown-item">Créer une consultation</a>
+                    </div>
+                </div>
+<?php endif; ?>
                 <a href="form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
                 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
     
-                <div class="dropdown-menu m-6">
+                <div class="dropdown-menu m-6 ">
                     <a href="../controllers/listrectraitee.php" class="dropdown-item">mes reclamations traitees</a>
                     <a href="../controllers/Listerecuser.php" class="dropdown-item">mes reclamations non traitees</a>
 

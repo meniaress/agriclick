@@ -47,7 +47,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="/projet%202/view/front office/agriculteure.html" class="nav-item nav-link">Home</a>
+                <a href="/projet%202/view/front office/agriculteure.html" class="nav-item nav-link">Accueil</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="indexcategorie.php" class="nav-item nav-link active">cat/of Travail</a>
                 <a href="ServiceList.php" class="nav-item nav-link ">Services</a>
