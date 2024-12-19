@@ -221,6 +221,52 @@ if (!$result) {
               </div>
               
             </div>
+
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/AgriCLICK/Controller/recherche.php'; ?>
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <h4 class="card-title">Liste des Partenariats</h4>
+    <form method="GET" action="" class="d-flex">
+        <select name="searchColumn" class="form-select me-2">
+            <option value="nom_organisation">Nom de l'organisation</option>
+            <option value="nom_responsable">Nom du responsable</option>
+            <option value="numéro">Numéro de téléphone</option>
+            <option value="email">Adresse e-mail</option>
+            <option value="type_partenariat">Type de partenariat</option>
+            <option value="description">Description</option>
+            <option value="status">Status</option>
+        </select>
+        <input type="text" name="searchValue" class="form-control me-2" placeholder="Rechercher..." required>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </form>
+    <button class="btn btn-primary btn-sm" onclick="window.location.href='addPartnership.php'">
+        <i class="bi bi-plus-circle"></i> Ajouter un partenariat
+    </button>
+</div>
+<tbody>
+  
+
+    <?php if (!empty($partenariats)): ?>
+        <?php foreach ($partenariats as $ligne):  ?>
+          
+            <tr>
+                <td><?= htmlspecialchars($ligne["Nom de l'organisation"]) ?></td>
+                <td><?= htmlspecialchars($ligne['Nom du responsable']) ?></td>
+                <td><?= htmlspecialchars($ligne['Numéro de téléphone']) ?></td>
+                <td><?= htmlspecialchars($ligne['Adresse e-mail']) ?></td>
+                <td><?= htmlspecialchars($ligne['Type de partenariat']) ?></td>
+                <td><?= htmlspecialchars($ligne['Description']) ?></td>
+                <td><?= htmlspecialchars($ligne['Status']) ?></td>
+                <td><?= htmlspecialchars($ligne['id']) ?></td>
+                
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="10" class="text-center">Aucun partenariat trouvé.</td>
+        </tr>
+    <?php endif; ?>
+</tbody>
+
             
             
             <div class="row">
@@ -231,6 +277,9 @@ if (!$result) {
                               <h4 class="card-title">Liste des Partenariats</h4>
                               <button class="btn btn-primary btn-sm" onclick="window.location.href='addPartnership.php'">
                                   <i class="bi bi-plus-circle"></i> Ajouter un partenariat
+                              </button>
+                              <button class="btn btn-secondary btn-sm" name="create_pdf">
+                                <i class="bi bi-file-earmark-pdf"></i> Exporter en PDF
                               </button>
                           </div>
                           <div class="table-responsive">
@@ -296,6 +345,7 @@ if (!$result) {
               }
           }
           </script>
+          
           
             
               <div class="col-lg-8 d-flex grid-margin stretch-card">

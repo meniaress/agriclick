@@ -73,7 +73,7 @@
     </div>
 </nav>
 <!-- Navbar End -->
- 
+<?php include $_SERVER['DOCUMENT_ROOT'] . '/AgriCLICK/Controller/fetchOrganisations.php'; ?>
 <!-- Formulaire HTML -->
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -86,16 +86,21 @@
                     <form id="inscriptionForm" action="../Controller/inscriptionform.php" method="post">
 
                         <div class="mb-3">
-                            <label for="partnerName" class="form-label">Nom de l'organisation</label>
-                            <select class="form-control" name="partnerName" id="partnerName" required>
-                                <option value="">Sélectionner une organisation</option>
-                                <?php
-                                // Remplir le menu déroulant avec les partenaires récupérés via la jointure
-                                foreach ($partenariats as $partenaire) {
-                                    echo "<option value='" . $partenaire['id'] . "'>" . htmlspecialchars($partenaire['nom']) . "</option>";
-                                }
-                                ?>
-                            </select>
+                        <form method="POST" action="inscriptionForm.php">
+                        <label for="partnerName">Sélectionner une organisation</label>
+                        <select name="partnerName" id="partnerName">
+            <?php
+            if (!empty($organisations)) {
+                foreach ($organisations as $organisation) {
+                    echo "<option value=\"" . htmlspecialchars($organisation['Nom de l\'organisation']) . "\">" . htmlspecialchars($organisation['Nom de l\'organisation']) . "</option>";
+                }
+            } else {
+                echo "<option value=\"\">Aucune organisation disponible</option>";
+            }
+            ?>
+        </select>
+                        
+            
                         </div>
 
                         <div class="mb-3">
