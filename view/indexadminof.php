@@ -28,26 +28,32 @@ $list = $OffreC->getOffresByCategorie($idCategorie);
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des Utilisateurs
-              </a>
-            </li>
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des Partenariats
-              </a>
-            </li>
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link active" href="#">
+          <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+                    </li>
+                    <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link active" href="indexadmincat.php">
                 Gestion des offres et categories
               </a>
             </li>
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des RECLAMATIONS
+                    <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../controllers/Reclamationlist.php">
+                Gestion des reclamations
               </a>
             </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../controllers/dashboard/listrep.php">
+                Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="dash.php">
+                Gestion des commandes et des services
+              </a>
+            </li>
+            <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link"  href="back office/client_liste.php">Gestion des Utilisateurs</a>
+                    </li>
           </ul>
           </div>
       </nav>

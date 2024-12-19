@@ -2,6 +2,9 @@
 // Inclure le fichier de configuration de la base de données
 require_once 'database.php';
 include_once '../model/Reclamation.php';
+include_once 'C:\xampp\htdocs\projet 2\model\client.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\database.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\clientc.php';
 
 session_start(); // Démarrer la session
 
@@ -17,6 +20,7 @@ if (isset($_SESSION['email'])) {
 // Vérifiez si l'email existe dans la base de données
 $db = Config::getConnexion();
 $sql = 'SELECT * FROM client WHERE email = :email';
+
 $stmt = $db->prepare($sql);
 $stmt->bindParam(':email', $email);
 $stmt->execute();
@@ -25,12 +29,24 @@ if ($stmt->rowCount() == 0) {
     header('Location: login.php'); // Rediriger vers la page de connexion si l'email n'existe pas
     exit();
 }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+$userId = $_SESSION['user_id']; 
+$clientC = new ClientC();
+$client = $clientC->getClientById($userId);
+
+$userRole = $client['choix']; 
 
 class ReclamationList {
     
     // Méthode pour afficher les réclamations d'un utilisateur spécifique
     public function AfficherReclamationNonTraitees($email) {
-        $sql = 'SELECT * FROM reclamtion WHERE email = :email AND status = "traitée"'; // Assurez-vous que le nom de la table est correct
+        $sql = 'SELECT rec.*, r.contenu, r.type
+                FROM  reclamtion rec
+                JOIN reponse r ON r.id_rec = rec.id
+                WHERE email = :email AND status = "traitée"';// Assurez-vous que le nom de la table est correct
         $db = Config::getConnexion(); // Assurez-vous que cette méthode renvoie une instance PDO
         try {
             $stmt = $db->prepare($sql);
@@ -132,20 +148,35 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
 <body>
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3">
-        <a href="index.html" class="navbar-brand">
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
+    <a href="index.html" class="navbar-brand">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
         </a>
+        <div class="col-lg-3">
+                <div class="m-0  align-items-center justify-content-start">
+                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
+                </div>
+            </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-auto">
-                <a href="index.html" class="nav-item nav-link">Home</a>
+            <div class="navbar-nav mx-auto py-0">
+            <a href ="" id="returnHome" class="nav-item nav-link ">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
-                <a href="product.html" class="nav-item nav-link">Product</a>
-                <a href="../view/form.php" class="nav-link active " >mes reclamations traitee</a>
+                <a href="../view/indexoffreclient.php" class="nav-item nav-link ">cat/of Travail</a>
+                <a href="../view/ServiceList.php" class="nav-item nav-link ">Services</a>
+                <a href="../view/form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
+                <div class="dropdown-menu m-6">
+                    <a href="listrectraitee.php" class="dropdown-item">Mes réclamations traitées</a>
+                    <a href="Listerecuser.php" class="dropdown-item">Mes réclamations non traitées</a>
+                </div>
+                
+            </div>
+            <div class="d-flex">
+                <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
+                <a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
+                
             </div>
         </div>
     </nav>
@@ -160,7 +191,8 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
                     <th>Email</th>
                     <th>Sujet</th>
                     <th>Message</th>
-                    
+                    <th>Type de réponse</th>
+                    <th>Contenu de réponse</th>
                    
                 </tr>
             </thead>
@@ -176,7 +208,8 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
                         echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
                         echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
-                        
+                        echo '<td>' . htmlspecialchars($offer['type']) . '</td>';
+                        echo '<td>' . htmlspecialchars($offer['contenu']) . '</td>';
                        
                         echo "</tr>";
                     }
@@ -184,7 +217,30 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
                 ?>
             </tbody>
         </table>
-        <a href="../view/form.php?success=1" class="return-link">Retour à l'accueil</a>
+        <a href="../view/form.php?success=1" class="btn btn-secondary py-md-3 px-md-5">Retourner</a>
     </div>
+    <script>
+   ( document.getElementById('returnHome')).addEventListener('click', function(event)   {
+        event.preventDefault();
+
+        var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
+
+        switch (profession) {
+            case 'Vétérinaire':
+                window.location.href = "/projet%202/view/front office/vet.html";
+                break;
+            case 'Mécanicien':
+                window.location.href = "/projet%202/view/front office/mecanicien.html";
+                break;
+            case 'Saisonnier':
+                window.location.href = "/projet%202/view/front office/saisonnier.html";
+                break;
+            
+            default:
+                window.location.href = "/projet%202/view/front office/index.html";
+                break;
+        }
+    });
+    </script>
 </body>
 </html>

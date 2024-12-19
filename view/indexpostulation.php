@@ -85,37 +85,17 @@ if (isset($_POST['export'])) {
     <link href="css/style.css" rel="stylesheet">
     </head>
 <body>
-    <!-- Topbar Start -->
-    <div class="container-fluid px-5 d-none d-lg-block">
-        <div class="row gx-5 py-3 align-items-center">
-            <div class="col-lg-3">
-                <div class="d-flex align-items-center justify-content-start">
-                    <img class="w-50" src="img/logo.png" alt="Image">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="index.html" class="navbar-brand ms-lg-5">
-                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">Agri</span>CLICK</h1>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="d-flex align-items-center justify-content-end">
-                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-primary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
+   
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-        <a href="index.html" class="navbar-brand d-flex d-lg-none">
+    <a href="index.html" class="navbar-brand">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
         </a>
+        <div class="col-lg-3">
+                <div class="m-0  align-items-center justify-content-start">
+                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
+                </div>
+            </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -137,6 +117,11 @@ if (isset($_POST['export'])) {
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">reclamation</a>
+            </div>
+            <div class="d-flex">
+                <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
+                <a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
+                
             </div>
         </div>
     </nav>

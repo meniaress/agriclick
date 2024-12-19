@@ -2,6 +2,10 @@
 // Inclure le fichier de configuration de la base de données
 require_once 'database.php';
 include_once '../model/Reclamation.php';
+include_once 'C:\xampp\htdocs\projet 2\model\client.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\database.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\clientc.php';
+
 
 session_start(); // Démarrer la session
 
@@ -25,7 +29,15 @@ if ($stmt->rowCount() == 0) {
     header('Location: login.php'); // Rediriger vers la page de connexion si l'email n'existe pas
     exit();
 }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+$userId = $_SESSION['user_id']; 
+$clientC = new ClientC();
+$client = $clientC->getClientById($userId);
 
+$userRole = $client['choix']; 
 class ReclamationList {
     
     // Méthode pour afficher les réclamations d'un utilisateur spécifique
@@ -47,12 +59,13 @@ class ReclamationList {
 $reclamationList = new ReclamationList();
 $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupérer les réclamations de cet email
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des réclamations traitées</title>
+    <title>Liste des réclamations</title>
     <link rel="stylesheet" href="css/style.css"> <!-- Link to your CSS file -->
     <link href="img/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -128,35 +141,47 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
             color: #004200; /* Couleur verte pour le lien de retour */
         }
     </style>
+    <script>
+        // Votre script JavaScript ici
+    </script>
 </head>
 <body>
 
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3">
-        <a href="index.html" class="navbar-brand">
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
+    <a href="index.html" class="navbar-brand">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
         </a>
+        <div class="col-lg-3">
+                <div class="m-0  align-items-center justify-content-start">
+                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
+                </div>
+            </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-auto">
-               
-            <a href="index.html" class="nav-item nav-link">Home</a>
+            <div class="navbar-nav mx-auto py-0">
+            <a href ="" id="returnHome" class="nav-item nav-link ">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="ServiceList.php" class="nav-item nav-link">Service</a>
-                <a href="product.html" class="nav-item nav-link">Product</a>
-                <div class="nav-item dropdown">
+                <a href="../view/indexoffreclient.php" class="nav-item nav-link ">cat/of Travail</a>
+                <a href="../view/ServiceList.php" class="nav-item nav-link ">Services</a>
+                <a href="../view/form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
+                <div class="dropdown-menu m-6">
+                    <a href="listrectraitee.php" class="dropdown-item">Mes réclamations traitées</a>
+                    <a href="Listerecuser.php" class="dropdown-item">Mes réclamations non traitées</a>
+                </div>
                 
-                <a href="../view/form.php" class="nav-link active " >mes reclamations non traitee</a>
+            </div>
+            <div class="d-flex">
+                <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
+                <a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
                 
             </div>
         </div>
     </nav>
-    <!-- Navbar End -->
-
+    
     <div class="container">
-        <h1>Liste des réclamations traitées pour l'email : <?php echo htmlspecialchars($email); ?></h1>
+        <h1>Liste des réclamations pour l'email : <?php echo htmlspecialchars($email); ?></h1>
         <table>
             <thead>
                 <tr>
@@ -164,30 +189,83 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
                     <th>Email</th>
                     <th>Sujet</th>
                     <th>Message</th>
-                    
-                   
+                    <th>Actions</th>
+                    <th>Temps restant</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Afficher les réclamations traitées
+                // Afficher les réclamations
                 if (empty($offers)) {
-                    echo '<tr><td colspan="7">Aucune réclamation traitée trouvée.</td></tr>';
+                    echo '<tr><td colspan="6">Aucune réclamation trouvée.</td></tr>';
                 } else {
                     foreach ($offers as $offer) {
-                        echo "<tr>";
-                        echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
-                        echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
-                       
-                        echo "</tr>";
+                        $dateCreation = new DateTime($offer['date_creation']);
+                        $dateActuelle = new DateTime();
+                        $interval = $dateActuelle->diff($dateCreation);
+                        $tempsRestant = 3600 - ($interval->h * 3600 + $interval->i * 60 + $interval->s);
+
+                        if ($tempsRestant > 0) {
+                            echo "<tr>";
+                            echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
+                            echo "<td class='actions'>";
+                            echo "<a href ='updaterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn'>Modifier</a>";
+                            echo "<a href='deleterecu.php?id=" . htmlspecialchars($offer['id']) . "' class='btn btn-delete'>Supprimer</a>";
+                            echo "</td>";
+                            echo "<td class='countdown' data-seconds='$tempsRestant'>" . floor($tempsRestant / 60) . " minutes</td>";
+                            echo "</tr>";
+                        } else {
+                            echo "<tr>";
+                            echo '<td>' . htmlspecialchars($offer['nom']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['email']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['sujet']) . '</td>';
+                            echo '<td>' . htmlspecialchars($offer['message']) . '</td>';
+                            echo '<td class="actions"><span>Modification/Déletion fermée</span></td>';
+                            echo '<td class="countdown">Temps écoulé</td>';
+                            echo "</tr>";
+                        }
                     }
                 }
                 ?>
             </tbody>
         </table>
-        <a href="../view/form.php?success=1" class="return-link">Retour à l'accueil</a>
+        <a href="../view/form.php?success=1" class="btn btn-secondary py-md-3 px-md-5">Retourner</a>
+
     </div>
+
+    <script>
+        document.querySelectorAll('.countdown').forEach(function(element) {
+            const seconds = parseInt(element.getAttribute('data-seconds'));
+            if (seconds > 0) {
+                startCountdown(seconds, element);
+            }
+        });
+    </script>
+    <script>
+   ( document.getElementById('returnHome')).addEventListener('click', function(event)   {
+        event.preventDefault();
+
+        var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
+
+        switch (profession) {
+            case 'Vétérinaire':
+                window.location.href = "/projet%202/view/front office/vet.html";
+                break;
+            case 'Mécanicien':
+                window.location.href = "/projet%202/view/front office/mecanicien.html";
+                break;
+            case 'Saisonnier':
+                window.location.href = "/projet%202/view/front office/saisonnier.html";
+                break;
+            
+            default:
+                window.location.href = "/projet%202/view/front office/index.html";
+                break;
+        }
+    });
+    </script>
 </body>
 </html>

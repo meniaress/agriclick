@@ -6,7 +6,9 @@ error_reporting(E_ALL);
 
 include_once("../controllers/ReclamationController.php");
 include_once("../model/Reclamation.php"); // Ensure the path is correct
-
+include_once 'C:\xampp\htdocs\projet 2\model\client.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\database.php';
+include_once 'C:\xampp\htdocs\projet 2\controllers\clientc.php';
 $reclamationController = new ReclamationController();
 $offer = null;
 $notification = null; // Variable for notifications
@@ -26,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $offer = new Reclamation(null, $nom, $email, $sujet, $message, $date_creation, $statut);
         if ($reclamationController->addOffer($offer)) {
             $_SESSION['email'] = $email; // Stocker l'email dans la session
-
+           
             // Redirect to the same page with a success parameter
             header('Location: form.php?success=1');
             exit();
@@ -37,6 +39,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $notification = "Erreur : Tous les champs sont requis.";
     }
 }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+$userId = $_SESSION['user_id']; 
+$clientC = new ClientC();
+$client = $clientC->getClientById($userId);
+
+$userRole = $client['choix']; 
+
 ?>
 
 <!DOCTYPE html>
@@ -134,48 +146,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <!-- Topbar Start -->
-    <div class="container-fluid px-5 d-none d-lg-block">
-        <div class="row gx-5 py-3 align-items-center">
-            <div class="col-lg-3">
-                <div class="d-flex align-items-center justify-content-start">
-                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="index.html" class="navbar-brand ms-lg-5">
-                        <h1 class="m-0 display-4 text-primary"><span class="text-secondary">Agri</span>CLICK</h1>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="d-flex align-items-center justify-content-end">
-                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-primary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <!-- Topbar End -->
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-        <a href="index.html" class="navbar-brand d-flex d-lg-none">
+    <a href="index.html" class="navbar-brand">
             <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
         </a>
+        <div class="col-lg-3">
+                <div class="m-0  align-items-center justify-content-start">
+                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
+                </div>
+            </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="indexcategorieclient.php" class="nav-item nav-link ">cat/of Travail</a>
+            <a href ="" id="returnHome" class="nav-item nav-link ">Home</a>
 
-                <a href="ServiceList.php" class="nav-item nav-link">Service</a>
-                <a href="product.html" class="nav-item nav-link">Product</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
+
+                <a href="ServiceList.php" class="nav-item nav-link">Services</a>
                 <div class="nav-item dropdown">
                 
                 <a href="form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
@@ -186,13 +180,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a href="../controllers/Listerecuser.php" class="dropdown-item">mes reclamations non traitees</a>
 
                 </div>
-            <?php endif; ?>
-
-
-
-                </div>
+                <?php endif; ?>
             </div>
         </div>
+<div class="d-flex">
+<a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
+<a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
+
+</div>
+</div>
     </nav>
     <!-- Navbar End -->
 
@@ -250,7 +246,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <!-- Form End -->
 
-    <!-- Footer Start -->
     <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
@@ -270,34 +265,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <i class="bi bi-telephone text-white me-2"></i>
                                 <p class="text-white mb-0">+012 345 67890</p>
                             </div>
+                            <div class="d-flex mt-4">
+                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                            <h4 class="text-white mb-4">Quick Links</h4>
+                            <div class="d-flex flex-column justify-content-start">
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>job offers</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Services</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
+                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                            <h4 class="text-white mb-4">Popular Links</h4>
+                            <div class="d-flex flex-column justify-content-start">
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>job offers</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Services</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
+                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
+                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mt-lg-n5">
-                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-secondary p-5">
-                        <h4 class="text-white">Newsletter</h4>
-                        <h6 class="text-white">Subscribe Our Newsletter</h6>
-                        <p>Amet justo diam dolor rebum lorem sit stet sea justo kasd</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-primary">Sign Up</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div>
     <div class="container-fluid bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy ; <a class="text-secondary fw-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary fw-bold" href="https://htmlcodex.com">HTML Codex</a></p>
+            <p class="mb-0">&copy; <a class="text-secondary fw-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary fw-bold" href="https://htmlcodex.com">HTML Codex</a></p>
             <br>Distributed By: <a class="text-secondary fw-bold" href="https://themewagon.com" target="_blank">ThemeWagon</a>
         </div>
     </div>
     <!-- Footer End -->
-
-    <!-- Back to Top -->
+     <!-- Back to Top -->
     <a href="#" class="btn btn-secondary py-3 fs-4 back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <!-- JavaScript Libraries -->
@@ -310,5 +322,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+  ( document.getElementById('returnHome')).addEventListener('click', function(event)   {
+        event.preventDefault();
+
+        var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
+
+        switch (profession) {
+            case 'Vétérinaire':
+                window.location.href = "/projet%202/view/front office/vet.html";
+                break;
+            case 'Mécanicien':
+                window.location.href = "/projet%202/view/front office/mecanicien.html";
+                break;
+            case 'Saisonnier':
+                window.location.href = "/projet%202/view/front office/saisonnier.html";
+                break;
+            case 'Agriculteur':
+                window.location.href = "/projet%202/view/front office/agriculteure.html";
+                break;
+            default:
+                window.location.href = "/projet%202/view/front office/index.html";
+                break;
+        }    });
+
+        ( document.getElementById('returnoffre')).addEventListener('click', function(event)   {
+        event.preventDefault();
+
+        var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
+
+        switch (profession) {
+            case 'Vétérinaire':
+                window.location.href = "indexcategorieclient.php";
+                break;
+            case 'Mécanicien':
+                window.location.href = "indexcategorieclient.php";
+                break;
+            case 'Saisonnier':
+                window.location.href = "indexcategorieclient.php";
+                break;
+            case 'Agriculteur':
+                window.location.href = "indexcategorie.php";
+                break;
+            default:
+                window.location.href = "indexcategorieclient.php";
+                break;
+        }
+    });
+    </script>
 </body>
 </html>

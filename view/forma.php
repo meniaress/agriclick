@@ -170,11 +170,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="front officeagriculteure.html" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="indexcategorie.php" class="nav-item nav-link ">cat/of Travail</a>
 
-                <a href="ServiceList.php" class="nav-item nav-link">Service</a>
+                <a href="ServiceList.php" class="nav-item nav-link">Services</a>
                 <a href="product.html" class="nav-item nav-link">Product</a>
                 <div class="nav-item dropdown">
                 
@@ -192,7 +192,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </div>
             </div>
+            <div class="d-flex">
+                <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
+                <a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
+                
+            </div>
         </div>
+        
     </nav>
     <!-- Navbar End -->
 
@@ -273,19 +279,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mt-lg-n5">
-                    <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-secondary p-5">
-                        <h4 class="text-white">Newsletter</h4>
-                        <h6 class="text-white">Subscribe Our Newsletter</h6>
-                        <p>Amet justo diam dolor rebum lorem sit stet sea justo kasd</p>
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-primary">Sign Up</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div>

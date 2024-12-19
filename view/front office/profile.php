@@ -304,18 +304,13 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
            <div class="navbar-nav mx-auto py-0">
                <a href=""id="returnHome" class="nav-item nav-link ">Home</a>
                <a href="" class="nav-item nav-link">About</a>
-               <a href="" class="nav-item nav-link">JOB OFFERS</a>
+               <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
+               <a href="http://localhost/projet%202/view/ServiceList.php" class="nav-item nav-link">SERVICES</a>
+
                <?php if ($isVeterinarian): ?>
                 <a href="" class="nav-item nav-link"> suivi veterinaire</a> <!-- Lien spécifique pour vétérinaire -->
 <?php endif; ?>
                <a href="http://localhost/projet%202\view\form.php" class="nav-item nav-link">RECLAMATION</a>
-               
-
-            
-               
-              
-         
-
            </div>
            <div class="d-flex">
                <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link active" id="signin-btn">Voir le profil</a>
@@ -416,7 +411,28 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
                 break;
         }
     });
+    ( document.getElementById('returnoffre')).addEventListener('click', function(event)   {
+        event.preventDefault();
 
+        var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
+
+        switch (profession) {
+            case 'Vétérinaire':
+                window.location.href = "/projet%202/view/indexcategorieclient.php";
+                break;
+            case 'Mécanicien':
+                window.location.href = "/projet%202/view/indexcategorieclient.php";
+                break;
+            case 'Saisonnier':
+                window.location.href = "/projet%202/view/indexcategorieclient.php";
+                break;
+            case 'Agriculteur':
+                window.location.href = "/projet%202/view/indexcategorie.php";
+                break;
+            default:
+                window.location.href = "/projet%202/view/indexcategorieclient.php";
+                break;
+        }});
     const dropdown = document.querySelector('.dropdown');
 dropdown.addEventListener('mouseleave', () => {
   const content = dropdown.querySelector('.dropdown-content');

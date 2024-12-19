@@ -118,7 +118,8 @@ if (!empty($role) || !empty($nom_utilisateur)) {
                         <a class="nav-link " href="#">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link" href="#">Gestion des offres</a>
+                        <a class="nav-link" href="../indexadmincat.php">Gestion des offres et categories
+                        </a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link" href="../../controllers/Reclamationlist.php">
