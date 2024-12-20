@@ -46,11 +46,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="" class="nav-item nav-link active">Home</a>
-                <a href="" class="nav-item nav-link">About</a>
+                <a href="" class="nav-item nav-link active">Accueil</a>
+                <a href="#about"    class="nav-item nav-link">À propos de nous</a>
                 <a href="http://localhost/projet%202\view\indexcategorieclient.php" class="nav-item nav-link ">cat/of Travail</a>
 
                 <a href="http://localhost/projet%202/view/ServiceList.php" class="nav-item nav-link">SERVICES</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Partenariats</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="formations.php" class="dropdown-item">Formations</a>
+                        <a href="index.php" class="dropdown-item">Partenaires</a>
+                    </div>
+                </div>
                 <a href='http://localhost/projet%202/view/form.php' class="nav-item nav-link">RECLAMATION</a>
                 
              
@@ -113,58 +120,53 @@
 
 
 
+    <div id="about" class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 d-flex align-items-center">
+                <div class="about-us-image me-4">
+                    <img src="img/logo.png" alt="About Us Image" style="width: 250px; height: auto;" />
+                </div>
+                <div>
+                    <h2>À propos de nous</h2>
+                    <p>AgriCLICK est une plateforme numérique qui facilite la mise en relation entre les jeunes à la recherche de travail temporaire et les agriculteurs ayant besoin de main-d'œuvre pour des tâches spécifiques, comme la récolte des olives. Avec un simple clic, les utilisateurs peuvent accéder à une multitude d'opportunités d'emploi saisonnier.
+                    En plus de cela, AgriCLICK offre également des services pour les vétérinaires et les mécaniciens, garantissant ainsi un soutien complet aux agriculteurs. De plus, la plateforme comprend un marché pour l'achat et la location de matériel agricole, simplifiant ainsi la gestion des ressources pour les exploitations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     
 
     <!-- Footer Start -->
+   
     <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
-                <div class="col-lg-8 col-md-6">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                            <h4 class="text-white mb-4">Get In Touch</h4>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-geo-alt text-white me-2"></i>
-                                <p class="text-white mb-0">123 Street, New York, USA</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-envelope-open text-white me-2"></i>
-                                <p class="text-white mb-0">info@example.com</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-telephone text-white me-2"></i>
-                                <p class="text-white mb-0">+012 345 67890</p>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <h4 class="text-white mb-4">Quick Links</h4>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Our Services</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
-                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <h4 class="text-white mb-4">Popular Links</h4>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Our Services</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
-                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
+                <div class="col-lg-4 col-md-4 py-5">
+                    <h4 class="text-white mb-4">Location</h4>
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-geo-alt text-white me-2"></i>
+                        <p class="text-white mb-0">123 Rue, New York, USA</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 py-5 text-center">
+                    <h4 class="text-white mb-4">Autour du Web</h4>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 py-5 text-end">
+                    <h4 class="text-white mb-4">Contactez-nous</h4>
+                    <div class="d-flex align-items-center justify-content-end mb-3">
+                        <i class="bi bi-envelope-open text-white me-2"></i>
+                        <p class="text-white mb-0">info@example.com</p>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <i class="bi bi-telephone text-white me-2"></i>
+                        <p class="text-white mb-0">+012 345 67890</p>
                     </div>
                 </div>
                 
@@ -174,8 +176,7 @@
     
     <div class="container-fluid bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; <a class="text-secondary fw-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary fw-bold" href="https://htmlcodex.com">HTML Codex</a></p>
-            <br>Distributed By: <a class="text-secondary fw-bold" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+            <p class="mb-0"><a class="text-secondary fw-bold" href="#">Copyright © Your Website 2024</a></p>
         </div>
     </div>
     <!-- Footer End -->

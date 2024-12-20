@@ -33,30 +33,35 @@
 
 <body>
     <!-- Navbar Start -->
-  <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-    <a href="index.html" class="navbar-brand">
-            <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
-        </a>
-        <div class="col-lg-3">
-                <div class="m-0  align-items-center justify-content-start">
-                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
-                </div>
-            </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-auto py-0">
-                <a href="/projet%202/view/front office/vet.html" class="nav-item nav-link">Accueil</a>
-                <a href="about.html" class="nav-item nav-link">a propos nous</a>
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
+       
+       <a href="index.html" class="navbar-brand d-flex d-lg-none">
+           <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK
+       </h1>
+       </a>
+
+       
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarCollapse">
+           <div class="navbar-nav mx-auto py-0">
+               <a href="" class="nav-item nav-link ">Accueil</a>
                 <a href="../indexcategorieclient.php" class="nav-item nav-link ">cat/of Travail</a>
                 <a href="../ServiceList.php" class="nav-item nav-link ">Services</a>
-                <div class="nav-item dropdown">
+                <div class="nav-item dropdown d-flex">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">suivi veterinaire</a>
                     <div class="dropdown-menu m-0">
                         <a href="animal.php" class="dropdown-item"> Ajouter un animal </a>
                         <a href="consult.php" class="dropdown-item">Créer une consultation</a>
                     </div>
+                    <div class="nav-item dropdown d-flex">
+                 <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Partenariats</a>
+                 <div class="dropdown-menu m-7">
+                     <a href="../elyes/formations.php" class="dropdown-item">Formations</a>
+                     <a href="../elyes/index.php" class="dropdown-item">Partenaires</a>
+                 </div>
+             </div>
                 </div>
                 <a href="../form.php" class="nav-item nav-link">Reclamation</a>
 

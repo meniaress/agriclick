@@ -106,10 +106,10 @@ $commandes = $commandeController->listCommandes();
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
           <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+                        <a class="nav-link " href="elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link" href="../view/indexadmincat.php">Gestion des offres et categories
+                        <a class="nav-link" href="indexadmincat.php">Gestion des offres et categories
                         </a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
@@ -120,6 +120,11 @@ $commandes = $commandeController->listCommandes();
             <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link" href="../controllers/dashboard/listrep.php">
                 Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="meniar/dash.php">
+                Gestion de suivi
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
@@ -174,16 +179,10 @@ $commandes = $commandeController->listCommandes();
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Moetez Ben Attia</h3>
-                <p>Your last login: 21h ago from Tunisia.</p>
-              </div>
               
-            </div>
             
 
     <div class="container py-5">
-        <h1 class="text-center mb-4">Welcome to the Admin Dashboard</h1>
 
         <div class="row">
             <div class="col-md-6">

@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="utf-8">
-    <title>Create Command</title>
+    <title>Creation Commande</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Include stylesheets -->
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="card shadow-sm p-4">
-                    <h2 class="text-center">Command Service</h2>
+                    <h2 class="text-center">Commander Service</h2>
 
                     <?php if (isset($error)) : ?>
                         <div class="alert alert-danger">
@@ -75,9 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <form method="POST" action="CommandeCreation.php?id=<?= htmlspecialchars($idService) ?>">
                         <!-- Payment Method -->
                         <div class="mb-3">
-                            <label for="paiement" class="form-label">Payment Method</label>
+                            <label for="paiement" class="form-label"> Methode de Payment</label>
                             <select id="paiement" name="paiement" class="form-select" required>
-                                <option value="" disabled selected>Select a payment method</option>
+                                <option value="" disabled selected>choisir methode de payment</option>
                                 <option value="Credit Card">Credit Card</option>
                                 <option value="PayPal">PayPal</option>
                                 <option value="Bank Transfer">Bank Transfer</option>
@@ -86,10 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- Message Input -->
                         <div class="mb-3">
                           <label for="message" class="form-label">Message (optional)</label>
-                          <textarea id="message" name="message" class="form-control" rows="3" placeholder="Enter any additional information here..."></textarea>
+                          <textarea id="message" name="message" class="form-control" rows="3" placeholder="ajouter un message"></textarea>
                         </div>
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary w-100">Confirm Command</button>
+                        <button type="submit" class="btn btn-primary w-100">Confirmer</button>
                     </form>
 
                     

@@ -56,9 +56,9 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>AGRICLICK</title>
+    <title>Agriclick</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/logo.png" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
@@ -150,38 +150,44 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
     
     <!-- Topbar End -->
 
-    <!-- Navbar Start -->
+    
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-    <a href="index.html" class="navbar-brand">
-            <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
-        </a>
-        <div class="col-lg-3">
-                <div class="m-0  align-items-center justify-content-start">
-                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
-                </div>
-            </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-auto py-0">
-            <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
+       
+       <a href="index.html" class="navbar-brand d-flex d-lg-none">
+           <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK
+       </h1>
+       </a>
 
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
+       
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarCollapse">
+           <div class="navbar-nav mx-auto py-0">
+           <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
 
-                <a href="ServiceList.php" class="nav-item nav-link">Services</a>
+               <a href="" id ="returnoffre"class="nav-item nav-link ">cat/of Travail</a>
+                <a href="ServiceList.php" class="nav-item nav-link ">services</a>
                 <div class="nav-item  dropdown d-flex">
                 <?php if ($isVeterinarian): ?>
                 <div class="nav-item  dropdown d-flex">
                     <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">suivi veterinaire</a>
                     <div class="dropdown-menu m-1">
-                        <a href="meniar/animal.php" class="dropdown-item"> Ajouter un animal </a>
+                        <a href="meniar/animal.php" class="dropdown-item"> Ajouter un animal</a>
                         <a href="meniar/consult.php" class="dropdown-item">Créer une consultation</a>
                     </div>
                 </div>
 <?php endif; ?>
-                <a href="form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
+<div class="nav-item  dropdown d-flex">
+
+<a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Partenariats</a>
+                    <div class="dropdown-menu m-7 ">
+                        <a href="elyes/formations.php" class="dropdown-item">Formations</a>
+                            <a href="elyes/index.php" class="dropdown-item">Partenaires</a>
+                        </div>
+                </div>                  
+                
+<a href="form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
                 <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
     
                 <div class="dropdown-menu m-6 ">
@@ -190,14 +196,17 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
 
                 </div>
                 <?php endif; ?>
+</div>
+                
+                
+           </div>
+           <div class="d-flex">
+                <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
+                <a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
+                
             </div>
         </div>
-<div class="d-flex">
-<a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
-<a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
-
-</div>
-</div>
+        
     </nav>
     <!-- Navbar End -->
 
@@ -217,8 +226,8 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
     <div class="container-fluid py-5">
         <div class="container">
             <div class="mx-auto text-center mb-5" style="max-width: 500px;">
-                <h6 class="text-primary text -uppercase">RECLAME Us</h6>
-                <h1 class="display-5">Please Feel Free To RECLAME Us</h1>
+                <h6 class="text-primary text -uppercase">Reclamation</h6>
+                <h1 class="display-5">N'hésite pas de faire une réclamation</h1>
             </div>
             <?php if (isset($notification)): ?>
                 <div class="alert alert-danger" role="alert">
@@ -231,15 +240,15 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
             <form method="POST" action="">
                 <div class="row g-3">
                     <div class="col-6 input-container">
-                        <input type="text" id="name" name="name" class="form-control bg-light border-0 px-4" placeholder="Your Name" style="height: 55px;" required>
+                        <input type="text" id="name" name="name" class="form-control bg-light border-0 px-4" placeholder="nom" style="height: 55px;" required>
                         <span class="error-message" id="nameError">Le nom doit contenir au moins 4 caractères et commencer par une majuscule.</span>
                     </div>
                     <div class="col-6 input-container">
-                        <input type="email" id="email" name="email" class="form-control bg-light border-0 px-4" placeholder="Your Email" style="height: 55px;" required>
+                        <input type="email" id="email" name="email" class="form-control bg-light border-0 px-4" placeholder="Email" style="height: 55px;" required>
                         <span class="error-message" id="emailError">Veuillez entrer un email valide.</span>
                     </div>
                     <div class="col-12 input-container">
-                        <input type="text" id="subject" name="subject" class="form-control bg-light border-0 px-4" placeholder="Subject" style="height: 55px;" required>
+                        <input type="text" id="subject" name="subject" class="form-control bg-light border-0 px-4" placeholder="Sujet" style="height: 55px;" required>
                         <span class="error-message">Le sujet doit contenir au moins 4 caractères.</span>
                     </div>
                     <div class="col-12 input-container">
@@ -247,7 +256,7 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
                         <span class="error-message">Le message doit contenir au moins 4 caractères.</span>
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-secondary w-100 py-3" type="submit" disabled>RECLAME</button>
+                        <button class="btn btn-secondary w-100 py-3" type="submit" disabled>Reclamer</button>
                     </div>
                 </div>
             </form>
@@ -258,63 +267,41 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
     <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
-                <div class="col-lg-8 col-md-6">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                            <h4 class="text-white mb-4">Get In Touch</h4>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-geo-alt text-white me-2"></i>
-                                <p class="text-white mb-0">123 Street, New York, USA</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-envelope-open text-white me-2"></i>
-                                <p class="text-white mb-0">info@example.com</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-telephone text-white me-2"></i>
-                                <p class="text-white mb-0">+012 345 67890</p>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <h4 class="text-white mb-4">Quick Links</h4>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>job offers</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Services</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
-                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <h4 class="text-white mb-4">Popular Links</h4>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>job offers</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Services</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
-                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
+                <div class="col-lg-4 col-md-4 py-5">
+                    <h4 class="text-white mb-4">Location</h4>
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-geo-alt text-white me-2"></i>
+                        <p class="text-white mb-0">123 Rue, New York, USA</p>
                     </div>
                 </div>
-               
+                <div class="col-lg-4 col-md-4 py-5 text-center">
+                    <h4 class="text-white mb-4">Autour du Web</h4>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 py-5 text-end">
+                    <h4 class="text-white mb-4">Contactez-nous</h4>
+                    <div class="d-flex align-items-center justify-content-end mb-3">
+                        <i class="bi bi-envelope-open text-white me-2"></i>
+                        <p class="text-white mb-0">info@example.com</p>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <i class="bi bi-telephone text-white me-2"></i>
+                        <p class="text-white mb-0">+012 345 67890</p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
+    
     <div class="container-fluid bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; <a class="text-secondary fw-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary fw-bold" href="https://htmlcodex.com">HTML Codex</a></p>
-            <br>Distributed By: <a class="text-secondary fw-bold" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+            <p class="mb-0"><a class="text-secondary fw-bold" href="#">Copyright © Your Website 2024</a></p>
         </div>
     </div>
     <!-- Footer End -->

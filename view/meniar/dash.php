@@ -33,34 +33,41 @@ if (!$result) {
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="img/icon.png" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo.pngsss" alt="logo"/></a>
-          <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-            <span class="typcn typcn-th-menu"></span>
-          </button>
+          
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des Utilisateurs
+          <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link " href="../elyes/dash.php">Gestion des Partenariats</a>
+                    </li>
+                    <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link" href="../indexadmincat.php">Gestion des offres et categories
+                        </a>
+                    </li>
+                    <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../../controllers/Reclamationlist.php">
+                Gestion des reclamations
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link active" href="#">
+              <a class="nav-link" href="../../controllers/dashboard/listrep.php">
+                Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link active" href="dash.php">
                 Gestion de suivi
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des offres
+              <a class="nav-link " href="../dash.php">
+                Gestion des commandes et des services
               </a>
             </li>
-            <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des offres
-              </a>
-            </li>
+            <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link"  href="../back office/client_liste.php">Gestion des Utilisateurs</a>
+                    </li>
+            
           </ul>
           </div>
       </nav>
@@ -73,30 +80,7 @@ if (!$result) {
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <div class="d-flex sidebar-profile">
-              <div class="sidebar-profile-image">
-                <img src="img/faces/face29.png" alt="image">
-                <span class="sidebar-status-indicator"></span>
-              </div>
-              <div class="sidebar-profile-name">
-                <p class="sidebar-name">
-                  Meniar
-                </p>
-                <p class="sidebar-designation">
-                  Welcome
-                </p>
-              </div>
-            </div>
-            <div class="nav-search">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="search">
-                    <i class="typcn typcn-zoom"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
+            
             <p class="sidebar-menu-title">Dash menu</p>
           </li>
           <li class="nav-item">
@@ -105,18 +89,27 @@ if (!$result) {
               <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
             </a>
           </li>
-</ul>
+          <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="http://localhost/projet%202/view/back%20office/statistique.php" aria-expanded="false" aria-controls="auth">
+                <i class="typcn typcn-user-add-outline menu-icon"></i>
+                <span class="menu-title">Statistiques des Clients</span>
+                <i class="menu-arrow"></i>
+              </a>
+             
+            </li>
+          <li class="nav-item">
+                    <a class="nav-link " href="../../controllers/dashboard/statistiques.php">
+                        <i class="typcn typcn-device-desktop menu-icon"></i>
+                        <span class="menu-title ">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
+                        
+                    </a>
+                </li>
+        </ul>
+     
       </nav>
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Meniar Mili</h3>
-                <p>Your last login: 21h ago from Tunisia.</p>
-              </div>
-              
-            </div>
             
             
             <div class="row">
@@ -184,151 +177,7 @@ if (!$result) {
           </script>
           
             
-              <div class="col-lg-8 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">Project status</h4>
-                    </div>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face30.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold mt-1">volkswagen</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$2322 </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">88% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">07 Nov 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face31.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">Land Rover</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$12022  </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">70% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">08 Nov 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face32.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">Bentley </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$8,725</div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">87% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">11 Jun 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face33.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">Morgan </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$5,220 </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">65% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">26 Oct 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face34.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">volkswagen</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$2322 </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success mt-1">88% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">07 Nov 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </div>
           <!-- content-wrapper ends -->

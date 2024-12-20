@@ -13,7 +13,7 @@ if (isset($_SESSION['email'])) {
     $email = $_SESSION['email']; // Récupérer l'email de la session
 } else {
     // Si l'email n'est pas défini, rediriger vers la page de connexion
-    header('Location: login.php');
+    header('Location: http://localhost/projet%202/view//front%20office/login.html');
     exit();
 }
 
@@ -38,6 +38,7 @@ $clientC = new ClientC();
 $client = $clientC->getClientById($userId);
 
 $userRole = $client['choix']; 
+$isVeterinarian = $client['choix'] === 'Vétérinaire';
 
 class ReclamationList {
     
@@ -70,7 +71,7 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des réclamations traitées</title>
     <link rel="stylesheet" href="css/style.css"> <!-- Link to your CSS file -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/logo.png" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
@@ -148,37 +149,63 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
 <body>
 
     <!-- Navbar Start -->
+  
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-    <a href="index.html" class="navbar-brand">
-            <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
-        </a>
-        <div class="col-lg-3">
-                <div class="m-0  align-items-center justify-content-start">
-                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
+       
+       <a href="index.html" class="navbar-brand d-flex d-lg-none">
+           <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK
+       </h1>
+       </a>
+
+       
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarCollapse">
+           <div class="navbar-nav mx-auto py-0">
+           <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
+
+               <a href="" id ="returnoffre"class="nav-item nav-link ">cat/of Travail</a>
+                <a href="../view/ServiceList.php" class="nav-item nav-link ">services</a>
+                <div class="nav-item  dropdown d-flex">
+                <?php if ($isVeterinarian): ?>
+                <div class="nav-item  dropdown d-flex">
+                    <a href="../view/meniar/animal.php" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">suivi veterinaire</a>
+                    <div class="dropdown-menu m-1">
+                        <a href="../view/meniar/animal.php" class="dropdown-item"> Ajouter un animal</a>
+                        <a href="../view/meniar/consult.php" class="dropdown-item">Créer une consultation</a>
+                    </div>
                 </div>
-            </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-auto py-0">
-            <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="../view/indexoffreclient.php" class="nav-item nav-link ">cat/of Travail</a>
-                <a href="../view/ServiceList.php" class="nav-item nav-link ">Services</a>
-                <a href="../view/form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
-                <div class="dropdown-menu m-6">
-                    <a href="listrectraitee.php" class="dropdown-item">Mes réclamations traitées</a>
-                    <a href="Listerecuser.php" class="dropdown-item">Mes réclamations non traitées</a>
-                </div>
+<?php endif; ?>
+<div class="nav-item  dropdown d-flex">
+
+<a href="../view/elyes/index.php" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Partenariats</a>
+                    <div class="dropdown-menu m-7 ">
+                        <a href="../view/elyes/formations.php" class="dropdown-item">Formations</a>
+                            <a href="../view/elyes/index.php" class="dropdown-item">Partenaires</a>
+                        </div>
+                </div>                  
                 
-            </div>
-            <div class="d-flex">
+<a href="../view/form.php" class="nav-link active dropdown-toggle" data-bs-toggle="dropdown">Reclamation</a>
+                <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+    
+                <div class="dropdown-menu m-6 ">
+                    <a href="listrectraitee.php" class="dropdown-item">mes reclamations traitees</a>
+                    <a href="Listerecuser.php" class="dropdown-item">mes reclamations non traitees</a>
+
+                </div>
+                <?php endif; ?>
+</div>
+                
+                
+           </div>
+           <div class="d-flex">
                 <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
                 <a href="http://localhost/projet%202/controllers/deconnexion.php" class="nav-item nav-link" id="signin-btn">se déconnecter</a>
                 
             </div>
         </div>
+        
     </nav>
     <!-- Navbar End -->
 
@@ -220,7 +247,7 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
         <a href="../view/form.php?success=1" class="btn btn-secondary py-md-3 px-md-5">Retourner</a>
     </div>
     <script>
-   ( document.getElementById('returnHome')).addEventListener('click', function(event)   {
+  ( document.getElementById('returnHome')).addEventListener('click', function(event)   {
         event.preventDefault();
 
         var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
@@ -235,9 +262,34 @@ $offers = $reclamationList->AfficherReclamationNonTraitees($email); // Récupér
             case 'Saisonnier':
                 window.location.href = "/projet%202/view/front office/saisonnier.html";
                 break;
-            
+            case 'Agriculteur':
+                window.location.href = "/projet%202/view/front office/agriculteure.html";
+                break;
             default:
                 window.location.href = "/projet%202/view/front office/index.html";
+                break;
+        }    });
+
+        ( document.getElementById('returnoffre')).addEventListener('click', function(event)   {
+        event.preventDefault();
+
+        var profession = '<?php echo htmlspecialchars($client["choix"]); ?>';
+
+        switch (profession) {
+            case 'Vétérinaire':
+                window.location.href = "../view/indexcategorieclient.php";
+                break;
+            case 'Mécanicien':
+                window.location.href = "../view/indexcategorieclient.php";
+                break;
+            case 'Saisonnier':
+                window.location.href = "../view/indexcategorieclient.php";
+                break;
+            case 'Agriculteur':
+                window.location.href = "../view/indexcategorie.php";
+                break;
+            default:
+                window.location.href = "../view/indexcategorieclient.php";
                 break;
         }
     });

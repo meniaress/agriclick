@@ -8,7 +8,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Liste des categories - agriCLICK Admin</title>
+    <title>Liste des categories - Agriclick Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="dashboard/vendors/typicons.font/font/typicons.css">
     <link rel="stylesheet" href="dashboard/vendors/css/vendor.bundle.base.css">
@@ -23,7 +23,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
         <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
           <ul class="navbar-nav mr-lg-2">
           <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+                        <a class="nav-link " href="elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link active" href="#">
@@ -38,6 +38,11 @@ $list = $CatC->trierCategorieParPremiereLettre();
             <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link" href="../controllers/dashboard/listrep.php">
                 Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="meniar/dash.php">
+                Gestion de suivi
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
@@ -90,13 +95,7 @@ $list = $CatC->trierCategorieParPremiereLettre();
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Ahmed Regaieg</h3>
-                <p>Your last login: 21h ago from Tunisia.</p>
-              </div>
-              
-            </div>
+            
             
     <h1 id="root">CATEGORIE DE TRAVAIL</h1>
     <div class="container">

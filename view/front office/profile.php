@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id']; 
 $clientC = new ClientC();
 $client = $clientC->getClientById($userId);
-$photoPath = 'C:\xampp\htdocs\projet%202\uploads' . $client['photo'];
+$photoPath = 'C:\xampp\htdocs\projet 2\uploads' . $client['photo'];
 
 $userRole = $client['choix']; 
 $isVeterinarian = $client['choix'] === 'Vétérinaire';
@@ -24,13 +24,13 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil utilisateur</title>
+    <title>Agriclick</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/logo.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -302,21 +302,28 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
        </button>
        <div class="collapse navbar-collapse" id="navbarCollapse">
            <div class="navbar-nav mx-auto py-0">
-               <a href=""id="returnHome" class="nav-item nav-link ">Home</a>
-               <a href="" class="nav-item nav-link">About</a>
+               <a href=""id="returnHome" class="nav-item nav-link ">Accueil</a>
+               <a href="" class="nav-item nav-link">A propos de nous</a>
                <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
                <a href="http://localhost/projet%202/view/ServiceList.php" class="nav-item nav-link">SERVICES</a>
-               <div class="nav-item dropdown">
-
-               <?php if ($isVeterinarian): ?>
+               <div class="nav-item  dropdown d-flex">
+                <?php if ($isVeterinarian): ?>
+                <div class="nav-item  dropdown d-flex">
                     <a href="../meniar/animal.php" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">suivi veterinaire</a>
-                    <div class="dropdown-menu m-0 ">
-                        <a href="../meniar/animal.php" class="dropdown-item"> Ajouter un animal </a>
+                    <div class="dropdown-menu m-1">
+                        <a href="../meniar/animal.php" class="dropdown-item"> Ajouter un animal</a>
                         <a href="../meniar/consult.php" class="dropdown-item">Créer une consultation</a>
                     </div>
-               
-<?php endif; ?>
-</div>
+                </div>
+                <?php endif; ?>
+
+</div>          <div class="nav-item dropdown">
+                <a href="../elyes/index.php" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Partenariats</a>
+                <div class="dropdown-menu m-0">
+                    <a href="../elyes/formations.php" class="dropdown-item">Formations</a>
+                    <a href="../elyes/index.php" class="dropdown-item">Partenaires</a>
+                </div>
+            </div>
                <a href="http://localhost/projet%202\view\form.php" class="nav-item nav-link">RECLAMATION</a>
            </div>
            <div class="d-flex">
@@ -346,7 +353,7 @@ $isVeterinarian = $client['choix'] === 'Vétérinaire';
 <div class="profile-pic">
     <?php 
     $photo = $client['photo'];
-    $photoPath = '/projet%202/uploads/' . ($photo ? htmlspecialchars($photo) : 'default_profile.png');
+    $photoPath = '/projet 2/uploads/' . ($photo ? htmlspecialchars($photo) : 'default_profile.png');
     ?>
     <img src="<?php echo $photoPath; ?>" alt="Photo de profil">
 </div>

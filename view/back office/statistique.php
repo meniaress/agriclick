@@ -80,65 +80,63 @@ foreach ($loginData as $row) {
 </head>
 <body>
 <div class="container-scroller">
-        <!-- Navbar -->
-        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
-                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-                    <span class="typcn typcn-th-menu"></span>
-                </button>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                <ul class="navbar-nav mr-lg-2">
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link " href="client_liste.php">Gestion des Utilisateurs</a>
+<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+         
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link " href="../elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
-                    </li>
-                    <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link" href="#">Gestion des offres</a>
-                    </li>
-                    <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="#">
-                Gestion des offres
+              <a class="nav-link " href="../indexadmincat.php">
+                Gestion des offres et categories
               </a>
             </li>
-                </ul>
-            </div>
-        </nav>
+                    <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../../controllers/Reclamationlist.php">
+                Gestion des reclamations
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link" href="../../controllers/dashboard/listrep.php">
+                Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="../meniar/dash.php">
+                Gestion de suivi
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="../dash.php">
+                Gestion des commandes et des services
+              </a>
+            </li>
+            <li class="nav-item d-none d-lg-flex">
+                        <a class="nav-link active"  href="client_liste.php">Gestion des Utilisateurs</a>
+                    </li>
+          </ul>
+          </div>
+      </nav>
 
         <div class="container-fluid page-body-wrapper">
             <!-- Sidebar -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
-          <ul class="nav">
-            <li class="nav-item">
-              <div class="d-flex sidebar-profile">
-                <div class="sidebar-profile-name">
-                </div>
-              </div>
-              <div class="nav-search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Type to search..." aria-label="search" aria-describedby="search">
-                  <div class="input-group-append">
-                    <span class="input-group-text" id="search">
-                      <i class="typcn typcn-zoom"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <p class="sidebar-menu-title">Dash menu</p>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="">
-                <i class="typcn typcn-device-desktop menu-icon"></i>
-                <span class="menu-title">Dashboard </span>
-              </a>
-            </li>
-            
-           
-            </li>
-            <li class="nav-item">
+                <ul class="nav">
+                    <li class="nav-item">
+                        
+                        
+                        <p class="sidebar-menu-title">Dash menu</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="http://localhost/projet%202/view/back%20office/statistique.php" aria-expanded="false" aria-controls="auth">
                 <i class="typcn typcn-user-add-outline menu-icon"></i>
                 <span class="menu-title">Statistiques des Clients</span>
@@ -146,8 +144,15 @@ foreach ($loginData as $row) {
               </a>
              
             </li>
-          </ul>
-        </nav>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../../controllers/dashboard/statistiques.php">
+                            <i class="typcn typcn-chart-bar menu-icon"></i>
+                            <span class="menu-title">Statistiques des Réponses</span>
+                        </a>
+                    </li>
+                    <!-- Add other sidebar items here -->
+                </ul>
+            </nav>
         
             <!-- Main content -->
             <div class="main-panel">

@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>FarmFresh - Organic Farm Website Template</title>
+    <title>Agriclick</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/logo.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -30,31 +30,34 @@
 </head>
 
 <body>
-    
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-        <a href="index.html" class="navbar-brand">
-            <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
+       
+        <a href="index.html" class="navbar-brand d-flex d-lg-none">
+            <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK
+        </h1>
         </a>
-        <div class="col-lg-3">
-                <div class="m-0  align-items-center justify-content-start">
-                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
-                </div>
-            </div>
+
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="" class="nav-item nav-link active">Home</a>
-                <a href="" class="nav-item nav-link">About</a>
+                <a href="" class="nav-item nav-link active">Accueil</a>
+                <a href="#about"    class="nav-item nav-link">À propos de nous</a>
+
+
                 <a href="http://localhost/projet%202\view\indexcategorieclient.php" class="nav-item nav-link ">cat/of Travail</a>
                 <a href="http://localhost/projet%202/view/ServiceList.php" class="nav-item nav-link">SERVICES</a>
-
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Partenariats</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="../elyes/formations.php" class="dropdown-item">Formations</a>
+                        <a href="../elyes/index.php" class="dropdown-item">Partenaires</a>
+                    </div>
+                </div>
                 <a href="http://localhost/projet%202\view\form.php" class="nav-item nav-link">RECLAMATION</a>
                 
-               
-                
-
             </div>
             <div class="d-flex">
                 <a href="http://localhost/projet%202/view/front office/profile.php" class="nav-item nav-link" id="signin-btn">Voir le profil</a>
@@ -64,17 +67,17 @@
         </div>
     </nav>
     <!-- Navbar End -->
+    
 
-
-    <!-- Carousel Start -->
-    <div class="container-fluid p-0">
+     <!-- Carousel Start -->
+     <div class="container-fluid p-0">
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img class="w-100" src="img/meca.jpg" alt="Image">
                     <div class="carousel-caption top-0 bottom-0 start-0 end-0 d-flex flex-column align-items-center justify-content-center">
                         <div class="text-start p-5" style="max-width: 900px;">
-                            <h3 class="text-white">Organic Vegetables</h3>
+                           
                             <h1 class="display-1 text-white mb-md-4">Un clic, des opportunités</h1>
                             
                             
@@ -85,8 +88,8 @@
                     <img class="w-100" src="img/meca.jpg" alt="Image">
                     <div class="carousel-caption top-0 bottom-0 start-0 end-0 d-flex flex-column align-items-center justify-content-center">
                         <div class="text-start p-5" style="max-width: 900px;">
-                            <h3 class="text-white">Organic Fruits</h3>
-                            <h1 class="display-1 text-white mb-md-4">Organic Fruits For Better Health</h1>
+                          
+                            <h1 class="display-1 text-white mb-md-4">Pour une agriculture connectée et soutenue</h1>
                            
                             
                         </div>
@@ -109,7 +112,20 @@
     
     
 
-
+    <div id="about" class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 d-flex align-items-center">
+                <div class="about-us-image me-4">
+                    <img src="img/logo.png" alt="About Us Image" style="width: 250px; height: auto;" />
+                </div>
+                <div>
+                    <h2>À propos de nous</h2>
+                    <p>AgriCLICK est une plateforme numérique qui facilite la mise en relation entre les jeunes à la recherche de travail temporaire et les agriculteurs ayant besoin de main-d'œuvre pour des tâches spécifiques, comme la récolte des olives. Avec un simple clic, les utilisateurs peuvent accéder à une multitude d'opportunités d'emploi saisonnier.
+                    En plus de cela, AgriCLICK offre également des services pour les vétérinaires et les mécaniciens, garantissant ainsi un soutien complet aux agriculteurs. De plus, la plateforme comprend un marché pour l'achat et la location de matériel agricole, simplifiant ainsi la gestion des ressources pour les exploitations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     

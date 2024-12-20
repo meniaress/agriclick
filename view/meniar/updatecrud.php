@@ -1,7 +1,7 @@
 <?php
 
 
-    include 'controllers\crud.php';
+    include '../../controllers/crud.php';
     
 $id=$_POST['id_ani'];
 $nom_ani=$_POST['nom_ani'];

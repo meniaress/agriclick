@@ -28,96 +28,25 @@ if (!empty($role) || !empty($nom_utilisateur)) {
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <link rel="shortcut icon" href="img/icon.png" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7fc;
-        }
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-        }
-        table {
-            width: 80%;
-            margin: 30px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 12px 20px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #004200;
-            color: #fff;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        tbody tr:last-child {
-            border-bottom: none;
-        }
-        .actions {
-            display: flex;
-            justify-content: center;
-        }
-        .btn {
-            padding: 5px 10px;
-            background-color: #004200;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
-        .btn:hover {
-            background-color: #003300;
-        }
-        .btn-delete {
-            background-color: #ff5f33;
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-        form button {
-            padding: 5px 10px;
-            background-color: #004200;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        form button:hover {
-            background-color: #003300;
-        }
-        td img {
-            border-radius: 50%;
-            object-fit: cover;
-        }
-    </style>
+      </style>
 </head>
 <body>
     <div class="container-scroller">
         <!-- Navbar -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                <ul class="navbar-nav mr-lg-2">
-                    
-                    <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+         
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link " href="../elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link" href="../indexadmincat.php">Gestion des offres et categories
-                        </a>
-                    </li>
+              <a class="nav-link " href="../indexadmincat.php">
+                Gestion des offres et categories
+              </a>
+            </li>
                     <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link" href="../../controllers/Reclamationlist.php">
                 Gestion des reclamations
@@ -129,39 +58,38 @@ if (!empty($role) || !empty($nom_utilisateur)) {
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="../dash.php">
+              <a class="nav-link " href="../meniar/dash.php">
+                Gestion de suivi
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="../dash.php">
                 Gestion des commandes et des services
               </a>
             </li>
             <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link active" href="client_liste.php">Gestion des Utilisateurs</a>
+                        <a class="nav-link active"  href="client_liste.php">Gestion des Utilisateurs</a>
                     </li>
-                </ul>
-            </div>
-        </nav>
+          </ul>
+          </div>
+      </nav>
 
         <div class="container-fluid page-body-wrapper">
             <!-- Sidebar -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
-          <ul class="nav">
-            <li class="nav-item">
-              <div class="d-flex sidebar-profile">
-                <div class="sidebar-profile-name">
-                </div>
-              </div>
-             
-              <p class="sidebar-menu-title">Dash menu</p>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <i class="typcn typcn-device-desktop menu-icon"></i>
-                <span class="menu-title">Dashboard </span>
-              </a>
-            </li>
-            
-           
-            </li>
-            <li class="nav-item">
+                <ul class="nav">
+                    <li class="nav-item">
+                        
+                        
+                        <p class="sidebar-menu-title">Dash menu</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="typcn typcn-device-desktop menu-icon"></i>
+                            <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="http://localhost/projet%202/view/back%20office/statistique.php" aria-expanded="false" aria-controls="auth">
                 <i class="typcn typcn-user-add-outline menu-icon"></i>
                 <span class="menu-title">Statistiques des Clients</span>
@@ -169,18 +97,22 @@ if (!empty($role) || !empty($nom_utilisateur)) {
               </a>
              
             </li>
-            <li class="nav-item">
-                        <a class="nav-link" href="../../controllers/dashboard/statistiques.php">
-                            <i class="typcn typcn-device-desktop menu-icon"></i>
-                            <span class="menu-title">Statistiques des Réponses<span class="badge badge-primary ml-3">New</span></span>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../../controllers/dashboard/statistiques.php">
+                            <i class="typcn typcn-chart-bar menu-icon"></i>
+                            <span class="menu-title">Statistiques des Réponses</span>
                         </a>
                     </li>
-          </ul>
-        </nav>
+                    <!-- Add other sidebar items here -->
+                </ul>
+            </nav>
         
-            <!-- Main content -->
-            <div class="main-panel">
-                <div class="content-wrapper">
+             <!-- Main content -->
+             <div class="main-panel">
+            <div class="content-wrapper">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                     <h1>Liste des clients</h1>
 
                     <!-- Recherche -->
@@ -195,12 +127,13 @@ if (!empty($role) || !empty($nom_utilisateur)) {
                         </select>
                         <label for="nom_utilisateur">Nom d'utilisateur :</label>
                         <input type="text" name="nom_utilisateur" id="nom_utilisateur" placeholder="Entrer un nom d'utilisateur">
-                        <button type="submit">Rechercher</button>
+                        <button class="btn btn-danger btn-sm" type="submit">Rechercher</button>
                     </form>
 
                     <!-- Tableau des clients -->
-                    <table>
-                        <thead>
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                    <thead class="table-primary">
                             <tr>
                                 <th>photo de profil</th>
                                 <th>Nom</th>
@@ -220,7 +153,7 @@ if (!empty($role) || !empty($nom_utilisateur)) {
                             <?php else: ?>
                                 <?php foreach ($clients as $client): ?>
                                     <?php
-                                    $photoPath = '/projet%202/uploads/' . ($client['photo'] && file_exists($_SERVER['DOCUMENT_ROOT'] . '/projet%202/uploads/' . $client['photo']) ? htmlspecialchars($client['photo']) : 'default_profile.png');
+                                    $photoPath = '/projet 2/uploads/' . ($client['photo'] && file_exists($_SERVER['DOCUMENT_ROOT'] . '/projet 2/uploads/' . $client['photo']) ? htmlspecialchars($client['photo']) : 'default_profile.png');
                                     ?>
                                     <tr>
                                         <td><img src="<?php echo $photoPath; ?>" alt="Photo de profil" width="50" height="50"></td>
@@ -231,27 +164,28 @@ if (!empty($role) || !empty($nom_utilisateur)) {
                                         <td><?php echo htmlspecialchars($client['telephone']); ?></td>
                                         <td><?php echo htmlspecialchars($client['choix']); ?></td>
                                         <td class="actions">
-                                            <a href="edit_client.php?id=<?php echo $client['id']; ?>" class="btn">Modifier</a>
-                                            <a href="http://localhost/projet%202/controllers/delete_client.php?id=<?php echo $client['id']; ?>" class="btn btn-delete">Supprimer</a>
+                                            <a href="edit_client.php?id=<?php echo $client['id']; ?>" class="btn btn-warning btn-sm">Modifier</a>
+                                            <a href="http://localhost/projet/controller/delete_client.php?id=<?php echo $client['id']; ?>" class="btn btn-danger btn-sm">Supprimer</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
                     </table>
+                                </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="vendors/js/vendor.bundle.base.js"></script>
-    <script src="js/off-canvas.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/template.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/todolist.js"></script>
-    <script src="vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="vendors/chart.js/Chart.min.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="../dashboard/vendors/js/vendor.bundle.base.js"></script>
+    <script src="../dashboard/js/off-canvas.js"></script>
+    <script src="../dashboard/js/hoverable-collapse.js"></script>
+    <script src="../dashboard/js/template.js"></script>
+    <script src="../dashboard/js/settings.js"></script>
+    <script src="../dashboard/js/todolist.js"></script>
+    <script src="../dashboard/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="../dashboard/vendors/chart.js/Chart.min.js"></script>
+    <script src="../dashboard/js/dashboard.js"></script>
 </body>
 </html>

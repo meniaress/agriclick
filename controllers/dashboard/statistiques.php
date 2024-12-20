@@ -39,30 +39,31 @@ session_start();
         <!-- Navbar -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="index.html"><img src="img/icon.png" alt="logo"/></a>
-                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="img/logo-mini.svg" alt="logo"/></a>
-                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button" data-toggle="minimize">
-                    <span class="typcn typcn-th-menu"></span>
-                </button>
+                
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav mr-lg-2">
-                  
+                    
                 <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+                        <a class="nav-link " href="../../view/elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
                         <a class="nav-link" href="../../view/indexadmincat.php">Gestion des offres et categories
                         </a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link " href="../Reclamationlist.php">
+              <a class="nav-link" href="../Reclamationlist.php">
                 Gestion des reclamations
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
-              <a class="nav-link" href="listrep.php">
+              <a class="nav-link " href="listrep.php">
                 Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="../../view/meniar/dash.php">
+                Gestion de suivi
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
@@ -73,13 +74,10 @@ session_start();
             <li class="nav-item d-none d-lg-flex">
                         <a class="nav-link"  href="../../view/back office/client_liste.php">Gestion des Utilisateurs</a>
                     </li>
-                    <li class="nav-item d-none d-lg-flex">
-                        <a class="nav-link active" href="statistiques.php">Statistiques</a>
-                    </li>
                 </ul>
             </div>
         </nav>
-
+      
         <div class="container-fluid page-body-wrapper">
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">

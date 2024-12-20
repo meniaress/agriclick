@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $photoPath = 'uploads/' . $photoName;
 
     
-      move_uploaded_file($photoTmpName, 'C:/xampp/htdocs/projet%202/' . $photoPath); 
+      move_uploaded_file($photoTmpName, 'C:/xampp/htdocs/projet 2/' . $photoPath); 
     } else {
 
       if (isset($_POST['delete_photo']) && $_POST['delete_photo'] == 'true') {
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriCLICK - Mise à jour du profil</title>
+    <title>Agriclick</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="photo">Photo de Profil +</label>
             <div class="profile-pic-container">
             <img id="profile-pic" 
-     src="<?php echo htmlspecialchars($client['photo'] ? '/projet%202/uploads/' . $client['photo'] : '/projet%202/uploads/default_profile.png'); ?>" >
+     src="<?php echo htmlspecialchars($client['photo'] ? '/projet 2/uploads/' . $client['photo'] : '/projet 2/uploads/default_profile.png'); ?>" >
 
                 <input type="file" name="photo" id="photo" class="file-input" onchange="previewImage(event)">
                 <label for="photo" class="upload-icon">

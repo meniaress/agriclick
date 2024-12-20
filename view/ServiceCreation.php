@@ -23,6 +23,7 @@ $clientC = new ClientC();
 $client = $clientC->getClientById($userId);
 
 $userRole = $client['choix']; 
+$isVeterinarian = $client['choix'] === 'Vétérinaire';
 
 if (
     isset($_POST["title"])  && $_POST["description"] && $_POST["localisation"] && $_POST["tarif"]  && $_POST["category"] && $_POST["type"]
@@ -149,23 +150,43 @@ if (
 <body>
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
-    <a href="index.html" class="navbar-brand">
-            <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK</h1>
-        </a>
-        <div class="col-lg-3">
-                <div class="m-0  align-items-center justify-content-start">
-                    <img src="img/logo.png" alt="Logo" style="height: 100px;"> 
-                </div>
-            </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-auto py-0">
-            <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+       
+       <a href="index.html" class="navbar-brand d-flex d-lg-none">
+           <h1 class="m-0 display-4 text-secondary"><span class="text-white">Agri</span>CLICK
+       </h1>
+       </a>
+
+       
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarCollapse">
+           <div class="navbar-nav mx-auto py-0">
+           <a href ="" id="returnHome" class="nav-item nav-link ">Accueil</a>
+
                 <a href="" id="returnoffre" class="nav-item nav-link ">cat/of Travail</a>
                 <a href="ServiceList.php" class="nav-item nav-link active">services</a>
+                <div class="nav-item  dropdown d-flex">
+                <?php if ($isVeterinarian): ?>
+                <div class="nav-item  dropdown d-flex">
+                    <a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">suivi veterinaire</a>
+                    <div class="dropdown-menu m-1">
+                        <a href="meniar/animal.php" class="dropdown-item"> Ajouter un animal</a>
+                        <a href="meniar/consult.php" class="dropdown-item">Créer une consultation</a>
+                    </div>
+                </div>
+<?php endif; ?>
+<div class="nav-item  dropdown d-flex">
+
+<a href="#" class="nav-link dropdown-toggle " data-bs-toggle="dropdown">Partenariats</a>
+                    <div class="dropdown-menu m-7 ">
+                        <a href="elyes/formations.php" class="dropdown-item">Formations</a>
+                            <a href="elyes/index.php" class="dropdown-item">Partenaires</a>
+                        </div>
+                </div>                  
+                
+               
+</div>
                 <a href="form.php" class="nav-item nav-link">Reclamation</a>
                 
            </div>
@@ -182,7 +203,7 @@ if (
     <!-- Page Header -->
     <div class="container-fluid bg-primary py-5 bg-hero mb-5">
         <div class="container py-5">
-            <h1 class="display-1 text-white">Create Service</h1>
+            <h1 class="display-1 text-white">creation Service</h1>
             <a href="servicelist.php" class=" btn btn-secondary py-md-3 px-md-5">Services</a>
         </div>
     </div>
@@ -192,11 +213,11 @@ if (
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card shadow-sm p-4">
-                    <h2 class="text-center mb-4">Create a New Service</h2>
+                    <h2 class="text-center mb-4">creation Service</h2>
                     <form name="serviceForm" method="POST" action="serviceCreation.php" onsubmit="return validateForm(event)" >
                         <!-- Title -->
                         <div class="mb-3">
-                            <label for="title">Service Title</label>
+                            <label for="title">nom service</label>
                             <input type="text" id="title" name="title" class="form-control" required>
                             <div id="titleError" class="error-text"></div>
                         </div>
@@ -222,8 +243,8 @@ if (
                             <div class="input-group">
                                 <input type="text" id="tarif" name="tarif" class="form-control" required>
                                 <select id="type" name="type" class="form-select" required>
-                                    <option value="per-hour">Per Hour</option>
-                                    <option value="per-task">Per Task</option>
+                                    <option value="per-hour">par heure</option>
+                                    <option value="per-task">par tache</option>
                                 </select>
                             </div>
                             <div id="tarifError" class="error-text"></div>
@@ -231,9 +252,9 @@ if (
 
                         <!-- Category -->
                         <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
+                            <label for="category" class="form-label">Categorie</label>
                             <div class="position-relative">
-                                <input list="categories" id="category" name="category" class="form-control" placeholder="Select or type a category" required>
+                                <input list="categories" id="category" name="category" class="form-control" placeholder="choisir une categorie" required>
                                 <datalist id="categories">
                                     <option value="jardinerie">
                                     <option value="mecanique">
@@ -246,8 +267,8 @@ if (
 
                         <!-- Submit Buttons -->
                         <div class="d-flex justify-content-end">
-                            <button type="reset" class="btn btn-outline-secondary me-2">Reset</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary me-2">supprimer</button>
+                            <button type="submit" class="btn btn-primary">confirmer</button>
                         </div>
                     </form>
 
@@ -255,67 +276,44 @@ if (
             </div>
         </div>
     </div>
-
     <div class="container-fluid bg-footer bg-primary text-white mt-5">
         <div class="container">
             <div class="row gx-5">
-                <div class="col-lg-8 col-md-6">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 col-md-12 pt-5 mb-5">
-                            <h4 class="text-white mb-4">Get In Touch</h4>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-geo-alt text-white me-2"></i>
-                                <p class="text-white mb-0">123 Street, New York, USA</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-envelope-open text-white me-2"></i>
-                                <p class="text-white mb-0">info@example.com</p>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <i class="bi bi-telephone text-white me-2"></i>
-                                <p class="text-white mb-0">+012 345 67890</p>
-                            </div>
-                            <div class="d-flex mt-4">
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <h4 class="text-white mb-4">Quick Links</h4>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>job offers</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Services</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
-                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
-                            <h4 class="text-white mb-4">Popular Links</h4>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Home</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>About Us</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>job offers</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Services</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Meet The Team</a>
-                                <a class="text-white mb-2" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Latest Blog</a>
-                                <a class="text-white" href="#"><i class="bi bi-arrow-right text-white me-2"></i>Contact Us</a>
-                            </div>
-                        </div>
+                <div class="col-lg-4 col-md-4 py-5">
+                    <h4 class="text-white mb-4">Location</h4>
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-geo-alt text-white me-2"></i>
+                        <p class="text-white mb-0">123 Rue, New York, USA</p>
                     </div>
                 </div>
-               
+                <div class="col-lg-4 col-md-4 py-5 text-center">
+                    <h4 class="text-white mb-4">Autour du Web</h4>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle me-3" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-secondary btn-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 py-5 text-end">
+                    <h4 class="text-white mb-4">Contactez-nous</h4>
+                    <div class="d-flex align-items-center justify-content-end mb-3">
+                        <i class="bi bi-envelope-open text-white me-2"></i>
+                        <p class="text-white mb-0">info@example.com</p>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end">
+                        <i class="bi bi-telephone text-white me-2"></i>
+                        <p class="text-white mb-0">+012 345 67890</p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
+    
     <div class="container-fluid bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; <a class="text-secondary fw-bold" href="#">Your Site Name</a>. All Rights Reserved. Designed by <a class="text-secondary fw-bold" href="https://htmlcodex.com">HTML Codex</a></p>
-            <br>Distributed By: <a class="text-secondary fw-bold" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+            <p class="mb-0"><a class="text-secondary fw-bold" href="#">Copyright © Your Website 2024</a></p>
         </div>
     </div>
     <!-- Footer End -->

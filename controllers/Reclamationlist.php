@@ -45,7 +45,7 @@ session_start(); // Start the session
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav mr-lg-2">
                 <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+                        <a class="nav-link " href="../view/elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
                         <a class="nav-link" href="../view/indexadmincat.php">Gestion des offres et categories
@@ -59,6 +59,11 @@ session_start(); // Start the session
             <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link" href="dashboard/listrep.php">
                 Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="../view/meniar/dash.php">
+                Gestion de suivi
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">

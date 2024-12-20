@@ -65,7 +65,7 @@ session_start(); // Démarrer la session
                 <ul class="navbar-nav mr-lg-2">
                     
                 <li class="nav-item  d-none d-lg-flex">
-                        <a class="nav-link " href="#">Gestion des Partenariats</a>
+                        <a class="nav-link " href="../../view/elyes/dash.php">Gestion des Partenariats</a>
                     </li>
                     <li class="nav-item  d-none d-lg-flex">
                         <a class="nav-link" href="../../view/indexadmincat.php">Gestion des offres et categories
@@ -79,6 +79,11 @@ session_start(); // Démarrer la session
             <li class="nav-item  d-none d-lg-flex">
               <a class="nav-link active" href="listrep.php">
                 Gestion des reponses
+              </a>
+            </li>
+            <li class="nav-item  d-none d-lg-flex">
+              <a class="nav-link " href="../../view/meniar/dash.php">
+                Gestion de suivi
               </a>
             </li>
             <li class="nav-item  d-none d-lg-flex">
@@ -136,7 +141,7 @@ session_start(); // Démarrer la session
                                     <option value="positive" <?php echo (isset($type) && $type == 'positive') ? 'selected' : ''; ?>>Positive</option>
                                     <option value="negative" <?php echo (isset($type) && $type == 'negative') ? 'selected' : ''; ?>>Négative</option>
                                 </select>
-                                <button type="submit">Rechercher</button>
+                                <button class="btn btn-primary btn-sm"type="submit">Rechercher</button>
                             </form>
                             <button id="download-pdf" class="btn btn-primary">Télécharger PDF</button>
 
