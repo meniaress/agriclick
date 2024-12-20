@@ -9,6 +9,51 @@ if (!$result) {
 } else {
     $nbr_partenaires = $result->rowCount();
 }
+function exportPartnershipsToCSV($partnerships)
+{
+    // Nom du fichier CSV de sortie
+    $filename = 'partnerships_export.csv';
+
+    // Ouverture du fichier en écriture
+    $fp = fopen($filename, 'w');
+
+    // En-têtes du fichier CSV
+    $headers = array('ID', 'Nom de l\'organisation', 'Nom du responsable', 'Numéro de téléphone', 'Adresse e-mail', 'Type de partenariat', 'Description', 'Image', 'Status');
+    fputcsv($fp, $headers);
+
+    // Écriture des données de partenariats dans le fichier CSV
+    foreach ($partnerships as $partnership) {
+        fputcsv($fp, array(
+            $partnership['id'],
+            $partnership['Nom de l\'organisation'],
+            $partnership['Nom du responsable'],
+            $partnership['Numéro de téléphone'],
+            $partnership['Adresse e-mail'],
+            $partnership['Type de partenariat'],
+            $partnership['Description'],
+            $partnership['Image'],
+            $partnership['Status']
+        ));
+    }
+
+    // Fermeture du fichier
+    fclose($fp);
+
+    // Envoi du fichier CSV au navigateur
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    readfile($filename);
+
+    // Suppression du fichier CSV après l'envoi
+    unlink($filename);
+}
+
+// Appel de la fonction si le bouton d'exportation est cliqué
+if (isset($_POST['export'])) {
+    exportPartnershipsToCSV($result->fetchAll(PDO::FETCH_ASSOC)); // Récupération des données à exporter
+    exit;
+}
+
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -214,14 +259,7 @@ if (!$result) {
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="row">
-              <div class="col-sm-6">
-                <h3 class="mb-0 font-weight-bold">Elyes Khiari</h3>
-                <p>Your last login: 21h ago from Tunisia.</p>
-              </div>
-              
-            </div>
-
+            
             <?php include $_SERVER['DOCUMENT_ROOT'] . '/AgriCLICK/Controller/recherche.php'; ?>
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
     <h4 class="card-title">Liste des Partenariats</h4>
@@ -238,9 +276,7 @@ if (!$result) {
         <input type="text" name="searchValue" class="form-control me-2" placeholder="Rechercher..." required>
         <button type="submit" class="btn btn-primary">Rechercher</button>
     </form>
-    <button class="btn btn-primary btn-sm" onclick="window.location.href='addPartnership.php'">
-        <i class="bi bi-plus-circle"></i> Ajouter un partenariat
-    </button>
+
 </div>
 <tbody>
   
@@ -268,75 +304,196 @@ if (!$result) {
 </tbody>
 
             
+          
+<div class="row">
+    <div class="col-lg-12 d-flex grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <h4 class="card-title">Liste des Partenariats</h4>
+                    <button class="btn btn-primary btn-sm" onclick="window.location.href='index.php'">
+                        <i class="bi bi-plus-circle"></i> Ajouter un partenariat
+                    </button>
+                    <form method="post" action="" style="display:inline-block;">
+                        <button type="submit" class="btn btn-secondary btn-sm" name="export">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Exporter en CSV
+                        </button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Nom de l'organisation</th>
+                                <th>Nom du responsable</th>
+                                <th>Numéro de téléphone</th>
+                                <th>Adresse e-mail</th>
+                                <th>Type de partenariat</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while ($ligne = $result->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<tr>";
+                                foreach ($ligne as $valeur) {
+                                    echo "<td>$valeur</td>";
+                                }
+                                $id = $ligne['id']; // Remplacez par le nom de la colonne pour l'ID
+                                echo "
+                                <td class='actions'>
+                                    <button class='btn btn-danger btn-sm' onclick='confirmDelete($id)'>
+                                        <i class='bi bi-trash'></i> Supprimer
+                                    </button>
+                                    <button class='btn btn-warning btn-sm' onclick=\"window.location.href='../Views/edit.php?id=$id'\">
+                                        <i class='bi bi-pencil'></i> Modifier
+                                    </button>
+                                    <form action='../Controller/acceptPartner.php' method='post' style='display:inline-block;'>
+                                        <input type='hidden' name='id' value='$id'>
+                                        <input type='hidden' name='email' value='{$ligne['Adresse e-mail']}'>
+                                        <button type='submit' class='btn btn-success btn-sm'>
+                                            <i class='bi bi-check-circle'></i> Accepter
+                                        </button>
+                                    </form>
+                                </td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php if ($nbr_partenaires == 0): ?>
+                    <div class="text-center mt-4">
+                        <p class="text-muted">Aucun partenariat trouvé.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+// Appel de la fonction d'exportation si le bouton est soumis
+if (isset($_POST['export'])) {
+    exportPostulationsToCSV($result->fetchAll(PDO::FETCH_ASSOC)); // Récupération des données à exporter
+    exit;
+}
+?>
+<div class="row">
+    <div class="col-lg-12 d-flex grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <h4 class="card-title">Liste des Inscriptions</h4>
+                    <button class="btn btn-primary btn-sm" onclick="window.location.href='addInscription.php'">
+                        <i class="bi bi-plus-circle"></i> Ajouter une inscription
+                    </button>
+                    <form method="post" action="" style="display:inline-block;">
+                        <button type="submit" class="btn btn-secondary btn-sm" name="export">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Exporter en CSV
+                        </button>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom de l'organisation</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Numéro</th>
+                                <th>Adresse e-mail</th>
+                                <th>Nom de la formation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            // Récupérer les données de la table inscriptions
+                            require_once '../connexion.php';
+                            $sql = "SELECT * FROM inscriptions";
+                            $result = $con->query($sql);
+
+                            while ($ligne = $result->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<tr>";
+                                foreach ($ligne as $valeur) {
+                                    echo "<td>$valeur</td>";
+                                }
+                                $id = $ligne['ID']; // Remplacez par le nom exact de votre colonne ID
+                                echo "
+                                <td class='actions'>
+                                    <button class='btn btn-danger btn-sm' onclick='confirmDelete($id)'>
+                                        <i class='bi bi-trash'></i> Supprimer
+                                    </button>
+                                    <button class='btn btn-warning btn-sm' onclick=\"window.location.href='../Views/editInscription.php?id=$id'\">
+                                        <i class='bi bi-pencil'></i> Modifier
+                                    </button>
+                                </td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php if ($result->rowCount() == 0): ?>
+                    <div class="text-center mt-4">
+                        <p class="text-muted">Aucune inscription trouvée.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+// Fonction d'exportation en CSV
+function exportInscriptionsToCSV($inscriptions)
+{
+    $filename = 'inscriptions_export.csv';
+
+    $fp = fopen($filename, 'w');
+
+    // En-têtes du fichier CSV
+    $headers = array('Nom de l\'organisation', 'Nom', 'Prénom', 'Numéro', 'Adresse e-mail', 'Nom de la formation', 'ID');
+    fputcsv($fp, $headers);
+
+    // Écriture des données
+    foreach ($inscriptions as $inscription) {
+        fputcsv($fp, array(
+            $inscription['Nom de l\'organisation'],
+            $inscription['ID'],
+            $inscription['Nom'],
+            $inscription['Prénom'],
+            $inscription['Numéro'],
+            $inscription['Adresse e-mail'],
+            $inscription['Nom de la formation'],
             
-            <div class="row">
-              <div class="col-lg-12 d-flex grid-margin stretch-card">
-                  <div class="card">
-                      <div class="card-body">
-                          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-                              <h4 class="card-title">Liste des Partenariats</h4>
-                              <button class="btn btn-primary btn-sm" onclick="window.location.href='addPartnership.php'">
-                                  <i class="bi bi-plus-circle"></i> Ajouter un partenariat
-                              </button>
-                              <button class="btn btn-secondary btn-sm" name="create_pdf">
-                                <i class="bi bi-file-earmark-pdf"></i> Exporter en PDF
-                              </button>
-                          </div>
-                          <div class="table-responsive">
-                              <table class="table table-bordered table-hover">
-                                  <thead class="table-primary">
-                                      <tr>
-                                          <th>Nom de l'organisation</th>
-                                          <th>Nom du responsable</th>
-                                          <th>Numéro de téléphone</th>
-                                          <th>Adresse e-mail</th>
-                                          <th>Type de partenariat</th>
-                                          <th>Description</th>
-                                          <th>Image</th>
-                                          <th>Status</th>
-                                          <th>ID</th>
-                                          <th>Actions</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <?php
-                                      while ($ligne = $result->fetch(PDO::FETCH_NUM)) {
-                                          echo "<tr>";
-                                          foreach ($ligne as $valeur) {
-                                              echo "<td>$valeur</td>";
-                                          }
-                                          $id = $ligne[8]; // Ajuster l'index pour l'ID si nécessaire
-                                          echo "
-                                          <td class='actions'>
-                                              <button class='btn btn-danger btn-sm' onclick='confirmDelete($id)'>
-                                                  <i class='bi bi-trash'></i> Supprimer
-                                              </button>
-                                              <button class='btn btn-warning btn-sm' onclick=\"window.location.href='../Controller/edit.php?id=$id'\">
-                                                  <i class='bi bi-pencil'></i> Modifier
-                                              </button>
-                                              <form action='../Controller/acceptPartner.php' method='post' style='display:inline-block;'>
-                                                  <input type='hidden' name='id' value='$id'>
-                                                  <input type='hidden' name='email' value='{$ligne[3]}'> 
-                                                  <button type='submit' class='btn btn-success btn-sm'>
-                                                      <i class='bi bi-check-circle'></i> Accepter
-                                                  </button>
-                                              </form>
-                                          </td>";
-                                          echo "</tr>";
-                                      }
-                                      ?>
-                                  </tbody>
-                              </table>
-                          </div>
-                          <?php if ($nbr_partenaires == 0): ?>
-                              <div class="text-center mt-4">
-                                  <p class="text-muted">Aucun partenariat trouvé.</p>
-                              </div>
-                          <?php endif; ?>
-                      </div>
-                  </div>
-              </div>
-          </div>
+        ));
+    }
+
+    fclose($fp);
+
+    // Envoi du fichier
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    readfile($filename);
+    unlink($filename);
+}
+
+// Exportation si le formulaire est soumis
+if (isset($_POST['export'])) {
+    $inscriptions = $result->fetchAll(PDO::FETCH_ASSOC); // Récupérer toutes les inscriptions
+    exportInscriptionsToCSV($inscriptions);
+    exit;
+}
+?>
+
+
           
           <script>
           function confirmDelete(id) {
@@ -348,162 +505,7 @@ if (!$result) {
           
           
             
-              <div class="col-lg-8 d-flex grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">Project status</h4>
-                    </div>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face30.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold mt-1">volkswagen</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$2322 </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">88% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">07 Nov 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face31.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">Land Rover</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$12022  </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">70% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">08 Nov 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face32.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">Bentley </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$8,725</div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">87% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">11 Jun 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face33.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">Morgan </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$5,220 </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success  mt-1">65% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">26 Oct 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="d-flex">
-                                <img class="img-sm rounded-circle mb-md-0 mr-2" src="img/faces/face34.png" alt="profile image">
-                                <div>
-                                  <div> Company</div>
-                                  <div class="font-weight-bold  mt-1">volkswagen</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              Budget
-                              <div class="font-weight-bold  mt-1">$2322 </div>
-                            </td>
-                            <td>
-                              Status
-                              <div class="font-weight-bold text-success mt-1">88% </div>
-                            </td>
-                            <td>
-                              Deadline
-                              <div class="font-weight-bold  mt-1">07 Nov 2019</div>
-                            </td>
-                            <td>
-                              <button type="button" class="btn btn-sm btn-secondary">edit actions</button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- content-wrapper ends -->
-
-          <!-- partial -->
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
+              
     <!-- base:js -->
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
